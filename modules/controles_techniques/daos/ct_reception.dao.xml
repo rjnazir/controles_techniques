@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dao xmlns="http://jelix.org/ns/dao/1.0">
+    <datasources>
+        <primarytable name="ct_reception" realname="ct_reception" primarykey="id" />
+    </datasources>
+    <record>
+        <property name="id" fieldname="id" datatype="int" autoincrement="true"/>
+        <property name="ct_centre_id" fieldname="ct_centre_id" datatype="int" default=""/>
+        <property name="ct_motif_id" fieldname="ct_motif_id" datatype="int" default=""/>
+        <property name="ct_type_reception_id" fieldname="ct_type_reception_id" datatype="int" default=""/>
+        <property name="ct_user_id" fieldname="ct_user_id" datatype="int" default=""/>
+        <property name="ct_utilisation_id" fieldname="ct_utilisation_id" datatype="int" default=""/>
+        <property name="ct_vehicule_id" fieldname="ct_vehicule_id" datatype="int" default=""/>
+        <property name="rcp_mise_service" fieldname="rcp_mise_service" datatype="date" default=""/>
+        <property name="rcp_immatriculation" fieldname="rcp_immatriculation" datatype="varchar" default="" maxlength="45"/>
+        <property name="rcp_proprietaire" fieldname="rcp_proprietaire" datatype="varchar" default="" maxlength="255"/>
+        <property name="rcp_profession" fieldname="rcp_profession" datatype="varchar" default="" maxlength="100"/>
+        <property name="rcp_adresse" fieldname="rcp_adresse" datatype="varchar" default="" maxlength="255"/>
+        <property name="rcp_nbr_assis" fieldname="rcp_nbr_assis" datatype="int" default=""/>
+        <property name="rcp_nbr_debout" fieldname="rcp_nbr_debout" datatype="int" default=""/>
+        <property name="rcp_num_pv" fieldname="rcp_num_pv" datatype="varchar" default="" maxlength="100"/>
+        <property name="ct_source_energie_id" fieldname="ct_source_energie_id" datatype="int" default=""/>
+        <property name="ct_carosserie_id" fieldname="ct_carosserie_id" datatype="int" default=""/>
+        <property name="rcp_num_group" fieldname="rcp_num_group" datatype="varchar" default="" maxlength="255"/>
+        <property name="rcp_created" fieldname="rcp_created" datatype="date" default=""/>
+        <property name="ct_genre_id" fieldname="ct_genre_id" datatype="int" default=""/>
+        <!--<property name="" fieldname="" datatype="string/int/float/date"
+        required="yes" maxlength="" minlength="" regexp="" sequence=""
+        updatepattern="" insertpattern="" selectpattern=""/>-->
+    </record>
+    <factory>
+        <!--<method name="findByStage" type="select/selectfirst/delete/update/php">
+            <parameter name="" />
+            <values>
+                <value property="" value="" />
+            </values>
+            <conditions logic="and/or">
+                <eq property="" value="" />
+            </conditions>
+            <order>
+                <orderitem property="" way="asc/desc" />
+            </order>
+            <limit offset="" count=""/>
+            <body><![CDATA[
+            ]]></body>
+        </method>-->
+    </factory>
+</dao>

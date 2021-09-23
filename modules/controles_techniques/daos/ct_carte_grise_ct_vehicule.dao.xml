@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dao xmlns="http://jelix.org/ns/dao/1.0">
+    <datasources>
+        <primarytable name="ct_carte_grise" realname="ct_carte_grise" primarykey="id" />
+            <foreigntable name="ct_vehicule" realname="ct_vehicule" primarykey="id" onforeignkey="ct_vehicule_id" />
+    </datasources>
+    <record>
+        <!-- table ct_carte_grise -->
+        <property name="id" fieldname="id" datatype="int" autoincrement="true"/>
+        <property name="ct_carosserie_id" fieldname="ct_carosserie_id" datatype="int" default=""/>
+        <property name="ct_centre_id" fieldname="ct_centre_id" datatype="int" default=""/>
+        <property name="ct_source_energie_id" fieldname="ct_source_energie_id" datatype="int" default=""/>
+        <property name="ct_vehicule_id" fieldname="ct_vehicule_id" datatype="int" default=""/>
+        <property name="cg_date_emission" fieldname="cg_date_emission" datatype="date" default=""/>
+        <property name="cg_nom" fieldname="cg_nom" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_prenom" fieldname="cg_prenom" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_profession" fieldname="cg_profession" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_adresse" fieldname="cg_adresse" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_commune" fieldname="cg_commune" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_nbr_assis" fieldname="cg_nbr_assis" datatype="int" default=""/>
+        <property name="cg_nbr_debout" fieldname="cg_nbr_debout" datatype="int" default=""/>
+        <property name="cg_puissance_admin" fieldname="cg_puissance_admin" datatype="int" default=""/>
+        <property name="cg_mise_en_service" fieldname="cg_mise_en_service" datatype="date" default=""/>
+        <property name="cg_patente" fieldname="cg_patente" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_ani" fieldname="cg_ani" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_rta" fieldname="cg_rta" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_num_carte_violette" fieldname="cg_num_carte_violette" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_date_carte_violette" fieldname="cg_date_carte_violette" datatype="date" default=""/>
+        <property name="cg_lieu_carte_violette" fieldname="cg_lieu_carte_violette" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_num_vignette" fieldname="cg_num_vignette" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_date_vignette" fieldname="cg_date_vignette" datatype="date" default=""/>
+        <property name="cg_lieu_vignette" fieldname="cg_lieu_vignette" datatype="varchar" default="" maxlength="255"/>
+        <property name="cg_immatriculation" fieldname="cg_immatriculation" datatype="varchar" default="" maxlength="45"/>
+        <property name="cg_created" fieldname="cg_created" datatype="datetime" default=""/>
+        <property name="cg_nom_cooperative" fieldname="cg_nom_cooperative" datatype="varchar" default="" maxlength="100"/>
+        <property name="cg_itineraire" fieldname="cg_itineraire" datatype="varchar" default="" maxlength="100"/>
+        <property name="cg_is_transport" fieldname="cg_is_transport" datatype="tinyint" required="true"/>
+        <property name="cg_num_identification" fieldname="cg_num_identification" datatype="varchar" default="" maxlength="45"/>
+        <property name="cg_zone_deserte" fieldname="cg_zone_deserte" datatype="varchar" default="" maxlength="255"/>
+        <property name="ct_zone_deserte_id" fieldname="ct_zone_deserte_id" datatype="int" default=""/>
+
+        <!-- table ct_vehicule -->
+        <property name="ct_genre_id" fieldname="ct_genre_id" datatype="int" table="ct_vehicule" />
+        <property name="ct_marque_id" fieldname="ct_marque_id" datatype="int" table="ct_vehicule"/>
+        <property name="vhc_cylindre" fieldname="vhc_cylindre" datatype="varchar" table="ct_vehicule" maxlength="10"/>
+        <property name="vhc_puissance" fieldname="vhc_puissance" datatype="double" table="ct_vehicule"/>
+        <property name="vhc_poids_vide" fieldname="vhc_poids_vide" datatype="double" table="ct_vehicule"/>
+        <property name="vhc_charge_utile" fieldname="vhc_charge_utile" datatype="double" table="ct_vehicule"/>
+        <property name="vhc_hauteur" fieldname="vhc_hauteur" datatype="double" table="ct_vehicule"/>
+        <property name="vhc_largeur" fieldname="vhc_largeur" datatype="double" table="ct_vehicule"/>
+        <property name="vhc_longueur" fieldname="vhc_longueur" datatype="double" table="ct_vehicule"/>
+        <property name="vhc_num_serie" fieldname="vhc_num_serie" datatype="varchar" table="ct_vehicule" maxlength="100"/>
+        <property name="vhc_num_moteur" fieldname="vhc_num_moteur" datatype="varchar" table="ct_vehicule" maxlength="100"/>
+        <property name="vhc_created" fieldname="vhc_created" datatype="datetime" table="ct_vehicule"/>
+        <property name="vhc_provenance" fieldname="vhc_provenance" datatype="varchar" table="ct_vehicule" maxlength="45"/>
+        <property name="vhc_type" fieldname="vhc_type" datatype="varchar" table="ct_vehicule" maxlength="45"/>
+        <property name="vhc_poids_total_charge" fieldname="vhc_poids_total_charge" datatype="double" table="ct_vehicule"/>
+
+        <!--<property name="" fieldname="" datatype="string/int/float/date"
+        required="yes" maxlength="" minlength="" regexp="" sequence=""
+        updatepattern="" insertpattern="" selectpattern=""/>-->
+    </record>
+    <factory>
+        <!--<method name="findByStage" type="select/selectfirst/delete/update/php">
+            <parameter name="" />
+            <values>
+                <value property="" value="" />
+            </values>
+            <conditions logic="and/or">
+                <eq property="" value="" />
+            </conditions>
+            <order>
+                <orderitem property="" way="asc/desc" />
+            </order>
+            <limit offset="" count=""/>
+            <body><![CDATA[
+            ]]></body>
+        </method>-->
+
+        <method name="findFirstBy" type="selectfirst">
+            <parameter name="imm" />
+            <parameter name="im0" />
+            <conditions logic="or">
+                <eq property="cg_immatriculation" expr="$imm" />
+                <eq property="cg_immatriculation" expr="$im0" />
+                <eq property="vhc_num_serie" expr="$imm" />
+            </conditions>
+        </method>
+    </factory>
+</dao>

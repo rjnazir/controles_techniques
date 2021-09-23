@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dao xmlns="http://jelix.org/ns/dao/1.0">
+    <datasources>
+        <primarytable name="ct_historique" realname="ct_historique" primarykey="id" />
+    </datasources>
+    <record>
+        <property name="id" fieldname="id" datatype="int" autoincrement="true"/>
+        <property name="hst_description" fieldname="hst_description" datatype="longtext" required="true"/>
+        <property name="hst_date_create" fieldname="hst_date_create" datatype="datetime" required="true"/>
+        <property name="ct_user_id" fieldname="ct_user_id" datatype="int" default=""/>
+        <property name="hst_is_view" fieldname="hst_is_view" datatype="tinyint" required="true"/>
+        <property name="ct_centre_id" fieldname="ct_centre_id" datatype="int" default=""/>
+        <property name="hist_type" fieldname="hist_type" datatype="varchar" default="" maxlength="20"/>
+        <!--<property name="" fieldname="" datatype="string/int/float/date"
+        required="yes" maxlength="" minlength="" regexp="" sequence=""
+        updatepattern="" insertpattern="" selectpattern=""/>-->
+    </record>
+    <factory>
+        <!--<method name="findByStage" type="select/selectfirst/delete/update/php">
+            <parameter name="" />
+            <values>
+                <value property="" value="" />
+            </values>
+            <conditions logic="and/or">
+                <eq property="" value="" />
+            </conditions>
+            <order>
+                <orderitem property="" way="asc/desc" />
+            </order>
+            <limit offset="" count=""/>
+            <body><![CDATA[
+            ]]></body>
+        </method>-->
+    </factory>
+</dao>

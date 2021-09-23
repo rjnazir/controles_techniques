@@ -1,0 +1,548 @@
+body {  
+  font-family: Verdana, Arial, Sans; 
+  font-size:0.8em;
+  margin:0;
+  background-color:#eff4f6;
+  color : #002830;
+  padding:0 1em;
+}
+a { color:#0000FF; text-decoration:none; font-size:11px; }
+a:visited { color : #002830;}
+a:hover { color: #0000FF; background-color:#d7e7eb; }
+h1.apptitle {
+	font-size: 1.7em;
+	background:-moz-linear-gradient(top, #000066, #0066FF 50%, #0066FF 50%, #000066);
+	background:linear-gradient(#0066FF 10%, #0066FF 25%, #000066 75%, #000066 100%);
+	background-color:#000099;
+	color:white;
+	margin: 32px auto 1em auto;
+	padding: 0.5em;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px; 
+	-o-border-radius:5px;
+	border-radius:5px ;
+	z-index:100;
+	-moz-box-shadow: #999 3px 3px 8px 0px;
+	-webkit-box-shadow: #999  3px 3px 8px;
+	-o-box-shadow: #999 3px 3px 8px 0px;
+	box-shadow: #999 3px 3px 8px 0px;
+}
+
+h1.apptitle span.welcome { font-size:0.8em; font-style:italic; }
+ul.checkresults { border:3px solid black; margin: 2em; padding:1em; list-style-type:none; }
+ul.checkresults li { margin:0; padding:5px; border-top:1px solid black; }
+ul.checkresults li:first-child {border-top:0px}
+li.error, p.error  { background-color:#ff6666;}
+li.ok, p.ok      { background-color:#a4ffa9;}
+li.warning { background-color:#ffbc8f;}
+li.notice { background-color:#DBF0FF;}
+.logo { margin:6px 0; text-align:right;}
+.nocss { display: none; }
+#page { margin: 0 auto; width: 924px; }
+div.block h2 {
+	color:white;
+	vertical-align:bottom;
+	margin:0;
+	padding:10px 0px 5px 10px;
+	background:-moz-linear-gradient(top, #000066,#0066FF 50%, #0066FF 50%, #000066);
+	background:linear-gradient(#0066FF 10%, #0066FF 25%, #000066 75%, #000066 100%);
+	background-color:#3c90af;
+	background-position:center left;
+	background-repeat:no-repeat;
+	-moz-border-radius:15px 15px 0px  0px ;
+	-o-border-radius:15px 15px 0px  0px ;
+	-webkit-border-top-right-radius: 15px;
+	-webkit-border-top-left-radius: 15px; 
+	border-radius:15px 15px 0px  0px ;
+	-moz-box-shadow: #999 3px 3px 8px 0px;
+	-webkit-box-shadow: #999 3px 3px 8px;
+	-o-box-shadow: #999 3px 3px 8px 0px;
+	box-shadow: #999 3px 3px 8px 0px;
+	z-index:50;
+	width:192px;
+	font-size:11px;
+}
+div.block2 h2 {
+	color:white;
+	vertical-align:bottom;
+	margin:0;
+	padding:10px 10px 10px 10px;
+	background:-moz-linear-gradient(top, #000066,#0066FF 50%, #0066FF 50%, #000066);
+	background:linear-gradient(#000066 10%, #0066FF 25%, #0066FF 75%, #000066 100%);
+	background-color:#3c90af;
+	background-position:center left;
+	background-repeat:no-repeat;
+	-moz-border-radius:10px 10px 10px  10px ;
+	-o-border-radius:10px 10px 10px  10px ;
+	-webkit-border-top-right-radius: 30px;
+	-webkit-border-top-left-radius: 30px; 
+	border-radius:10px 10px 10px  10px ;
+	-moz-box-shadow: #999 3px 3px 8px 0px;
+	-webkit-box-shadow: #999 3px 3px 8px;
+	-o-box-shadow: #999 3px 3px 8px 0px;
+	box-shadow: #999 3px 3px 8px 0px;
+	z-index:50;
+	font-size:11px;
+}
+div.block h3 {
+  color:#C03033;
+}
+div.block .blockcontent {
+  background: white;
+  padding: 1em 2em;
+  margin-bottom: 20px;
+  -moz-box-shadow: #999 3px 3px 8px 0px;
+  -webkit-box-shadow: #999  3px 3px 8px;
+  -o-box-shadow: #999 3px 3px 8px 0px;
+  box-shadow: #999 3px 3px 8px 0px;
+  -moz-border-radius:0px 0px 15px 15px;
+  -webkit-border-bottom-left-radius: 15px; 
+  -webkit-border-bottom-right-radius: 15px; 
+  -o-border-radius:0px 0px 15px 15px;
+  border-radius:0px 0px 15px 15px;
+}
+
+div#jelixpowered {
+    text-align:center;
+    margin: 0 auto;
+}
+
+/*Style du menu personnalisé*/
+/*==========================*/
+div#menuV {width: 200px;}
+
+/* fond blanc pour le menu */ 
+div#menuV a { color:#000000; font-family:Arial, Helvetica, sans-serif; font-size:11px; font-weight:bold; background:linear-gradient(#0066FF 10%, #99CCFF 25%, #99CCFF 75%, #0066FF 100%);background:-moz-linear-gradient(top, #99CCFF, #0066FF 20%, #0066FF 70%, #99CCFF);}
+div#menuV ul {padding: 0; width: 200px; border:1px solid; margin:0px; }
+/* fond different au survol de la souris pour les sous menu et les "basiques"*/ 
+div#menuV li:hover {background:#CCCCCC;}
+div#menuV li.sousmenu:hover {background: #CCCCCC;}
+/* Rajout d'une petite fleche pour les sous menu */ 
+div#menuV li.sousmenu {background:url(../../../../recruteg/concours/www/fleche.gif) 95% 50% no-repeat;}
+div#menuV ul li {position:relative; list-style: none; border-bottom:1px solid;}
+div#menuV ul ul {position: absolute; top: -1px; left: 160px; display:none}
+/* on rajoute une bordure a gauche et des padding, on doit donc réajuster la taille 100-(8 de bordure + 8 de padding) =84 */ 
+div#menuV li a {text-decoration: none; padding: 4px 0 4px 8px; display:block; border-left: width:143px}
+div#menuV ul.niveau1 li.sousmenu:hover ul.niveau2, 
+div#menuV ul.niveau2 li.sousmenu:hover ul.niveau3 {display:block;}
+/* la bordure de chaque hauteur a une couleure de survol*/ 
+div#menuV li a:hover { background:linear-gradient(#333333 10%, #CCCCCC 25%, #CCCCCC 75%, #333333 100%);background:-moz-linear-gradient(top, #333333, #CCCCCC 20%, #CCCCCC 70%, #333333);}
+div#menuV ul ul li a:hover {color:#000000;}
+div#menuV ul ul ul li a:hover {color:#000000;}
+
+/* Styles du lien */
+/*================*/
+/*div#lien {width: 200px;}*/
+
+/* fond blanc pour le menu */ 
+div#lien a {color:#000000; font-family:Arial, Helvetica, sans-serif; font-size:11px; font-weight:bold; background:linear-gradient(#333333 10%, #CCCCCC 25%, #CCCCCC 75%, #333333 100%); background:-moz-linear-gradient(top, #CCCCCC, #333333 20%, #333333 70%, #CCCCCC); border-radius: 5px;}
+div#lien ul {padding: 0;  margin:0px; }/*border:1px solid;*/
+/* fond different au survol de la souris pour les sous menu et les "basiques"*/ 
+div#lien li:hover {background:#CCCCCC; border-radius: 5px;}
+div#lien li.sousmenu:hover {background: #CCCCCC; border-radius: 5px;}
+/* Rajout d'une petite fleche pour les sous menu */ 
+div#lien li.sousmenu {background:url(../../../../recruteg/concours/www/fleche.gif) 95% 50% no-repeat;}
+div#lien ul li {position:relative; list-style: none;} /*border-bottom:1px solid;*/
+div#lien ul ul {position: absolute; top: -1px; left: 160px; right:160px; display:none}
+/* on rajoute une bordure a gauche et des padding, on doit donc réajuster la taille 100-(8 de bordure + 8 de padding) =84 */ 
+div#lien li a {text-decoration: none; padding: 4px 0 4px 8px; display:block;border-left: width:143px; border-right:width:143px;} /**/
+div#lien ul.niveau1 li.sousmenu:hover ul.niveau2, 
+div#lien ul.niveau2 li.sousmenu:hover ul.niveau3 {display:block;}
+/* la bordure de chaque hauteur a une couleure de survol*/ 
+div#lien li a:hover {background:linear-gradient(#CCCCCC 5%, #000000 25%, #000000 80%, #CCCCCC 100%); background:-moz-linear-gradient(top, #CCCCCC, #333333 20%, #333333 70%, #CCCCCC); color:#FFFFFF; font-weight:bold; border-radius: 5px;}
+/*div#lien ul ul li a:hover {color:#000000;}
+div#lien ul ul ul li a:hover {color:#000000;}*/
+
+/*menu deconnexion*/
+div#exit {width:160px; -moz-border-radius:5px 5px 5px 5px; -o-border-radius:5px 5px 5px 5px; -webkit-border-top-right-radius:15px; 	-webkit-border-top-left-radius:15px; border-radius:5px 5px 5px 5px; -moz-box-shadow:#999 3px 3px 8px 0px; -webkit-box-shadow:#999 3px 3px 8px; -o-box-shadow:#999 3px 3px 8px 0px; box-shadow:#999 3px 3px 8px 0px;}
+div#exit a {color:#000000; font-family:Arial, Helvetica, sans-serif; font-size:11px; font-weight:bold;}
+div#exit ul {
+	padding:0;
+	width:200px;
+	margin:0px;
+	background:-moz-linear-gradient(top, #990000, #FF0000 20%, #FF0000 70%, #990000);
+	background:linear-gradient(#FF0000 10%, #990000 25%, #990000 75%, #FF0000 100%);
+	border:1px solid;
+}
+div#exit ul li {position:relative; list-style:none; border-bottom: 1px solid;}
+div#exit li:hover {}
+div#exit li a {text-decoration:none; padding:4px 0 4px 8px; display:block; width:183px;}
+div#exit li a:hover {
+	background:-moz-linear-gradient(top, #333333, #CCCCCC 10%, #CCCCCC 80%, #333333);
+	background:linear-gradient(#CCCCCC 5%, #000000 25%, #000000 80%, #CCCCCC 100%);
+	width:192px;
+	color:#FFFFFF;
+}
+/*Fin menu deconnexion*/
+
+/*Fin de style du menu personnalisé*/
+/*=================================*/
+.zone{-moz-border-radius:15px;}
+.zone2{ -moz-border-radius:5px; background:url(../../../../recruteg/concours/www/calendrier/css/gold/gold.jpg);}
+.titre2{ color:#000000; font-size:12; font-family:Arial, Helvetica, sans-serif; font-weight:bold; text-align:center; border:1px solid #666666; -moz-border-radius:5px; background:url(../../../../recruteg/concours/www/calendrier/css/gold/gold.jpg);}
+.obligatoire{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:italic;
+	color:#FF0000;
+}
+.erreur a{
+	background:#03F
+	background:-moz-linear-gradient(top, #03F, #00F 25%, ##00F 75%, #03F);
+	background:linear-gradient(#03F 10%, #00F 30%, #00F 80%, #03F 100%);
+	border:double 1px #000066;
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:italic;
+	text-decoration:blink;
+	border-radius:7.5px;
+	padding:10px;
+	margin:5px;
+	text-align:center;
+	width:450px;
+}
+.erreur a:link{
+	background:-moz-linear-gradient(top, #339900, #006600 25%, #006600 75%, #339900);
+	background:linear-gradient(#339900 10%, #006600 30%, #006600 80%, #339900 100%);
+	border:double 1px #000066;
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:italic;
+	text-decoration:blink;
+	border-radius:7.5px;
+	padding:10px;
+	margin:5px;
+	text-align:center;
+	width:450px;
+}
+.erreur a:hover{
+	background:-moz-linear-gradient(top, #CC0000, #FF0000 25%, #FF0000 75%, #CC0000);
+	background:linear-gradient(#CC0000 10%, #FF0000 30%, #FF0000 80%, #CC0000 100%);
+	border:double 1px #000066;
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:italic;
+	text-decoration:blink;
+	border-radius:7.5px;
+	padding:10px;
+	margin:5px;
+	text-align:center;
+	width:450px;
+}
+.erreur a:active{
+	background:-moz-linear-gradient(top, #CC0000, #FF0000 25%, #FF0000 75%, #CC0000);
+	background:linear-gradient(#CC0000 10%, #FF0000 30%, #FF0000 80%, #CC0000 100%);
+	border:double 1px #000066;
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:italic;
+	text-decoration:blink;
+	border-radius:7.5px;
+	padding:10px;
+	margin:5px;
+	text-align:center;
+	width:450px;
+}
+.erreur a:visited{
+	background:-moz-linear-gradient(top, #CC0000, #FF0000 25%, #FF0000 75%, #CC0000);
+	background:linear-gradient(#CC0000 10%, #FF0000 30%, #FF0000 80%, #CC0000 100%);
+	border:double 1px #000066;
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:italic;
+	text-decoration:blink;
+	border-radius:7.5px;
+	padding:10px;
+	margin:5px;
+	text-align:center;
+	width:450px;
+}
+.ok{
+	background:-moz-linear-gradient(top, #339900, #006600 25%, #006600 75%, #339900);
+	background:linear-gradient(#339900 10%, #006600 30%, #006600 80%, #339900 100%);
+	border:double 1px #000066;
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:italic;
+	font-weight:bold;
+	text-decoration:blink;
+	border-radius:7.5px;
+	padding:10px;
+	margin:5px;
+	text-align:center;
+}
+.ok a{
+	/*background:-moz-linear-gradient(top, #339900, #006600 25%, #006600 75%, #339900);*/
+	background:linear-gradient(#339900 10%, #006600 30%, #006600 80%, #339900 100%);
+	/*border:double 1px #000066;*/
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:italic;
+	font-weight:bold;
+	text-decoration:blink;
+	/*border-radius:7.5px;*/
+	padding:50;
+	margin:25px;
+	text-align:center;
+	width:450px;
+}
+.ok a:hover{
+	background:-moz-linear-gradient(top, #339900, #006600 25%, #006600 75%, #339900);
+	background:linear-gradient(#339900 10%, #006600 30%, #006600 80%, #339900 100%);
+	border:double 1px #000066;
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:italic;
+	font-weight:bold;
+	text-decoration:blink;
+	border-radius:7.5px;
+	padding:10px;
+	margin:5px;
+	text-align:center;
+	width:450px;
+}
+.ok a:visited{
+	background:-moz-linear-gradient(top, #339900, #006600 25%, #006600 75%, #339900);
+	background:linear-gradient(#339900 10%, #006600 30%, #006600 80%, #339900 100%);
+	border:double 1px #000066;
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:italic;
+	font-weight:bold;
+	text-decoration:blink;
+	border-radius:7.5px;
+	padding:10px;
+	margin:5px;
+	text-align:center;
+	width:450px;
+}
+
+.sms a:link{
+	color:#FFFFFF;
+	text-decoration:none;
+	margin:5px;
+	padding:10px;
+	width:45px;
+	text-align:center;
+}
+.sms{
+	background:-moz-linear-gradient(top, #660000, #FF0000 25%, #FF0000 75%, #660000);
+	background:linear-gradient(#660000 10%, #FF0000 30%, #FF0000 80%, #660000 100%);
+	border:double 1px #333333;
+	color:#FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	/*text-decoration:blink;*/
+	border-radius:7.5px;
+	padding:10px;
+	margin:5px;
+	text-align:center;
+	width:450px;
+}
+.sms2{
+	background:#FFFFFF;
+	border:double 1px #333333;
+	color:#000000;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	font-weight:bold;
+	font-style:italic;
+	-moz-border-radius:2px;
+	padding:5px;
+}
+.corps{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#000000;
+}
+.corps3{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-style:oblique;
+	border:inset #CCCCCC 0.25px;
+	background-color:#FFFFFF;
+	color:#000000;
+}
+#th.corp3{
+	background-color:#FFFFFF;
+	border:inset 0.25px #CCCCCC;
+	font-size:11px;
+}
+.champs{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#000000;
+	border-radius:5px;
+}
+.corps2{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	color:#FFFFFF;
+	background:-moz-linear-gradient(top, #000066,#0066FF 50%, #0066FF 50%, #000066);
+	background:linear-gradient(#000066 10%,#0066FF 30%, #0066FF 80%, #000066 100%);
+	background-color:#99CCFF;
+	background-position:center left;
+	background-repeat:inherit;
+}
+/*---------STYLE POUR LA PAGINATION---------*/
+ul.pagelinks>li {
+	display: inline;
+	color:#0000FF;
+	border:1px solid #CCCCCF;
+	background-color:#CCCCCF;
+	text-decoration:none;
+	-moz-border-radius:2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	margin:3px;
+	padding:3px;
+}
+ul.pagelinks>li:before {
+	/*content: ' | ';*/
+	content: ' ';
+}
+ul.pagelinks>li.pagelinks-start:before {
+	content: ' ';
+}
+ul.pagelinks>li a:link{
+	display: inline;
+	color:#0000FF;
+	border:1px solid #CCCCCF;
+	background-color:#CCCCCF;
+	text-decoration:none;
+	-moz-border-radius:2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	margin:3px;
+	padding:3px;
+}
+ul.pagelinks>li a:hover{
+	display: inline;
+	color:#000000;
+	border:1px solid #CCCCCF;
+	background-color:#CCCCCF;
+	text-decoration:none;
+	-moz-border-radius:2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	margin:3px;
+	padding:3px;
+}
+ul.pagelinks>li a:active{
+	display:inline;
+	color:#FF0000;
+	border:1px solid #CCCCCF;
+	background-color:#CCCCCF;
+	text-decoration:blink;
+	-moz-border-radius:2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	margin:3px;
+	padding:3px;
+}
+ul.pagelinks>li a:visited{
+	display:inline;
+	color:#3300FF;
+	border:1px solid #CCCCCF;
+	background-color:#CCCCCF;
+	text-decoration:none;
+	-moz-border-radius:2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+	margin:3px;
+	padding:3px;
+}
+/*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
+ul.pagelinks2>li {
+	display: inline;
+	color:#0000FF;
+	/*border:1px solid #99CCFF;
+	background-color:#99CCFF;*/
+	text-decoration:none;
+	-moz-border-radius:2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+}
+ul.pagelinks2>li:before {
+	/*content: ' | ';*/
+	content: '  ';
+}
+ul.pagelinks2>li.pagelinks-start2:before {
+	content: ' ';
+}
+ul.pagelinks2>li a:link{
+	display: inline;
+	color:#0000FF;
+	/*border:1px solid #99CCFF;
+	background-color:#99CCFF;*/
+	text-decoration:none;
+	-moz-border-radius:2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+}
+ul.pagelinks2>li a:hover{
+	display: inline;
+	color:#000000;
+	/*border:1px solid #000000;
+	background-color:#FFFFFF;*/
+	text-decoration:none;
+	-moz-border-radius:2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+}
+ul.pagelinks2>li a:active{
+	display:inline;
+	color:#FF0000;
+	/*border:1px solid #000000;
+	background-color:#FF3300;*/
+	text-decoration:blink;
+	-moz-border-radius:2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+}
+ul.pagelinks2>li a:visited{
+	display:inline;
+	color:#3300FF;
+	/*border:1px solid #000000;
+	background-color:#CCCC00;*/
+	text-decoration:none;
+	-moz-border-radius:2px;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:11px;
+	font-weight:bold;
+}
+/*-----------STYLE POUR LES PAGES-----------*/
+/*----------STYLE AVEC CSS3 ET HTML---------*/
+/*[required] {
+   border: 2px solid red;
+}*/
+
+ul.liste>li {
+	display: inline;
+	color:#000;
+	background-color:#FFF;
+	text-decoration:none;
+	vertical-align:middle;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:16px;
+	font-weight:bold;
+}

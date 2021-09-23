@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dao xmlns="http://jelix.org/ns/dao/1.0">
+    <datasources>
+        <primarytable name="ct_user" realname="ct_user" primarykey="id" />
+    </datasources>
+    <record>
+        <property name="id" fieldname="id" datatype="int" required="true"/>
+        <property name="username" fieldname="username" datatype="varchar" required="true" maxlength="180"/>
+        <property name="username_canonical" fieldname="username_canonical" datatype="varchar" required="true" maxlength="180"/>
+        <property name="email" fieldname="email" datatype="varchar" required="true" maxlength="180"/>
+        <property name="email_canonical" fieldname="email_canonical" datatype="varchar" required="true" maxlength="180"/>
+        <property name="enabled" fieldname="enabled" datatype="tinyint" required="true"/>
+        <property name="salt" fieldname="salt" datatype="varchar" default="" maxlength="255"/>
+        <property name="password" fieldname="password" datatype="varchar" required="true" maxlength="255"/>
+        <property name="last_login" fieldname="last_login" datatype="datetime" default=""/>
+        <property name="confirmation_token" fieldname="confirmation_token" datatype="varchar" default="" maxlength="180"/>
+        <property name="password_requested_at" fieldname="password_requested_at" datatype="datetime" default=""/>
+        <property name="roles" fieldname="roles" datatype="longtext" required="true" comment="(DC2Type:array)"/>
+        <property name="usr_name" fieldname="usr_name" datatype="varchar" default="" maxlength="255"/>
+        <property name="usr_email" fieldname="usr_email" datatype="varchar" default="" maxlength="255"/>
+        <property name="usr_locked" fieldname="usr_locked" datatype="tinyint" default=""/>
+        <property name="usr_password" fieldname="usr_password" datatype="varchar" default="" maxlength="255"/>
+        <property name="usr_adresse" fieldname="usr_adresse" datatype="varchar" default="" maxlength="255"/>
+        <property name="usr_token" fieldname="usr_token" datatype="varchar" default="" maxlength="100"/>
+        <property name="usr_created_at" fieldname="usr_created_at" datatype="datetime" default=""/>
+        <property name="usr_updated_at" fieldname="usr_updated_at" datatype="datetime" default=""/>
+        <property name="usr_locked_update" fieldname="usr_locked_update" datatype="tinyint" default=""/>
+        <property name="usr_request_update" fieldname="usr_request_update" datatype="tinyint" required="true"/>
+        <property name="usr_profession" fieldname="usr_profession" datatype="varchar" default="" maxlength="255"/>
+        <property name="usr_telephone" fieldname="usr_telephone" datatype="varchar" default="" maxlength="45"/>
+        <property name="usr_is_connected" fieldname="usr_is_connected" datatype="tinyint" default=""/>
+        <property name="usr_presence" fieldname="usr_presence" datatype="tinyint" default=""/>
+        <property name="ct_centre_id" fieldname="ct_centre_id" datatype="int" default=""/>
+        <property name="ct_role_id" fieldname="ct_role_id" datatype="int" default=""/>
+        <!--<property name="" fieldname="" datatype="string/int/float/date"
+        required="yes" maxlength="" minlength="" regexp="" sequence=""
+        updatepattern="" insertpattern="" selectpattern=""/>-->
+    </record>
+    <factory>
+        <!--<method name="findByStage" type="select/selectfirst/delete/update/php">
+            <parameter name="" />
+            <values>
+                <value property="" value="" />
+            </values>
+            <conditions logic="and/or">
+                <eq property="" value="" />
+            </conditions>
+            <order>
+                <orderitem property="" way="asc/desc" />
+            </order>
+            <limit offset="" count=""/>
+            <body><![CDATA[
+            ]]></body>
+        </method>-->
+    </factory>
+</dao>

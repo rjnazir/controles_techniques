@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dao xmlns="http://jelix.org/ns/dao/1.0">
+    <datasources>
+        <primarytable name="ct_const_av_ded" realname="ct_const_av_ded" primarykey="id" />
+    </datasources>
+    <record>
+        <property name="id" fieldname="id" datatype="int" autoincrement="true"/>
+        <property name="ct_centre_id" fieldname="ct_centre_id" datatype="int" default=""/>
+        <property name="ct_verificateur_id" fieldname="ct_verificateur_id" datatype="int" default=""/>
+        <property name="cad_provenance" fieldname="cad_provenance" datatype="varchar" default="" maxlength="45"/>
+        <property name="cad_divers" fieldname="cad_divers" datatype="varchar" default="" maxlength="100"/>
+        <property name="cad_proprietaire_nom" fieldname="cad_proprietaire_nom" datatype="varchar" default="" maxlength="100"/>
+        <property name="cad_proprietaire_adresse" fieldname="cad_proprietaire_adresse" datatype="varchar" default="" maxlength="100"/>
+        <property name="cad_bon_etat" fieldname="cad_bon_etat" datatype="tinyint" default=""/>
+        <property name="cad_sec_pers" fieldname="cad_sec_pers" datatype="tinyint" default=""/>
+        <property name="cad_sec_march" fieldname="cad_sec_march" datatype="tinyint" default=""/>
+        <property name="cad_protec_env" fieldname="cad_protec_env" datatype="tinyint" default=""/>
+        <property name="cad_numero" fieldname="cad_numero" datatype="varchar" default="" maxlength="45"/>
+        <property name="cad_immatriculation" fieldname="cad_immatriculation" datatype="varchar" default="" maxlength="45"/>
+        <property name="cad_date_embarquement" fieldname="cad_date_embarquement" datatype="datetime" default=""/>
+        <property name="cad_lieu_embarquement" fieldname="cad_lieu_embarquement" datatype="varchar" default="" maxlength="45"/>
+        <property name="cad_created" fieldname="cad_created" datatype="datetime" default=""/>
+        <property name="cad_conforme" fieldname="cad_conforme" datatype="tinyint" default=""/>
+        <property name="cad_observation" fieldname="cad_observation" datatype="varchar" default="" maxlength="255"/>
+        <!--<property name="" fieldname="" datatype="string/int/float/date"
+        required="yes" maxlength="" minlength="" regexp="" sequence=""
+        updatepattern="" insertpattern="" selectpattern=""/>-->
+    </record>
+    <factory>
+        <!--<method name="findByStage" type="select/selectfirst/delete/update/php">
+            <parameter name="" />
+            <values>
+                <value property="" value="" />
+            </values>
+            <conditions logic="and/or">
+                <eq property="" value="" />
+            </conditions>
+            <order>
+                <orderitem property="" way="asc/desc" />
+            </order>
+            <limit offset="" count=""/>
+            <body><![CDATA[
+            ]]></body>
+        </method>-->
+    </factory>
+</dao>

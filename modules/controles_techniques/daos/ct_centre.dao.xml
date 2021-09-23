@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dao xmlns="http://jelix.org/ns/dao/1.0">
+    <datasources>
+        <primarytable name="ct_centre" realname="ct_centre" primarykey="id" />
+    </datasources>
+    <record>
+        <property name="id" fieldname="id" datatype="int" autoincrement="true"/>
+        <property name="ct_province_id" fieldname="ct_province_id" datatype="int" default=""/>
+        <property name="ctr_nom" fieldname="ctr_nom" datatype="varchar" default="" maxlength="255"/>
+        <property name="ctr_code" fieldname="ctr_code" datatype="varchar" default="" maxlength="255"/>
+        <property name="ctr_created_at" fieldname="ctr_created_at" datatype="datetime" default=""/>
+        <property name="ctr_updated_at" fieldname="ctr_updated_at" datatype="datetime" default=""/>
+        <!--<property name="" fieldname="" datatype="string/int/float/date"
+        required="yes" maxlength="" minlength="" regexp="" sequence=""
+        updatepattern="" insertpattern="" selectpattern=""/>-->
+    </record>
+    <factory>
+        <!--<method name="findByStage" type="select/selectfirst/delete/update/php">
+            <parameter name="" />
+            <values>
+                <value property="" value="" />
+            </values>
+            <conditions logic="and/or">
+                <eq property="" value="" />
+            </conditions>
+            <order>
+                <orderitem property="" way="asc/desc" />
+            </order>
+            <limit offset="" count=""/>
+            <body><![CDATA[
+            ]]></body>
+        </method>-->
+    </factory>
+</dao>

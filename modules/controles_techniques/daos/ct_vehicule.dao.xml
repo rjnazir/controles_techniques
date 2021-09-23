@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dao xmlns="http://jelix.org/ns/dao/1.0">
+    <datasources>
+        <primarytable name="ct_vehicule" realname="ct_vehicule" primarykey="id" />
+    </datasources>
+    <record>
+        <property name="id" fieldname="id" datatype="int" autoincrement="true"/>
+        <property name="ct_genre_id" fieldname="ct_genre_id" datatype="int" default=""/>
+        <property name="ct_marque_id" fieldname="ct_marque_id" datatype="int" default=""/>
+        <property name="vhc_cylindre" fieldname="vhc_cylindre" datatype="varchar" default="" maxlength="10"/>
+        <property name="vhc_puissance" fieldname="vhc_puissance" datatype="double" default=""/>
+        <property name="vhc_poids_vide" fieldname="vhc_poids_vide" datatype="double" default=""/>
+        <property name="vhc_charge_utile" fieldname="vhc_charge_utile" datatype="double" default=""/>
+        <property name="vhc_hauteur" fieldname="vhc_hauteur" datatype="double" default=""/>
+        <property name="vhc_largeur" fieldname="vhc_largeur" datatype="double" default=""/>
+        <property name="vhc_longueur" fieldname="vhc_longueur" datatype="double" default=""/>
+        <property name="vhc_num_serie" fieldname="vhc_num_serie" datatype="varchar" default="" maxlength="100"/>
+        <property name="vhc_num_moteur" fieldname="vhc_num_moteur" datatype="varchar" default="" maxlength="100"/>
+        <property name="vhc_created" fieldname="vhc_created" datatype="datetime" default=""/>
+        <property name="vhc_provenance" fieldname="vhc_provenance" datatype="varchar" default="" maxlength="45"/>
+        <property name="vhc_type" fieldname="vhc_type" datatype="varchar" default="" maxlength="45"/>
+        <property name="vhc_poids_total_charge" fieldname="vhc_poids_total_charge" datatype="double" default=""/>
+        <!--<property name="" fieldname="" datatype="string/int/float/date"
+        required="yes" maxlength="" minlength="" regexp="" sequence=""
+        updatepattern="" insertpattern="" selectpattern=""/>-->
+    </record>
+    <factory>
+        <!--<method name="findByStage" type="select/selectfirst/delete/update/php">
+            <parameter name="" />
+            <values>
+                <value property="" value="" />
+            </values>
+            <conditions logic="and/or">
+                <eq property="" value="" />
+            </conditions>
+            <order>
+                <orderitem property="" way="asc/desc" />
+            </order>
+            <limit offset="" count=""/>
+            <body><![CDATA[
+            ]]></body>
+        </method>-->
+    </factory>
+</dao>

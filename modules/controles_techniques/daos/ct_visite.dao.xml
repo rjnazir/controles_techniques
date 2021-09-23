@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dao xmlns="http://jelix.org/ns/dao/1.0">
+    <datasources>
+        <primarytable name="ct_visite" realname="ct_visite" primarykey="id" />
+    </datasources>
+    <record>
+        <property name="id" fieldname="id" datatype="int" autoincrement="true"/>
+        <property name="ct_carte_grise_id" fieldname="ct_carte_grise_id" datatype="int" default=""/>
+        <property name="ct_centre_id" fieldname="ct_centre_id" datatype="int" default=""/>
+        <property name="ct_type_visite_id" fieldname="ct_type_visite_id" datatype="int" default=""/>
+        <property name="ct_usage_id" fieldname="ct_usage_id" datatype="int" default=""/>
+        <property name="ct_user_id" fieldname="ct_user_id" datatype="int" default=""/>
+        <property name="ct_verificateur_id" fieldname="ct_verificateur_id" datatype="int" default=""/>
+        <property name="vst_num_pv" fieldname="vst_num_pv" datatype="varchar" default="" maxlength="255"/>
+        <property name="vst_num_feuille_caisse" fieldname="vst_num_feuille_caisse" datatype="varchar" default="" maxlength="255"/>
+        <property name="vst_date_expiration" fieldname="vst_date_expiration" datatype="date" default=""/>
+        <property name="vst_created" fieldname="vst_created" datatype="datetime" default=""/>
+        <property name="vst_updated" fieldname="vst_updated" datatype="datetime" default=""/>
+        <property name="ct_utilisation_id" fieldname="ct_utilisation_id" datatype="int" default=""/>
+        <property name="vst_is_apte" fieldname="vst_is_apte" datatype="tinyint" default=""/>
+        <property name="vst_is_contre_visite" fieldname="vst_is_contre_visite" datatype="tinyint" default=""/>
+        <property name="vst_duree_reparation" fieldname="vst_duree_reparation" datatype="varchar" default="" maxlength="100"/>
+
+        <!--<property name="" fieldname="" datatype="string/int/float/date"
+        required="yes" maxlength="" minlength="" regexp="" sequence=""
+        updatepattern="" insertpattern="" selectpattern=""/>-->
+    </record>
+    <factory>
+        <!--<method name="findByStage" type="select/selectfirst/delete/update/php">
+            <parameter name="" />
+            <values>
+                <value property="" value="" />
+            </values>
+            <conditions logic="and/or">
+                <eq property="" value="" />
+            </conditions>
+            <order>
+                <orderitem property="" way="asc/desc" />
+            </order>
+            <limit offset="" count=""/>
+            <body><![CDATA[
+            ]]></body>
+        </method>-->
+    </factory>
+</dao>

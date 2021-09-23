@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="http://jelix.org/ns/module/1.0">
+    <info id="controles_techniques@yourwebsite.undefined" name="controles_techniques" createdate="2019-09-25">
+        <version date="2019-09-25">0.1pre</version>
+        <label lang="en_US">controles_techniques</label>
+        <description lang="en_US" />
+        <license URL="">All rights reserved</license>
+        <copyright>2020 DSGR/DT/SIT</copyright>
+        <creator name="RAHARISON J. Nazir" email="raharison.j.nazir@gmail.com" />
+        <!--<contributor name="hisname" email="hisemail@yoursite.undefined"  since="" role=""/>-->
+        <homepageURL>http://dgsr.com</homepageURL>
+    </info>
+    <dependencies>
+        <jelix minversion="1.6.18" maxversion="1.6.*"/>
+    </dependencies>
+</module>
