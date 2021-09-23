@@ -329,7 +329,7 @@
         function touscentrescrt($center){
             $db0 = jDb::getDbWidget();
             $db1 = jDb::getConnection();
-            $condition = null;
+            $condition = "";
             $center == 6 ? $center = 26 : $center = $center;
             $sql0 = "SELECT * FROM ct_centre WHERE ct_centre.id = ".$center."";
             $crt = $db0->fetchFirst($sql0);
@@ -405,12 +405,12 @@
          */
         function compterti($center, $date, $isadm){
             $db = jDb::getConnection();
-            $condition = $this->tousitinerante($center);
+            $condition = ($this->tousitinerante($center)!=="")?"(".$this->tousitinerante($center).") AND ":"";
             if($condition != ""){
                 if(empty($isadm)){
-                    $sql = "SELECT ct_reception.* FROM ct_reception WHERE (".$condition.") AND ct_reception.rcp_created LIKE '".$date."%'";
+                    $sql = "SELECT ct_reception.* FROM ct_reception WHERE ".$condition." ct_reception.rcp_created LIKE '".$date."%'";
                 }else{
-                    $sql = "SELECT ct_reception.* FROM ct_reception WHERE (".$condition.") AND ct_reception.rcp_created LIKE '".$date."%' AND ct_reception.ct_utilisation_id = ".$isadm."";
+                    $sql = "SELECT ct_reception.* FROM ct_reception WHERE ".$condition." ct_reception.rcp_created LIKE '".$date."%' AND ct_reception.ct_utilisation_id = ".$isadm."";
                 }
                 $res = $db->query($sql);
                 $nbr = $res->rowCount();
@@ -475,35 +475,35 @@
          */
         function comptevtitinerante($center, $date, $issursite, $isadm, $isapte, $iscontre){
             $db = jDb::getConnection();
-            $condition = $this->tousitinerante($center);
+            $condition = ($this->tousitinerante($center)!=="")?"(".$this->tousitinerante($center).") AND ":"";
             if($condition != ""){
                 if(empty($isadm)){
                     if(empty($isapte)){
                         if(empty($iscontre)){
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND (".$condition.") AND `ct_visite`.`ct_type_visite_id` = ".$issursite."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite."";
                         }else{
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND (".$condition.") AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                         }
                     }else{
                         if(empty($iscontre)){
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND (".$condition.") AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte."";
                         }else{
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND (".$condition.") AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                         }
                     }
                 }else{
                     if(empty($isapte)){
                         if(empty($iscontre)){
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND (".$condition.") AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm."";
                         }else{
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND (".$condition.") AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
 
                         }
                     }else{
                         if(empty($iscontre)){
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND (".$condition.") AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte."";
                         }else{
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND (".$condition.") AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                         }
                     }
                 }
@@ -524,8 +524,8 @@
          */
         function compteitinerife($center, $date, $issursite){
             $db = jDb::getConnection();
-            $condition = $this->tousitinerante($center);
-            $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE   ct_visite.vst_created LIKE '".$date."%' AND (".$condition.") AND ct_visite.ct_type_visite_id = ".$issursite." AND (ct_anomalie.anml_code = 'MOT1' OR ct_anomalie.anml_code = 'MOT2' OR ct_anomalie.anml_code = 'EM20')";
+            $condition = ($this->tousitinerante($center)!=="")?"(".$this->tousitinerante($center).") AND ":"";
+            $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE   ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND (ct_anomalie.anml_code = 'MOT1' OR ct_anomalie.anml_code = 'MOT2' OR ct_anomalie.anml_code = 'EM20')";
             $res = $db->query($sql);
             $nbr = $res->rowCount();
             return $nbr;

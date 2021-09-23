@@ -2548,3 +2548,36 @@ array (   'module' => 'controles_techniques',   'action' => 'crbilanquotidien:in
 	4	jCoordinator->process()	D:\laragon\www\controles_techniques\www\index.php : 19
 
 
+2021-09-23 14:25:23	::1	error	2021-09-23 14:25:23	::1	[403]	invalid query (You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') AND ct_visite.ct_type_visite_id = 1 AND (ct_anomalie.anml_code = 'MOT1' OR ct_' at line 1(SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE   ct_visite.vst_created LIKE '2021-09-21%' AND () AND ct_visite.ct_type_visite_id = 1 AND (ct_anomalie.anml_code = 'MOT1' OR ct_anomalie.anml_code = 'MOT2' OR ct_anomalie.anml_code = 'EM20')))	D:\laragon\www\jelix\lib\jelix\plugins\db\mysqli\mysqli.dbconnection.php	145
+	/controles_techniques/www/index.php/controles_techniques/crbilanquotidien/
+array (   'module' => 'controles_techniques',   'action' => 'crbilanquotidien:index',   'annee' => '2021-09-21',   'ok' => 'Afficher', )
+
+	0	mysqliDbConnection->_doQuery()	D:\laragon\www\jelix\lib\jelix\db\jDbConnection.class.php : 123
+	1	jDbConnection->query()	D:\laragon\www\controles_techniques\modules\controles_techniques\classes\myclass.class.php : 529
+	2	myclass->compteitinerife()	D:\laragon\www\controles_techniques\modules\controles_techniques\controllers\crbilanquotidien.classic.php : 93
+	3	crbilanquotidienCtrl->index()	D:\laragon\www\jelix\lib\jelix\core\jCoordinator.class.php : 225
+	4	jCoordinator->process()	D:\laragon\www\controles_techniques\www\index.php : 19
+
+
+2021-09-23 14:35:05	::1	error	2021-09-23 14:35:05	::1	[403]	invalid query (You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'AND ct_visite.ct_type_visite_id = 1 AND (ct_anomalie.anml_code = 'MOT1' OR ct_an' at line 1(SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE   ct_visite.vst_created LIKE '2021-09-21%' AND  AND ct_visite.ct_type_visite_id = 1 AND (ct_anomalie.anml_code = 'MOT1' OR ct_anomalie.anml_code = 'MOT2' OR ct_anomalie.anml_code = 'EM20')))	D:\laragon\www\jelix\lib\jelix\plugins\db\mysqli\mysqli.dbconnection.php	145
+	/controles_techniques/www/index.php/controles_techniques/crbilanquotidien/
+array (   'module' => 'controles_techniques',   'action' => 'crbilanquotidien:index',   'annee' => '2021-09-21',   'ok' => 'Afficher', )
+
+	0	mysqliDbConnection->_doQuery()	D:\laragon\www\jelix\lib\jelix\db\jDbConnection.class.php : 123
+	1	jDbConnection->query()	D:\laragon\www\controles_techniques\modules\controles_techniques\classes\myclass.class.php : 529
+	2	myclass->compteitinerife()	D:\laragon\www\controles_techniques\modules\controles_techniques\controllers\crbilanquotidien.classic.php : 93
+	3	crbilanquotidienCtrl->index()	D:\laragon\www\jelix\lib\jelix\core\jCoordinator.class.php : 225
+	4	jCoordinator->process()	D:\laragon\www\controles_techniques\www\index.php : 19
+
+
+2021-09-23 14:47:29	::1	error	2021-09-23 14:47:29	::1	[403]	invalid query (You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ') `ct_visite`.`ct_type_visite_id` = 1' at line 1(SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '2021-09-21%' AND (( ct_centre_id = 66 OR ct_centre_id = 67 OR ct_centre_id = 68 OR ct_centre_id = 69) AND ) `ct_visite`.`ct_type_visite_id` = 1))	D:\laragon\www\jelix\lib\jelix\plugins\db\mysqli\mysqli.dbconnection.php	145
+	/controles_techniques/www/index.php/controles_techniques/crbilanquotidien/
+array (   'module' => 'controles_techniques',   'action' => 'crbilanquotidien:index',   'annee' => '2021-09-21',   'ok' => 'Afficher', )
+
+	0	mysqliDbConnection->_doQuery()	D:\laragon\www\jelix\lib\jelix\db\jDbConnection.class.php : 123
+	1	jDbConnection->query()	D:\laragon\www\controles_techniques\modules\controles_techniques\classes\myclass.class.php : 510
+	2	myclass->comptevtitinerante()	D:\laragon\www\controles_techniques\modules\controles_techniques\controllers\crbilanquotidien.classic.php : 84
+	3	crbilanquotidienCtrl->index()	D:\laragon\www\jelix\lib\jelix\core\jCoordinator.class.php : 225
+	4	jCoordinator->process()	D:\laragon\www\controles_techniques\www\index.php : 19
+
+
