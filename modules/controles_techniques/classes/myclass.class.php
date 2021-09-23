@@ -316,8 +316,6 @@
                     }
                     $i++;
                 }
-            }else{
-                $condition .= " ct_centre_id = ".$center."";
             }
             return $condition;
         }
@@ -346,8 +344,6 @@
                     }
                     $i++;
                 }
-            }else{
-                $condition .= " ct_centre_id = ".$center."";
             }
             return $condition;
         }
