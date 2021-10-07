@@ -303,7 +303,7 @@
             $db0 = jDb::getDbWidget();
             $db1 = jDb::getConnection();
             $condition = "";
-            $center == 6 ? $center = 26 : $center = $center;
+            // $center == 6 ? $center = 26 : $center = $center;
             $sql0 = "SELECT * FROM ct_centre WHERE ct_centre.id = ".$center."";
             $crt = $db0->fetchFirst($sql0);
             if(!empty($crt)){
@@ -457,6 +457,7 @@
                 case "MORONDAVA"    : $centre = 'CENSERO MVA'; break;
                 case "SANFIL"       : $centre = 'CENSERO TLR'; break;
                 case "TAOLAGNARO"   : $centre = 'CENSERO TRO'; break;
+                case preg_match("/RECEPTION/", $center)   : $centre = 'CENTRE RT'; break;
                 default : $centre = $center;
             }
             return $centre;
