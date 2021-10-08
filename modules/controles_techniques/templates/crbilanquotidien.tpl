@@ -1,6 +1,7 @@
 <head>
 <link href="../../../www/jelix/design/jelix.css" rel="stylesheet" type="text/css" />
 <link href="../../../jelix/design/jelix.css" rel="stylesheet" type="text/css" />
+<link href="/jelix/design/jelix.css" rel="stylesheet" type="text/css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <h1 align="center" class="apptitle">BILAN D'ACTIVITE JOURNALIERE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{jurl 'controles_techniques~default:index'}"><input name="retour" type="button" value="&lt;&lt; Retour" /></a></h1>
