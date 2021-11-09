@@ -156,7 +156,8 @@ class one_visiteCtrl extends jController {
                         'gr_libelle'            => utf8_encode($row->gr_libelle),
         
                         'vst_num_pv'            => utf8_encode($res1->vst_num_pv),
-                        'vst_date_expiration'   => utf8_encode($res1->vst_date_expiration),
+                        // 'vst_date_expiration'   => utf8_encode($res1->vst_date_expiration),
+                        'vst_date_expiration'   => ($res1->vst_is_apte == 1) ? utf8_encode($res1->vst_date_expiration) : ($res1->vst_duree_reparation),
                         'vst_is_apte'           => utf8_encode($res1->vst_is_apte),
                         'vst_is_contre_visite'  => utf8_encode($res1->vst_is_contre_visite),
                         'vst_created'           => utf8_encode($res1->vst_created),
