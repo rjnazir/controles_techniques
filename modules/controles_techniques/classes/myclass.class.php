@@ -285,9 +285,11 @@
          */
         function compteinapteife($center, $date, $issursite){
             $db = jDb::getConnection();
-            $condition = ($this->tousitinerante($center)!=="")?"(".$this->tousitinerante($center).") AND ":"";
-            if($condition !== ""){
-                $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND (ct_anomalie.anml_code = 'MOT1' OR ct_anomalie.anml_code = 'MOT2' OR ct_anomalie.anml_code = 'EM20')";
+            // $condition = ($this->tousitinerante($center)!=="")?"(".$this->tousitinerante($center).") AND ":"";
+            // if(!$condition !== ""){
+            if(!is_null($center)){
+                // $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND ct_anomalie.anml_code IN ('MOT1', 'MOT2', 'EM20')";
+                $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE ct_visite.vst_created LIKE '".$date."%' AND ct_visite.ct_centre_id = ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_anomalie.anml_code IN ('MOT1', 'MOT2', 'EM20')";
                 $res = $db->query($sql);
                 $nbr = $res->rowCount();
             }else{
@@ -302,6 +304,7 @@
         function tousitinerante($center){
             $db0 = jDb::getDbWidget();
             $db1 = jDb::getConnection();
+            // $condition = "";
             $condition = "";
             // $center == 6 ? $center = 26 : $center = $center;
             $sql0 = "SELECT * FROM ct_centre WHERE ct_centre.id = ".$center."";
@@ -313,14 +316,14 @@
                 $i = 0;
                 foreach($ctr as $ctr){
                     if($i < ($k-1)){
-                        $condition .= " ct_centre_id = ".$ctr->id." OR";
+                        $condition .= "".$ctr->id.", ";
                     }else{
-                        $condition .= " ct_centre_id = ".$ctr->id."";
+                        $condition .= "".$ctr->id."";
                     }
                     $i++;
                 }
             }
-            return $condition;
+            return $condition = !empty($condition) ? 'ct_centre_id IN ('.$condition.')' : "";
         }
 
         /**
@@ -526,7 +529,7 @@
             $db = jDb::getConnection();
             $condition = ($this->tousitinerante($center)!=="")?"(".$this->tousitinerante($center).") AND ":"";
             if($condition !== ""){
-                $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE   ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND (ct_anomalie.anml_code = 'MOT1' OR ct_anomalie.anml_code = 'MOT2' OR ct_anomalie.anml_code = 'EM20')";
+                $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE   ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND ct_anomalie.anml_code IN ('MOT1', 'MOT2', 'EM20')";
                 $res = $db->query($sql);
                 $nbr = $res->rowCount();
             }else{
