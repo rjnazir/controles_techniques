@@ -75,7 +75,7 @@
             {foreach($res as $res)}
             <tr class="corps" style="background:{cycle array('#CCCCCC','#FFFFFF')}">
                 <td align="center">{$k++}</td>
-                <td>{$res->ctr_nom}</td>
+                <td>{$res->ctr_nom} ({$res->ctr_lib})</td>
                 <td align="right">{$res->total_vt}</td>
                 <td align="right">{$res->total_contre}</td>
                 <td align="right">{$res->total_adm}</td>

@@ -64,8 +64,7 @@
             $nsr    = $this->getImmOrNserie($imm);
 
             $db     = jDb::getConnection();
-            $sql    = 
-                    "SELECT ct_verificateur.usr_name AS verificateur,
+            $sql    = "SELECT ct_verificateur.usr_name AS verificateur,
                             ct_user.usr_name AS secretaire,
                             ct_visite.id AS ID,
                             ct_visite.*,
@@ -218,13 +217,14 @@
          * @param $date : date d'activité
          */
         function ListCenter($date){
-            $db = jDb::getConnection();
-            $sql = "
-                    SELECT  DISTINCT ct_centre.ctr_nom, ct_centre.id, ct_centre.ct_province_id
+            $db =   jDb::getConnection();
+            $sql=   "
+                    SELECT  DISTINCT ct_centre.id, ct_centre.ctr_nom, ct_centre.ctr_code, ct_centre.ct_province_id, ct_province.prv_nom
                             FROM    ct_centre INNER JOIN
-                                    ct_visite ON ct_centre.id = ct_visite.ct_centre_id
-                            WHERE   ct_visite.vst_created LIKE '".$date."%' ORDER BY ct_centre.ct_province_id";
-            $res = $db->query($sql);
+                                    ct_visite ON ct_centre.id = ct_visite.ct_centre_id INNER JOIN
+                                    ct_province ON ct_centre.ct_province_id = ct_province.id
+                            WHERE   ct_visite.vst_created LIKE '".$date."%' ORDER BY ct_centre.ct_province_id ASC, ct_centre.id ASC, ct_centre.ctr_code ASC";
+            $res=   $db->query($sql);
             return $res;
         }
 
@@ -273,6 +273,107 @@
             }
             $res = $db->query($sql);
             $nbr = $res->rowCount();
+            return $nbr;
+        }
+
+        /**
+         * Fonction transformant le code d'un centre en code portant la liste des centres rattachés
+         * @param $code : Code du centre concerné
+         * @return $script : text contenant la liste des centres rattachés
+         */
+        function convertCodeCentreToScript($code){
+            $db = jDb::getConnection();
+            $sql= "SELECT * FROM ct_centre WHERE ct_centre.ctr_code LIKE '".$code."' AND ct_centre.ctr_nom NOT LIKE '%ITINERANTE%'";
+            $res= $db->query($sql);
+            $nbr= $res->rowCount();
+            $script = null;
+            $i = 0;
+            foreach($res as $ctr){
+                $i != ($nbr - 1) ? $link = ' OR ' : $link = '';
+                $script .= 'ct_visite.ct_centre_id = '.$ctr->id.$link;
+                $i++;
+            }
+            return $script = !empty($script) ? '('.$script.') AND ' : NULL;
+        }
+
+        /**
+         * Fonction transformant le code d'un centre en code portant la liste des centres rattachés
+         * @param $code : Code du centre concerné
+         * @return $array : text contenant la liste des centres rattachés
+         */
+        function convertCodeCentreToArray($code){
+            $db = jDb::getConnection();
+            $sql= "SELECT ct_centre.id FROM ct_centre WHERE ct_centre.ctr_code LIKE '".$code."' AND ct_centre.ctr_nom NOT LIKE '%ITINERANTE%'";
+            $res= $db->query($sql);
+            return $res;
+            // return $array = (array) $res;
+        }
+
+        /**
+         * Fonction permettant de compter le nombre de visite d'une journée donnée avec des conditions de comptabilité
+         * @param $code : nom du centre de visite
+         * @param $date : date de visite
+         * @param $issursite : type de visite sur site ou à domicile
+         * @param $isadm : type d'utilisation véhicule
+         * @param $isapte : resultat de la visite technique en question
+         * @param $iscontre : type de visite effectuée (visite ou contre visite)
+         */
+        function newCompteVT($code, $date, $issursite, $isadm, $isapte, $iscontre){
+            $db = jDb::getConnection();
+            $center = $this->convertCodeCentreToScript($code);
+            if(is_null($isadm)){
+                if(is_null($isapte)){
+                    if(is_null($iscontre)){
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite."";
+                    }else{
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                    }
+                }else{
+                    if(is_null($iscontre)){
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte."";
+                    }else{
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                    }
+                }
+            }else{
+                if(is_null($isapte)){
+                    if(is_null($iscontre)){
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm."";
+                    }else{
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+
+                    }
+                }else{
+                    if(is_null($iscontre)){
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte."";
+                    }else{
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                    }
+                }
+            }
+            $res = $db->query($sql);
+            $nbr = $res->rowCount();
+            return $nbr;
+        }
+
+        /**
+         * Fonction permettant de compter le nombre de visite inapte pour fumée excessive
+         * d'une journée donnée avec des conditions de comptabilité
+         * @param $code : nom du centre de visite
+         * @param $date : date de visite
+         * @param $issursite : type de visite effectué
+         * @return $integer : nombre des VHL inapte pour fumée excessive
+         */
+        function newCompteVTIFE($code, $date, $issursite){
+            $db = jDb::getConnection();
+            $centers = $this->convertCodeCentreToScript($code);
+            if(!empty($centers)){
+                $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE ct_visite.vst_created LIKE '".$date."%' ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_anomalie.anml_code IN ('MOT1', 'MOT2', 'EM20')";
+                $res = $db->query($sql);
+                $nbr = $res->rowCount();
+            }else{
+                $nbr = 0;
+            }
             return $nbr;
         }
 
@@ -460,7 +561,7 @@
                 case "MORONDAVA"    : $centre = 'CENSERO MVA'; break;
                 case "SANFIL"       : $centre = 'CENSERO TLR'; break;
                 case "TAOLAGNARO"   : $centre = 'CENSERO TRO'; break;
-                case preg_match("/RECEPTION/", $center)   : $centre = 'CENTRE RT'; break;
+                // case preg_match("/RECEPTION/", $center)   : $centre = 'CENTRE RT'; break;
                 default : $centre = $center;
             }
             return $centre;

@@ -40,6 +40,7 @@ class crbilanquotidienCtrl extends jController {
         $rtitiner   = NULL;
         $cad    = NULL;
         $res    = array();
+        $codes  = array();
 
         // Recuperation des conditions
         $ok = $this->param("ok");
@@ -55,92 +56,125 @@ class crbilanquotidienCtrl extends jController {
             }else{
                 $centres = $myclass->ListCenter($annee);
                 $i = 0;
-                foreach($centres as $center){
-                    if(!preg_match("/ITINERANTE/", $center->ctr_nom) AND !preg_match("/BARIKADIMY/", $center->ctr_nom) AND !preg_match("/ENVIRONNEMENT/", $center->ctr_nom)){
-                        $res[$i] = new \stdClass();
-                        // $res[$i]->ctr_nom = $myclass->transformcenter($center->ctr_nom)." (".$center->ctr_nom.")";
-                        $res[$i]->ctr_nom = $myclass->transformcenter($center->ctr_nom);
 
-                        // VISITE SUR SITE
-                        $nbrtbycenter = $myclass->compteVT($center->id, $annee, $issursite=1, NULL, NULL, NULL);
+                foreach($centres as $center){
+                    $res[$i]    = new \stdClass();
+                    if(!in_array($center->ctr_code, $codes)){
+                        /* Rgts CENSERO concerné */
+                        $res[$i]->ctr_code  = $center->ctr_code;
+                        $res[$i]->ctr_nom   = $myclass->transformcenter($center->ctr_nom);
+                        $res[$i]->ctr_lib   = $center->ctr_nom;
+                        /* Ajout des visites sur site */
+                        $nbrtbycenter = $myclass->newCompteVT($center->ctr_code, $annee, $issursite = 1, NULL, NULL, NULL);
                         $res[$i]->total_vt = $nbrtbycenter;
-                        $nbradmbycenter = $myclass->compteVT($center->id, $annee, $issursite=1, $isadm=1, NULL, NULL);
-                        $res[$i]->total_adm = $nbradmbycenter;
-                        $nbraptebycenter = $myclass->compteVT($center->id, $annee, $issursite=1, NULL, $isapte=1, NULL);
+                        /* Ajout des contres visites */
+                        // $nbrcontrebycenter = $myclass->newCompteVT($center->ctr_code, $annee, $issursite=1, NULL, NULL, $iscontre=1);
+                        // $res[$i]->total_contre = $nbrcontrebycenter;
+                        /* Ajout des visites des VHL administratifs */
+                        // $nbradmbycenter = $myclass->newCompteVT($center->ctr_code, $annee, $issursite=1, $isadm=1, NULL, NULL);
+                        // $res[$i]->total_adm = $nbradmbycenter;
+                        /* Ajout des visites inaptes */
+                        $nbraptebycenter = $myclass->newCompteVT($center->ctr_code, $annee, $issursite = 1, NULL, $isapte = 1, NULL);
                         $nbrinaptebycenter = $nbrtbycenter - $nbraptebycenter;
                         $res[$i]->total_inapte = $nbrinaptebycenter;
-                        $nbrifebycenter = $myclass->compteinapteife($center->id, $annee, $issursite=1);
-                        $res[$i]->total_ife = $nbrifebycenter;
-                        $nbrcontrebycenter = $myclass->compteVT($center->id, $annee, $issursite=1, NULL, NULL, $iscontre=1);
-                        $res[$i]->total_contre = $nbrcontrebycenter;
+                        // $nbrifebycenter = $myclass->newCompteVTIFE($center->ctr_code, $annee, $issursite = 1);
+                        // $res[$i]->total_ife = $nbrifebycenter;
 
                         $total += $nbrtbycenter;
+                        $contre += $nbrcontrebycenter;
                         $adm += $nbradmbycenter;
                         $inapte += $nbrinaptebycenter;
-                        $ife += $nbrifebycenter;
-                        $contre += $nbrcontrebycenter;
+                        // $ife += $nbrifebycenter;
 
-                        // VISITE ITINERANTE
-                        $nbr_itine = $myclass->comptevtitinerante($center->id, $annee, $issursite=1, NULL, NULL, NULL);
-                        $res[$i]->itine = $nbr_itine;
-                        $nbr_cvitine = $myclass->comptevtitinerante($center->id, $annee, $issursite=1, NULL, NULL, $iscontre=1);
-                        $res[$i]->cvitine = $nbr_cvitine;
-                        $nbr_admitine = $myclass->comptevtitinerante($center->id, $annee, $issursite=1, $isadm=1, NULL, NULL);
-                        $res[$i]->admitine = $nbr_admitine;
-                        $nbr_aptitine = $myclass->comptevtitinerante($center->id, $annee, $issursite=1, NULL, $isapte=1, NULL);
-                        $nbr_inptitiner = $nbr_itine - $nbr_aptitine;
-                        $res[$i]->inptitine = $nbr_inptitiner;
-                        $nbr_ifeitine = $myclass->compteitinerife($center->id, $annee, $issursite=1);
-                        $res[$i]->ifeitine = $nbr_ifeitine;
-                        $nbr_rtitine = $myclass->compterti($center->id, $annee, NULL);
-                        $res[$i]->rtitine = $nbr_rtitine;
-
-                        $itiner += $nbr_itine;
-                        $cvitiner += $nbr_cvitine;
-                        $admitiner += $nbr_admitine;
-                        $inptitiner += $nbr_inptitiner;
-                        $ifeitiner += $nbr_ifeitine;
-                        $rtitiner += $nbr_rtitine;
-
-                        // VISITE A DOMICILE
-                        $nbrvtdomicile = $myclass->compteVT($center->id, $annee, $issursite=2, NULL, NULL, NULL);
-                        $res[$i]->total_dom = $nbrvtdomicile;
-                        $nbrcontredom = $myclass->compteVT($center->id, $annee, $issursite=2, NULL, NULL, $iscontre=1);
-                        $res[$i]->total_cvdom = $nbrcontredom;
-                        $nbradmdom = $myclass->compteVT($center->id, $annee, $issursite=2, $isadm=1, NULL, NULL);
-                        $res[$i]->total_admdom = $nbradmdom;
-                        $nbrinaptedom = $myclass->compteVT($center->id, $annee, $issursite=2, NULL, $isapte=1, NULL);
-                        $nbrinaptedom = $nbrvtdomicile - $nbrinaptedom;
-                        $res[$i]->total_inaptedom = $nbrinaptedom;
-                        $nbrifedom = $myclass->compteinapteife($center->id, $annee, $issursite=2);
-                        $res[$i]->total_ifedom = $nbrifedom;
-
-                        $domicile += $nbrvtdomicile;
-                        $contredom += $nbrcontredom;
-                        $admdom += $nbradmdom;
-                        $inaptedom += $nbrinaptedom;
-                        $ifedom += $nbrifedom;
-
-                        // RECEPTION TECHNIQUE
-                        $nbrrt = $myclass->comptert($center->id, $annee, NULL, NULL);
-                        $res[$i]->total_rt = $nbrrt;
-                        $nbrrtadm = $myclass->comptert($center->id, $annee, $isadm=1, NULL);
-                        $res[$i]->total_rtadm = $nbrrtadm;
-                        $nbrrttecg = $myclass->comptert($center->id, $annee, NULL, $motif=9);
-                        $res[$i]->total_rttecg = $nbrrttecg;
-    
-                        $rt += $nbrrt;
-                        $rtadm += $nbrrtadm;
-                        $rttecg += $nbrrttecg;
-
-                        // COSTATATION AVANT DEDOUANEMENT
-                        $nbrcad = $myclass->comptecad($center->id, $annee);
-                        $res[$i]->total_cad  = $nbrcad;
-
-                        $cad += $nbrcad;
-
+                        // Ajout du code centre dans le tableau des code centre
+                        array_push($codes, $center->ctr_code);
                         $i++;
                     }
+
+                //     if(!preg_match("/ITINERANTE/", $center->ctr_nom) AND !preg_match("/BARIKADIMY/", $center->ctr_nom) AND !preg_match("/ENVIRONNEMENT/", $center->ctr_nom)){
+                //         $res[$i] = new \stdClass();
+                //         // $res[$i]->ctr_nom = $myclass->transformcenter($center->ctr_nom)." (".$center->ctr_nom.")";
+                //         $res[$i]->ctr_nom = $myclass->transformcenter($center->ctr_nom);
+
+                //         // VISITE SUR SITE
+                //         $nbrtbycenter = $myclass->compteVT($center->id, $annee, $issursite=1, NULL, NULL, NULL);
+                //         $res[$i]->total_vt = $nbrtbycenter;
+                //         $nbradmbycenter = $myclass->compteVT($center->id, $annee, $issursite=1, $isadm=1, NULL, NULL);
+                //         $res[$i]->total_adm = $nbradmbycenter;
+                //         $nbraptebycenter = $myclass->compteVT($center->id, $annee, $issursite=1, NULL, $isapte=1, NULL);
+                //         $nbrinaptebycenter = $nbrtbycenter - $nbraptebycenter;
+                //         $res[$i]->total_inapte = $nbrinaptebycenter;
+                //         $nbrifebycenter = $myclass->compteinapteife($center->id, $annee, $issursite=1);
+                //         $res[$i]->total_ife = $nbrifebycenter;
+                //         $nbrcontrebycenter = $myclass->compteVT($center->id, $annee, $issursite=1, NULL, NULL, $iscontre=1);
+                //         $res[$i]->total_contre = $nbrcontrebycenter;
+
+                //         $total += $nbrtbycenter;
+                //         $adm += $nbradmbycenter;
+                //         $inapte += $nbrinaptebycenter;
+                //         $ife += $nbrifebycenter;
+                //         $contre += $nbrcontrebycenter;
+
+                //         // VISITE ITINERANTE
+                //         $nbr_itine = $myclass->comptevtitinerante($center->id, $annee, $issursite=1, NULL, NULL, NULL);
+                //         $res[$i]->itine = $nbr_itine;
+                //         $nbr_cvitine = $myclass->comptevtitinerante($center->id, $annee, $issursite=1, NULL, NULL, $iscontre=1);
+                //         $res[$i]->cvitine = $nbr_cvitine;
+                //         $nbr_admitine = $myclass->comptevtitinerante($center->id, $annee, $issursite=1, $isadm=1, NULL, NULL);
+                //         $res[$i]->admitine = $nbr_admitine;
+                //         $nbr_aptitine = $myclass->comptevtitinerante($center->id, $annee, $issursite=1, NULL, $isapte=1, NULL);
+                //         $nbr_inptitiner = $nbr_itine - $nbr_aptitine;
+                //         $res[$i]->inptitine = $nbr_inptitiner;
+                //         $nbr_ifeitine = $myclass->compteitinerife($center->id, $annee, $issursite=1);
+                //         $res[$i]->ifeitine = $nbr_ifeitine;
+                //         $nbr_rtitine = $myclass->compterti($center->id, $annee, NULL);
+                //         $res[$i]->rtitine = $nbr_rtitine;
+
+                //         $itiner += $nbr_itine;
+                //         $cvitiner += $nbr_cvitine;
+                //         $admitiner += $nbr_admitine;
+                //         $inptitiner += $nbr_inptitiner;
+                //         $ifeitiner += $nbr_ifeitine;
+                //         $rtitiner += $nbr_rtitine;
+
+                //         // VISITE A DOMICILE
+                //         $nbrvtdomicile = $myclass->compteVT($center->id, $annee, $issursite=2, NULL, NULL, NULL);
+                //         $res[$i]->total_dom = $nbrvtdomicile;
+                //         $nbrcontredom = $myclass->compteVT($center->id, $annee, $issursite=2, NULL, NULL, $iscontre=1);
+                //         $res[$i]->total_cvdom = $nbrcontredom;
+                //         $nbradmdom = $myclass->compteVT($center->id, $annee, $issursite=2, $isadm=1, NULL, NULL);
+                //         $res[$i]->total_admdom = $nbradmdom;
+                //         $nbrinaptedom = $myclass->compteVT($center->id, $annee, $issursite=2, NULL, $isapte=1, NULL);
+                //         $nbrinaptedom = $nbrvtdomicile - $nbrinaptedom;
+                //         $res[$i]->total_inaptedom = $nbrinaptedom;
+                //         $nbrifedom = $myclass->compteinapteife($center->id, $annee, $issursite=2);
+                //         $res[$i]->total_ifedom = $nbrifedom;
+
+                //         $domicile += $nbrvtdomicile;
+                //         $contredom += $nbrcontredom;
+                //         $admdom += $nbradmdom;
+                //         $inaptedom += $nbrinaptedom;
+                //         $ifedom += $nbrifedom;
+
+                //         // RECEPTION TECHNIQUE
+                //         $nbrrt = $myclass->comptert($center->id, $annee, NULL, NULL);
+                //         $res[$i]->total_rt = $nbrrt;
+                //         $nbrrtadm = $myclass->comptert($center->id, $annee, $isadm=1, NULL);
+                //         $res[$i]->total_rtadm = $nbrrtadm;
+                //         $nbrrttecg = $myclass->comptert($center->id, $annee, NULL, $motif=9);
+                //         $res[$i]->total_rttecg = $nbrrttecg;
+    
+                //         $rt += $nbrrt;
+                //         $rtadm += $nbrrtadm;
+                //         $rttecg += $nbrrttecg;
+
+                //         // COSTATATION AVANT DEDOUANEMENT
+                //         $nbrcad = $myclass->comptecad($center->id, $annee);
+                //         $res[$i]->total_cad  = $nbrcad;
+
+                //         $cad += $nbrcad;
+
+                //     }
                 }
 
                 $rep->body->assign('k', $k);
