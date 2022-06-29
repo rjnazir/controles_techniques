@@ -306,7 +306,6 @@
             $sql= "SELECT ct_centre.id FROM ct_centre WHERE ct_centre.ctr_code LIKE '".$code."' AND ct_centre.ctr_nom NOT LIKE '%ITINERANTE%'";
             $res= $db->query($sql);
             return $res;
-            // return $array = (array) $res;
         }
 
         /**
@@ -362,19 +361,22 @@
          * @param $code : nom du centre de visite
          * @param $date : date de visite
          * @param $issursite : type de visite effectué
-         * @return $integer : nombre des VHL inapte pour fumée excessive
+         * @return $nombre : nombre des VHL inapte pour fumée excessive
          */
-        function newCompteVTIFE($code, $date, $issursite){
-            $db = jDb::getConnection();
-            $centers = $this->convertCodeCentreToScript($code);
-            if(!empty($centers)){
-                $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE ct_visite.vst_created LIKE '".$date."%' ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_anomalie.anml_code IN ('MOT1', 'MOT2', 'EM20')";
-                $res = $db->query($sql);
-                $nbr = $res->rowCount();
-            }else{
-                $nbr = 0;
+        function newCompteVTIFE($code, $date, $issursite, $itinerante){
+            $nombre = 0;
+            $db = jDb::getDbWidget();
+            $code = $this->getAllSubCentersByCodeCenter($code, $itinerante);
+            if($code !== '()'){
+                $sql = "SELECT COUNT(*) AS NOMBRE FROM  ct_visite
+                                                        INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id 
+                                                        INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id
+                        WHERE ct_visite.vst_created LIKE '".$date."%' AND ct_anomalie.anml_code IN ('MOT1', 'MOT2', 'EM20')";
+                !is_null($code) ? $sql .=" AND ct_centre_id IN $code " : $sql .= "";
+                !is_null($issursite) ? $sql .=" AND ct_visite.ct_type_visite_id = $issursite " : $sql .= "";
+                $nombre = $db->fetchFirst($sql)->NOMBRE;
             }
-            return $nbr;
+            return $nombre;     
         }
 
         /**
@@ -386,10 +388,7 @@
          */
         function compteinapteife($center, $date, $issursite){
             $db = jDb::getConnection();
-            // $condition = ($this->tousitinerante($center)!=="")?"(".$this->tousitinerante($center).") AND ":"";
-            // if(!$condition !== ""){
             if(!is_null($center)){
-                // $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND ct_anomalie.anml_code IN ('MOT1', 'MOT2', 'EM20')";
                 $sql = "SELECT * FROM ct_visite INNER JOIN ct_visite_anomalie ON ct_visite.id = ct_visite_anomalie.ct_anomalie_id INNER JOIN ct_anomalie ON ct_visite_anomalie.ct_visite_id = ct_anomalie.id WHERE ct_visite.vst_created LIKE '".$date."%' AND ct_visite.ct_centre_id = ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_anomalie.anml_code IN ('MOT1', 'MOT2', 'EM20')";
                 $res = $db->query($sql);
                 $nbr = $res->rowCount();
@@ -397,6 +396,51 @@
                 $nbr = 0;
             }
             return $nbr;
+        }
+
+        /**
+         * Fonction permettant de reccuperer tous les centres itinérantes d'un censero par son code centre
+         * @param $code : Code centre du centre concerné
+         * @return $array : tabeau des ID des centres itinérantes d'un censero
+         */
+        function getAllSubCentersByCodeCenter($code, $itinerante){
+            $db = jDb::getConnection();
+            if($itinerante == 'ITINERANTE'){
+                $sql = "SELECT ct_centre.id FROM ct_centre WHERE ct_centre.ctr_code = '".$code."' AND ct_centre.ctr_nom LIKE '%ITINERANTE%'";
+            }else{
+                $sql = "SELECT ct_centre.id FROM ct_centre WHERE ct_centre.ctr_code = '".$code."' AND ct_centre.ctr_nom NOT LIKE '%ITINERANTE%'";
+            }
+            $all = $db->query($sql);
+            $array = array();
+            foreach($all as $one){array_push($array, $one->id);}
+            $array = "(".implode($array, ",").")";
+            return $array;
+        }
+
+        /**
+         * Fonction permettant de recuperer nombre visite itinérante d'un censero
+         * @param $code : Code du centre
+         * @param $date : Date du visite à recupérer
+         * @param $site : Type de visite, SUR SITE ou A DOMICILE
+         * @param $used : VHL administratif ou particulier
+         * @param $apte : Aptitude du VHL
+         * @param $type : Visite ou contre visite
+         * @return $size: Nombre des visites effectuées
+         */
+        function getNombreVisiteBy($code, $date, $site, $used, $apte, $type, $itinerante){
+            $nombre = 0;
+            $db = jDb::getDbWidget();
+            $code = $this->getAllSubCentersByCodeCenter($code, $itinerante);
+            if($code !== '()'){
+                $sql = "SELECT COUNT(*) AS NOMBRE FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%'";
+                !is_null($code) ? $sql .=" AND ct_centre_id IN $code "          : $sql .= "";
+                !is_null($site) ? $sql .=" AND ct_type_visite_id = $site "      : $sql .= "";
+                !is_null($used) ? $sql .=" AND ct_utilisation_id = $used "      : $sql .= "";
+                !is_null($apte) ? $sql .=" AND vst_is_apte = $apte "            : $sql .= "";
+                !is_null($type) ? $sql .=" AND vst_is_contre_visite = $type "   : $sql .= "";
+                $nombre = $db->fetchFirst($sql)->NOMBRE;
+            }
+            return $nombre;
         }
 
         /**
@@ -524,6 +568,24 @@
         }
 
         /**
+         * Fonction permettant de recuperer le nombre de reception d'un censero
+         */
+        function newCompteRT($code, $date, $used, $motif, $itin){
+            $nombre = 0;
+            $db = jDb::getDbWidget();
+            if($code === '004') $code = '024';
+            $code = $this->getAllSubCentersByCodeCenter($code, $itin);
+            if($code !== "()"){
+                $sql = "SELECT COUNT(*) AS NOMBRE FROM ct_reception WHERE ct_reception.rcp_created LIKE '".$date."%'";
+                !is_null($code) ? $sql .= " AND ct_centre_id IN $code " : $sql .= "";
+                !is_null($used) ? $sql .= " AND ct_utilisation_id = $used " : $sql .= "";
+                !is_null($motif) ? $sql .= " AND ct_reception.ct_motif_id = $motif " : $sql .= "";
+                $nombre = $db->fetchFirst($sql)->NOMBRE;
+            }
+            return $nombre;
+        }
+
+        /**
          * Fonction permettant de mofidier l'affichage du nom du centre
          * suivant le nom de centre entré comme parametre
          * @param $center   : Nom centre à traiter
@@ -561,7 +623,6 @@
                 case "MORONDAVA"    : $centre = 'CENSERO MVA'; break;
                 case "SANFIL"       : $centre = 'CENSERO TLR'; break;
                 case "TAOLAGNARO"   : $centre = 'CENSERO TRO'; break;
-                // case preg_match("/RECEPTION/", $center)   : $centre = 'CENTRE RT'; break;
                 default : $centre = $center;
             }
             return $centre;
@@ -656,6 +717,25 @@
             $res = $db->query($sql);
             $nbr = $res->rowCount();
             return $nbr;
+        }
+
+        /**
+         * Fonction permettant de compter le nombre de CAD effectuée par code un centre donné à une date donnée
+         * @param $center   : identifiant du centre en question
+         * @param $date     : date de la reception technique
+         * @param $isadm    : type d'utilisation du véhicule
+         */
+        function newCompteCAD($code, $date, $itin){
+            $nombre = 0;
+            $db = jDb::getDbWidget();
+            if($code === '004') $code = '024';
+            $code = $this->getAllSubCentersByCodeCenter($code, $itin);
+            if($code !== "()"){
+                $sql = "SELECT COUNT(*) AS NOMBRE FROM ct_const_av_ded WHERE ct_const_av_ded.cad_created LIKE '".$date."%'";
+                !is_null($code) ? $sql .= " AND ct_centre_id IN $code " : $sql .= "";
+                $nombre = $db->fetchFirst($sql)->NOMBRE;
+            }
+            return $nombre;
         }
     }
 ?>
