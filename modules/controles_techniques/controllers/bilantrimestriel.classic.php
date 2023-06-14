@@ -52,8 +52,8 @@ class bilantrimestrielCtrl extends jController {
                         $usg = $_usage->id;
                         $_result[$k]['usg_libelle'] = $_usage->usg_libelle;
                         foreach($_ctres as $_ctres){
-                            $nomc = $_ctres->ctr_nom;
-                            $code = $_ctres->ctr_cod;
+                            $nomc = $myclass->transformcenter($_ctres->ctr_nom);
+                            $code = $_ctres->ctr_code;
                             switch($nomc){
                                 case preg_match('/ANA/i', $nomc) :
                                     $_result[$k]['ana'] = $myclass->getCompteVisiteByUsageByCentre($code, $usg, $annee, $_cmois, null, null, null, null);break;
@@ -80,4 +80,3 @@ class bilantrimestrielCtrl extends jController {
         return $rep;
     }
 }
-
