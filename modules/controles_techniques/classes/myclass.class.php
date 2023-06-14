@@ -737,5 +737,74 @@
             }
             return $nombre;
         }
+
+        /**
+         * Conversion trimestre en 3 mois
+         * @param integer $tr   : trimestre choisi
+         * @return array $mois  : liste des mois concernés
+         */
+        function convertToMonth($tr)
+        {
+            if($tr == 1){
+                $mois = [1, 2, 3];
+            }else if($tr == 2){
+                $mois = [4, 5, 6];
+            }else if($tr == 3){
+                $mois = [7, 8, 9];
+            }else{
+                $mois = [10, 11, 12];
+            }
+            return $mois;
+        }
+
+        /**
+         * Recupération tous usages effectis
+         */
+        function getUsageAll()
+        {
+            $db = jDb::getConnection();
+            $sql = "SELECT * FROM ct_usage ORDER BY id ASC";
+            $r = $db->query($sql);
+            return $r;
+        }
+
+        /**
+         * Récupération des centres mères
+         */
+        function getCentreParent()
+        {
+            $list_ctr = '(
+                "ALAROBIA", "ALASORA", "ANTSIRABE", "BETONGOLO", "IVATO", "TSIROANOMANDIDY", "AMBATONDRAZAKA", "FENERIVE-EST",
+                "MORAMANGA", "TANAMBOROZANO", "AMBOSITRA", "FARAFANGANA", "BESOROHITRA", "MANAKARA", "TRANOBOZAKA", "NOSY BE",
+                "SAMBAVA", "ANTSOHIHY", "AMBOROVY", "AMBOVOMBE", "IHOSY", "MORONDAVA", "SANFIL", "TAOLAGNARO"
+            )';
+            $d = jDb::getConnection();
+            $s = "SELECT * FROM ct_centre where ctr_nom IN $list_ctr ORDER BY ct_province_id ASC, id ASC";
+            $l = $d->query($s);
+            $i = 0;
+            $r = null;
+            foreach($l as $l)
+            {
+                $r[$i] = new \stdClass();
+                $r[$i]->ctr_idf = $this->transformcenter($l->id);
+                $r[$i]->ctr_nom = $this->transformcenter($l->ctr_nom);
+                $r[$i]->ctr_cod = $l->ctr_code;
+                $i++;
+            }
+            return $r;
+        }
+
+        /**
+         * Récupération des centres par code centre
+         * @param $c    : Code centre à recherche
+         * @return $r   : Liste des centres trouvés
+         */
+        function getCentreByCode($c)
+        {
+            $d = jDb::getConnection();
+            $s = "SELECT id FROM ct_centre WHERE ctr_code = '$c'";
+            $r = $d->query($s);
+            return $r;
+        }
     }
 ?>

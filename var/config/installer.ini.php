@@ -23,13 +23,16 @@ jsoap.version=
 junittests.installed=0
 junittests.version=
 jelix.installed=1
-jelix.version=1.6.18
+jelix.version="1.6.18"
 jelix.version.date="2018-07-11 15:20"
-jelix.firstversion=1.6.18
+jelix.firstversion="1.6.18"
 jelix.firstversion.date="2018-07-11 15:20"
 controles_techniques.installed=1
-controles_techniques.version=0.1pre
+controles_techniques.version="0.1pre"
+jtcpdf.installed=0
+jtcpdf.version=
 [__modules_data]
 jelix.contexts="db:default"
+
 
 
