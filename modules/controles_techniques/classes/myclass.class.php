@@ -746,13 +746,13 @@
         function convertToMonth($tr)
         {
             if($tr == 1){
-                $mois = [1, 2, 3];
+                $mois = "('1', '2', '3')";
             }else if($tr == 2){
-                $mois = [4, 5, 6];
+                $mois = "('4', '5', '6')";
             }else if($tr == 3){
-                $mois = [7, 8, 9];
+                $mois = "('7', '8', '9')";
             }else{
-                $mois = [10, 11, 12];
+                $mois = "('10', '11', '12')";
             }
             return $mois;
         }
@@ -785,8 +785,8 @@
             $r = null;
             foreach($l as $l)
             {
-                $r[$i] = new \stdClass();
-                $r[$i]->ctr_idf = $this->transformcenter($l->id);
+                $r = new stdClass();
+                $r[$i]->ctr_idf = $l->id;
                 $r[$i]->ctr_nom = $this->transformcenter($l->ctr_nom);
                 $r[$i]->ctr_cod = $l->ctr_code;
                 $i++;
@@ -805,6 +805,32 @@
             $s = "SELECT id FROM ct_centre WHERE ctr_code = '$c'";
             $r = $d->query($s);
             return $r;
+        }
+
+        /**
+         * Récupération nombre de visite suivant les conditions
+         * @param $code     : Identifiant du centre et ces sous centres
+         * @param $usage    : Usage effectif du véhicule
+         * @param $typevst  : Type de visite (Sur site ou A domicile)
+         * @param $isadmin  : Utilisation du véhicule
+         * @param $isapte   : Aptitude du véhicule
+         * @param $iscontre : Genre de visite première ou contre
+         * @return $nombre  : Nombre de visite remplicant les condition;
+         */
+        function getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, $typevst, $isadmin, $isapte, $iscontre)
+        {
+            if(!empty($code)) $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
+            if(!empty($usage)) $_c_usage = ' AND ct_usage_id = '.$usage;
+            if(!empty($annee) and !empty($periode)) $_c_periode = ' AND (Year(vst_created) = '.$annee.' AND MONTH(vst_created) IN '.$periode.')';
+            !empty($typevst) ? $_c_cvisite = ' AND ct_type_visite_id = '.$typevst : $_c_cvisite = '';
+            !empty($isadmin) ? $_c_isadmin = ' AND ct_utilisation_id = '.$typevst : $_c_isadmin = '';
+            $isapte != null  ? $_c_isapte  = ' AND vst_is_apte = '.$isapte : $_c_isapte = '';
+            $iscontre != null? $_c_iscontre= ' AND vst_is_contre_visite = '.$iscontre : $_c_iscontre = '';
+            $d = jDb::getConnection();
+            $s = "SELECT * FROM ct_visite WHERE $_c_code $_c_usage $_c_periode $_c_cvisite $_c_isadmin $_c_isapte $_c_iscontre";
+            $r = $d->query($s);
+            $nombre = $r->rowCount();
+            return $nombre;
         }
     }
 ?>

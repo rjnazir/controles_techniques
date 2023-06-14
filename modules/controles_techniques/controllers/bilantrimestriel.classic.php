@@ -46,15 +46,18 @@ class bilantrimestrielCtrl extends jController {
                     $_usage = $myclass->getUsageAll();
                     $_ctres  = $myclass->getCentreParent();
                     $k = 0;
-                    $l = 0;
 
-                    foreach($_ctres as $_ctres){
-                        $ctr_subctr = $myclass->getCentreByCode($_ctres->ctr_cod);
-                        $ctr_idf    = $_ctres->ctr_idf;
-                        foreach($_usage as $_usage){
-                            $_result = new ArrayObject();
-                            $_result[$k]->usg_libelle = $_usage->usg_libelle;
-                            $l++;
+                    foreach($_usage as $_usage)
+                    {
+                        $usg = $_usage->id;
+                        $_result[$k]['usg_libelle'] = $_usage->usg_libelle;
+                        foreach($_ctres as $_ctres){
+                            $nomc = $_ctres->ctr_nom;
+                            $code = $_ctres->ctr_cod;
+                            switch($nomc){
+                                case preg_match('/ANA/i', $nomc) :
+                                    $_result[$k]['ana'] = $myclass->getCompteVisiteByUsageByCentre($code, $usg, $annee, $_cmois, null, null, null, null);break;
+                            }
                         }
                         $k++;
                     }
