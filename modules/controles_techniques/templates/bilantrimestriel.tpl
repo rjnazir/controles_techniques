@@ -4,8 +4,9 @@
 <link href="/jelix/design/jelix.css" rel="stylesheet" type="text/css" />
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{* <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /> *}
 </head>
-<h1 align="center" class="apptitle">BILAN D'ACTIVITE TRIMESTRIEL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{jurl 'controles_techniques~default:index'}"><input name="retour" type="button" value="&lt;&lt; Retour" /></a></h1>
+<h1 align="center" class="apptitle">STATISTIQUE TRIMESTRIELLE VISITE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{jurl 'controles_techniques~default:index'}"><input name="retour" type="button" value="&lt;&lt; Retour" /></a></h1>
 <form action="" method="post" enctype="application/x-www-form-urlencoded" name="form">
 <table width="100%">
     <tr>
@@ -47,24 +48,25 @@
         <table align="center" border="1 red 0.1em">
             <thead class="titre2" style="font-size: xx-small;">
                 <tr>
-                    <th>ANA</th>
-                    <th>SVA</th>
-                    <th>NSB</th>
-                    <th>FNR</th>
-                    <th>ATR<th>
-                    <th>MRA</th>
-                    <th>FNA</th>
-                    <th>IHO</th>
+                    <th></th>
+                    <th>DOR</th>
+                    <th>BGL</th>
+                    <th>ALS</th>
+                    <th>IVT</th>
+                    <th>ABE</th>
+                    <th>TDD</th>
                     <th>TNA</th>
                     <th>AKA</th>
                     <th>FVE</th>
                     <th>MOG</th>
-                    <th>BGL</th>
-                    <th>DOR</th>
-                    <th>ALS</th>
-                    <th>IVT</th>
-                    <th>TDD</th>
-                    <th>ABE</th>
+                    <th>ANA</th>
+                    <th>SVA</th>
+                    <th>NSB</th>
+                    <th>FNR</th>
+                    <th>ATR</th>
+                    <th>MRA</th>
+                    <th>FNA</th>
+                    <th>IHO</th>
                     <th>TLR</th>
                     <th>MVA</th>
                     <th>TRO</th>
@@ -75,10 +77,32 @@
             </thead>
             <tbody>
                 {foreach $res as $res}
-                    <tr class="corps" style="background:{cycle array('#CCCCCC','#FFFFFF')}" style="font-size: xx-small;">
-                        <td>{$res['usg_libelle']}</td>
-                        <td>{$res['ana']}</td>
-                        <td>{* {$res['SVA']} *}</td>
+                    <tr align="right" class="corps" style="background:{cycle array('#CCCCCC','#FFFFFF')}" style="font-size: xx-small;">
+                        <td align="left">{$res['usg_libelle']}</td>
+                        <td>{$res['vt_total001']}</td>
+                        <td>{$res['vt_total002']}</td>
+                        <td>{$res['vt_total004']}</td>
+                        <td>{$res['vt_total010']}</td>
+                        <td>{$res['vt_total023']}</td>
+                        <td>{$res['vt_total027']}</td>
+                        <td>{$res['vt_total005']}</td>
+                        <td>{$res['vt_total016']}</td>
+                        <td>{$res['vt_total017']}</td>
+                        <td>{$res['vt_total018']}</td>
+                        <td>{$res['vt_total009']}</td>
+                        <td>{$res['vt_total019']}</td>
+                        <td>{$res['vt_total029']}</td>
+                        <td>{$res['vt_total007']}</td>
+                        <td>{$res['vt_total015']}</td>
+                        <td>{$res['vt_total021']}</td>
+                        <td>{$res['vt_total022']}</td>
+                        <td>{$res['vt_total025']}</td>
+                        <td>{$res['vt_total008']}</td>
+                        <td>{$res['vt_total011']}</td>
+                        <td>{$res['vt_total013']}</td>
+                        <td>{$res['vt_total014']}</td>
+                        <td>{$res['vt_total020']}</td>
+                        <td>{$res['vt_total026']}</td>
                     </tr>
                 {/foreach}
             </tbody>

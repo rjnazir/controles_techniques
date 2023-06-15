@@ -4,6 +4,9 @@
 	<a class="lien" href="{jurl 'controles_techniques~etat_vhladm_gn:index'}">
 		<input name="ok" type="button" value="STATISTIQUE VT ADM &amp; GN" />
 	</a>
+	<a class="lien" href="{jurl 'controles_techniques~statbycentrebyusage:index'}">
+		<input name="ok1" type="button" value="STAT PERIODIQUE PAR CENTRE DES VISITES" />
+	</a>
 	<a class="lien" href="{jurl 'controles_techniques~bilantrimestriel:index'}">
 		<input name="ok1" type="button" value="CR BILAN TRIMESTRIEL" />
 	</a>

@@ -781,16 +781,22 @@
             $d = jDb::getConnection();
             $s = "SELECT * FROM ct_centre where ctr_nom IN $list_ctr ORDER BY ct_province_id ASC, id ASC";
             $r = $d->query($s);
-            // $i = 0;
-            // $r = null;
-            // foreach($l as $l)
-            // {
-            //     $r = new stdClass();
-            //     $r[$i]->ctr_idf = $l->id;
-            //     $r[$i]->ctr_nom = $this->transformcenter($l->ctr_nom);
-            //     $r[$i]->ctr_cod = $l->ctr_code;
-            //     $i++;
-            // }
+            return $r;
+        }
+
+        /**
+         * Récupération des centres mères
+         */
+        function getCentreParent2()
+        {
+            $list_ctr = '(
+                "ALAROBIA", "ALASORA", "ANTSIRABE", "BETONGOLO", "IVATO", "TSIROANOMANDIDY", "AMBATONDRAZAKA", "FENERIVE-EST",
+                "MORAMANGA", "TANAMBOROZANO", "AMBOSITRA", "FARAFANGANA", "BESOROHITRA", "MANAKARA", "TRANOBOZAKA", "NOSY BE",
+                "SAMBAVA", "ANTSOHIHY", "AMBOROVY", "AMBOVOMBE", "IHOSY", "MORONDAVA", "SANFIL", "TAOLAGNARO"
+            )';
+            $d = jDb::getConnection();
+            $s = "SELECT * FROM ct_centre where ctr_nom IN $list_ctr ORDER BY ctr_nom ASC";
+            $r = $d->query($s);
             return $r;
         }
 
@@ -808,6 +814,19 @@
         }
 
         /**
+         * Récupération des centres par code centre
+         * @param $c    : Code centre à recherche
+         * @return $r   : Liste des centres trouvés
+         */
+        function getCentreById($i)
+        {
+            $d = jDb::getDbWidget();
+            $s = "SELECT * FROM ct_centre WHERE id = $i";
+            $c = $d->fetchFirst($s)->ctr_code;
+            return $c;
+        }
+
+        /**
          * Récupération nombre de visite suivant les conditions
          * @param $code     : Identifiant du centre et ces sous centres
          * @param $usage    : Usage effectif du véhicule
@@ -822,14 +841,22 @@
             if(!empty($code)) $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
             if(!empty($usage)) $_c_usage = ' AND ct_usage_id = '.$usage;
             if(!empty($annee) and !empty($periode)) $_c_periode = ' AND (Year(vst_created) = '.$annee.' AND MONTH(vst_created) IN '.$periode.')';
-            !empty($typevst) ? $_c_cvisite = ' AND ct_type_visite_id = '.$typevst : $_c_cvisite = '';
-            !empty($isadmin) ? $_c_isadmin = ' AND ct_utilisation_id = '.$typevst : $_c_isadmin = '';
-            $isapte != null  ? $_c_isapte  = ' AND vst_is_apte = '.$isapte : $_c_isapte = '';
-            $iscontre != null? $_c_iscontre= ' AND vst_is_contre_visite = '.$iscontre : $_c_iscontre = '';
+            !empty($typevst) ? $_c_cvisite = ' AND ct_type_visite_id = '.$typevst.'' : $_c_cvisite = ' AND ct_type_visite_id IN (1, 2)';
+            !empty($isadmin) ? $_c_isadmin = ' AND ct_utilisation_id = '.$isadmin.'' : $_c_isadmin = ' AND ct_utilisation_id IN (1, 2)';
+            $isapte != null  ? $_c_isapte  = ' AND vst_is_apte = '.$isapte.'' : $_c_isapte = ' AND vst_is_apte IN (0, 1) ';
+            $iscontre != null? $_c_iscontre= ' AND vst_is_contre_visite = '.$iscontre.'' : $_c_iscontre = '';
             $d = jDb::getDbWidget();
             $s = "SELECT COUNT(*) AS nombre_vt FROM ct_visite WHERE $_c_code $_c_usage $_c_periode $_c_cvisite $_c_isadmin $_c_isapte $_c_iscontre";
             $nombre = $d->fetchFirst($s)->nombre_vt;
             return $nombre;
+        }
+
+        /**
+         * 
+         */
+        function getDataStatv2023($annee, $periode)
+        {
+
         }
     }
 ?>

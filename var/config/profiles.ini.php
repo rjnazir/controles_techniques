@@ -11,9 +11,9 @@ driver="mysqli"
 
 ; For most of drivers:
 database="controle_technique"
-host= "localhost"
-user= "user"
-password="dgsrmysql2023"
+host= "192.168.88.254"
+user= "raharison"
+password= "R@h@r1s0N"
 persistent= on
 
 ; when you have charset issues, enable force_encoding so the connection will be
