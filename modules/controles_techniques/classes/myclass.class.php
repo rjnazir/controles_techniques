@@ -827,6 +827,19 @@
         }
 
         /**
+         * Récupération des centres par code centre
+         * @param $c    : Code centre à recherche
+         * @return $r   : Liste des centres trouvés
+         */
+        function getNomCentreById($i)
+        {
+            $d = jDb::getDbWidget();
+            $s = "SELECT * FROM ct_centre WHERE id = $i";
+            $c = $d->fetchFirst($s)->ctr_nom;
+            return $c;
+        }
+
+        /**
          * Récupération nombre de visite suivant les conditions
          * @param $code     : Identifiant du centre et ces sous centres
          * @param $usage    : Usage effectif du véhicule

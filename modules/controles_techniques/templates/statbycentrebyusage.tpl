@@ -51,7 +51,7 @@
     	</table>
     	{if !empty($result)}
     	<p align="center">
-        	<a href="{jurl 'controles_techniques~statbycentrecyusage_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" target="_blank" alt="Exporter en MS Excel" ><img src="../../../msexcel.png" width="3%" alt="Exporter en MS Excel" /></a>
+        	<a href="{jurl 'controles_techniques~statbycentrebyusage_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" target="_blank" alt="Exporter en MS Excel" ><img src="../../../msexcel.png" width="3%" alt="Exporter en MS Excel" /></a>
         </p>
         <br/>
         <table align="center" border="1 red 0.1em">

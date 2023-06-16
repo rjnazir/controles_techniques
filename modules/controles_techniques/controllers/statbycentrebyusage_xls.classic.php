@@ -28,7 +28,14 @@ class statbycentrebyusage_xlsCtrl extends jController {
         $annee = $this->param("annee");
         $centre = $this->param("centre");
         $trimestre = $this->param("trimestre");
-        $centres = $myclass->getCentreParent2();
+        $nom_centre = $myclass->transformcenter($myclass->getNomCentreById($centre));
+        switch($trimestre)
+        {
+            case 1 : $trim = "1ER TRIMESTRE";break;
+            case 2 : $trim = "2EME TRIMESTRE";break;
+            case 3 : $trim = "3EME TRIMESTRE";break;
+            case 4 : $trim = "4EME TRIMESTRE";break;
+        }
 
         if(empty($annee) AND empty($centre) AND empty($trimestre)){
             jMessage::add("Veuillez entrer les paramètres, svp!");
@@ -110,7 +117,8 @@ class statbycentrebyusage_xlsCtrl extends jController {
         ");
 
         // Declaration du type de contenu
-        $file_mane = strtoupper("".str_replace("-","",$annee)).".xls";
+        $file_mane = 'STATISTIQUE ' . $nom_centre .' '. $trim .' '. $annee;
+        $file_mane = strtolower(str_replace(" ","_",$file_mane)).".xls";
         header("Content-type: application/vnd.ms-excel");
         header("Content-disposition: attachment; filename=".$file_mane.""); /* Remplacer .csv par .xls pour exporter en .XLS */
 

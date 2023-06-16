@@ -11,7 +11,7 @@ driver="mysqli"
 
 ; For most of drivers:
 database="controle_technique"
-host= "localhost"
+host= "192.168.88.254"
 user= "user_ctapp"
 password= "rRqm8liOsqAm0AQJ"
 persistent= on
