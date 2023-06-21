@@ -5,10 +5,13 @@
 		<input name="ok" type="button" value="STATISTIQUE VT ADM &amp; GN" />
 	</a>
 	<a class="lien" href="{jurl 'controles_techniques~statbycentrebyusage:index'}">
-		<input name="ok1" type="button" value="STAT PERIODIQUE PAR CENTRE DES VISITES" />
+		<input name="ok1" type="button" value="STAT TRIMESTRIELLE PAR USAGE PAR CENTRE DES VISITES" />
+	</a>
+	<a class="lien" href="{jurl 'controles_techniques~statbycentrebyusagebymonth:index'}">
+		<input name="ok1" type="button" value="STAT MENSUELLE PAR USAGE PAR CENTRE DES VISITES" />
 	</a>
 	<a class="lien" href="{jurl 'controles_techniques~bilantrimestriel:index'}">
-		<input name="ok1" type="button" value="CR BILAN TRIMESTRIEL" />
+		<input name="ok1" type="button" value="STAT GLOBALE TRIMESTRIELLE" />
 	</a>
 	<a class="lien" href="{jurl 'controles_techniques~crbilanquotidien:index'}">
 		<input name="ok1" type="button" value="CR BILAN QUOTIDIEN" />

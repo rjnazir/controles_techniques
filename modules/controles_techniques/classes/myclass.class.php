@@ -745,14 +745,18 @@
          */
         function convertToMonth($tr)
         {
-            if($tr == 1){
-                $mois = "('1', '2', '3')";
-            }else if($tr == 2){
-                $mois = "('4', '5', '6')";
-            }else if($tr == 3){
-                $mois = "('7', '8', '9')";
+            if(strlen($tr) == 1){
+                if($tr == 1){
+                    $mois = "('1', '2', '3')";
+                }else if($tr == 2){
+                    $mois = "('4', '5', '6')";
+                }else if($tr == 3){
+                    $mois = "('7', '8', '9')";
+                }else{
+                    $mois = "('10', '11', '12')";
+                }
             }else{
-                $mois = "('10', '11', '12')";
+                $mois = $tr;
             }
             return $mois;
         }
@@ -851,25 +855,43 @@
          */
         function getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, $typevst, $isadmin, $isapte, $iscontre)
         {
-            if(!empty($code)) $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
-            if(!empty($usage)) $_c_usage = ' AND ct_usage_id = '.$usage;
-            if(!empty($annee) and !empty($periode)) $_c_periode = ' AND (Year(vst_created) = '.$annee.' AND MONTH(vst_created) IN '.$periode.')';
-            !empty($typevst) ? $_c_cvisite = ' AND ct_type_visite_id = '.$typevst.'' : $_c_cvisite = ' AND ct_type_visite_id IN (1, 2)';
-            !empty($isadmin) ? $_c_isadmin = ' AND ct_utilisation_id = '.$isadmin.'' : $_c_isadmin = ' AND ct_utilisation_id IN (1, 2)';
-            $isapte != null  ? $_c_isapte  = ' AND vst_is_apte = '.$isapte.'' : $_c_isapte = ' AND vst_is_apte IN (0, 1) ';
-            $iscontre != null? $_c_iscontre= ' AND vst_is_contre_visite = '.$iscontre.'' : $_c_iscontre = '';
+            if(isset($code) and !empty($code)){
+                $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
+            }
+            if(isset($usage) and !empty($usage)){
+                $_c_usage = ' AND ct_usage_id = '.$usage;
+            }
+            if(strlen($periode) != 7 AND $annee != 1000){
+                if(isset($annee) and isset($periode) and !empty($annee) and !empty($periode)){
+                    $_c_periode = ' AND (Year(vst_created) = '.$annee.' AND MONTH(vst_created) IN '.$periode.')';
+                }
+            }else{
+                $_c_periode = ' AND vst_created LIKE "'.$periode.'%"';
+            }
+            switch($typevst){
+                case 1 : $_c_cvisite = ' AND ct_type_visite_id = 1';break;
+                case 2 : $_c_cvisite = ' AND ct_type_visite_id = 2';break;
+                case 1000 : $_c_cvisite = '';break;
+            }
+            switch($isadmin){
+                case 1 : $_c_isadmin = ' AND ct_utilisation_id = 1';break;
+                case 2 : $_c_isadmin = ' AND ct_utilisation_id = 2';break;
+                case 1000 : $_c_isadmin = '';break;
+            }
+            switch($isapte){
+                case 0 : $_c_isapte = ' AND vst_is_apte = 0';break;
+                case 1 : $_c_isapte = ' AND vst_is_apte = 1';break;
+                case 1000 : $_c_isapte = '';break;
+            }
+            switch($iscontre){
+                case 0 : $_c_iscontre= ' AND vst_is_contre_visite = 0';break;
+                case 1 : $_c_iscontre= ' AND vst_is_contre_visite = 1';break;
+                case 1000 : $_c_iscontre= '';break;
+            }
             $d = jDb::getDbWidget();
             $s = "SELECT COUNT(*) AS nombre_vt FROM ct_visite WHERE $_c_code $_c_usage $_c_periode $_c_cvisite $_c_isadmin $_c_isapte $_c_iscontre";
             $nombre = $d->fetchFirst($s)->nombre_vt;
             return $nombre;
-        }
-
-        /**
-         * 
-         */
-        function getDataStatv2023($annee, $periode)
-        {
-
         }
     }
 ?>
