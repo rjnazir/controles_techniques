@@ -893,5 +893,81 @@
             $nombre = $d->fetchFirst($s)->nombre_vt;
             return $nombre;
         }
+
+        /**
+         * Récupération tous motifs de réception
+         */
+        public function getAllCtMotif()
+        {
+            $db = jDb::getConnection();
+            $sql = "SELECT * FROM ct_motif ORDER BY mtf_libelle ASC";
+            $r = $db->query($sql);
+            return $r;
+        }
+
+        /**
+         * Récupérer motifs par ID
+         * @param $id : Identifiant du motif
+         */
+        public function getCtMotifById($id)
+        {
+            $d = jDb::getDbWidget();
+            $s = "SELECT * FROM ct_motif WHERE id = $id";
+            $m = $d->fetchFirst($s);
+            return $m;
+        }
+
+        /**
+         * Récupération nombre de reception suivant les conditions
+         * @param $code     : Identifiant du centre et ces sous centres
+         * @param $motif    : Motif de reception du véhicule
+         * @param $isadmin  : Utilisation du véhicule (Particulier ou administratif)
+         * @return $nombre  : Nombre de visite remplicant les condition;
+         */
+        function getCompteRtByMotifByCentre($code, $motif, $annee, $periode, $isadmin, $isvhlimmmga, $tonnage)
+        {
+            if(isset($code) and !empty($code)){
+                $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
+            }
+            if(isset($motif) and !empty($motif)){
+                $_c_motif = ' AND ct_motif_id = '.$motif;
+            }
+            if(strlen($periode) != 7 AND $annee != 1000){
+                if(isset($annee) and isset($periode) and !empty($annee) and !empty($periode)){
+                    $_c_periode = ' AND (Year(rcp_created) = '.$annee.' AND MONTH(rcp_created) IN '.$periode.')';
+                }
+            }else{
+                $_c_periode = ' AND rcp_created LIKE "'.$periode.'%"';
+            }
+            switch($isadmin){
+                case 1 : $_c_isadmin = ' AND ct_utilisation_id = 1';break;
+                case 2 : $_c_isadmin = ' AND ct_utilisation_id = 2';break;
+                case 1000 : $_c_isadmin = '';break;
+            }
+            switch($isvhlimmmga){
+                case 0 : $_c_isvhlimmmga = ' AND mtf_is_calculable = 0';break;
+                case 1 : $_c_isvhlimmmga = ' AND mtf_is_calculable = 1';break;
+                case 1000 : $_c_isvhlimmmga = '';break;
+            }
+            if($isvhlimmmga == 1){
+                switch($tonnage){
+                    case '< 3500'           : $_c_tonnage = ' AND vhc_poids_total_charge < 3500';break;
+                    case '3.5T ≤ PTAC < 7T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 3500 AND vhc_poids_total_charge < 7000';break;
+                    case '7T ≤ PTAC < 10T'  : $_c_tonnage = ' AND vhc_poids_total_charge >= 7000 AND vhc_poids_total_charge < 10000';break;
+                    case '10T ≤ PTAC < 19T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 10000 AND vhc_poids_total_charge < 19000';break;
+                    // case '19T ≤ PTAC < 26T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 19000 AND vhc_poids_total_charge < 26000';break;
+                    case '19T ≤ PTAC < 26T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 19000';break;
+                    default                 : $_c_tonnage = '';break;
+                }
+            }else{
+                $_c_tonnage = '';
+            }
+            $d = jDb::getDbWidget();
+            $s = "SELECT COUNT(*) AS nombre_rt FROM ct_reception INNER JOIN ct_motif ON ct_motif.id = ct_reception.ct_motif_id
+                INNER JOIN ct_vehicule ON ct_vehicule.id = ct_reception.ct_vehicule_id
+                WHERE $_c_code $_c_motif $_c_periode $_c_isadmin $_c_isvhlimmmga $_c_tonnage";
+            $nombre = $d->fetchFirst($s)->nombre_rt;
+            return $nombre;
+        }
     }
 ?>

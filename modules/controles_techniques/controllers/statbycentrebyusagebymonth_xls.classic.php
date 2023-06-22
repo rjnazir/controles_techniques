@@ -70,46 +70,53 @@ class statbycentrebyusagebymonth_xlsCtrl extends jController {
             "<table align='center' border='1 red 0.1em'>
                 <thead class='titre2' style='font-size: xx-small;'>
                     <tr>
-                        <th rowspan='3'>USAGES EFFECTIFS</th>
-                        <th colspan='4'>SUR SITE</th>
-                        <th rowspan='3'>TOTAL</th>
-                        <th colspan='4'>A DOMICILE</th>
-                        <th rowspan='3'>TOTAL</th>
-                        <th rowspan='3'>TOTAL GENERAL</th>
+                        <th rowspan='3'>MOTIFS</th>
+                        <th colspan='3'>VHL IMM A MSCR</th>
+                        <th colspan='11'>VHL IMPORT ET AUTRES</th>
                     </tr>
                     <tr>
-                        <th colspan='2'>PARTICULIER</th>
-                        <th colspan='2'>ADMISTRATIF</th>
-                        <th colspan='2'>PARTICULIER</th>
-                        <th colspan='2'>ADMISTRATIF</th>
+                        <th rowspan='2'>PARTICULIER</th>
+                        <th rowspan='2'>ADM</th>
+                        <th rowspan='2'>TOTAL</th>
+                        <th colspan='2'>PTAC < 3.5T</th>
+                        <th colspan='2'>3.5T ≤ PTAC < 7T</th>
+                        <th colspan='2'>7T ≤ PTAC < 10T</th>
+                        <th colspan='2'>10T ≤ PTAC < 19T</th>
+                        <th colspan='2'>19T ≤ PTAC < 26T</th>
+                        <th rowspan='2'>TOTAL</th>
                     </tr>
                     <tr>
-                        <th>PREMIER</th>
-                        <th>CONTRE</th>
-                        <th>PREMIER</th>
-                        <th>CONTRE</th>
-                        <th>PREMIER</th>
-                        <th>CONTRE</th>
-                        <th>PREMIER</th>
-                        <th>CONTRE</th>
+                        <th>PARTICULIER</th>
+                        <th>ADM</th>
+                        <th>PARTICULIER</th>
+                        <th>ADM</th>
+                        <th>PARTICULIER</th>
+                        <th>ADM</th>
+                        <th>PARTICULIER</th>
+                        <th>ADM</th>
+                        <th>PARTICULIER</th>
+                        <th>ADM</th>
                     </tr>
                 </thead>
                 <tbody>");
                     foreach ($result as $result){
                         $fichier .= (
                         "<tr align='right' class='corps' style='background:{cycle array('#CCCCCC','#FFFFFF')}' style='font-size: xx-small;'>
-                            <td align='left'>".$result['usage']."</td>
-                            <td>".$result['sspartprem']."</td>
-                            <td>".$result['sspartcntr']."</td>
-                            <td>".$result['ssadmiprem']."</td>
-                            <td>".$result['ssadmicntr']."</td>
-                            <td>".$result['ssitetotal']."</td>
-                            <td>".$result['adpartprem']."</td>
-                            <td>".$result['adpartcntr']."</td>
-                            <td>".$result['adadmiprem']."</td>
-                            <td>".$result['adadmicntr']."</td>
-                            <td>".$result['aditetotal']."</td>
-                            <td>".$result['totalgener']."</td>
+                            <td align='left'>".$result['motif']."</td>
+                            <td>".$result['rtpartvhlimmmga']."</td>
+                            <td>".$result['rtadmnvhlimmmga']."</td>
+                            <td>".$result['rtttalvhlimmmga']."</td>
+                            <td>".$result['rtpevimpinf3500']."</td>
+                            <td>".$result['rtadvimpinf3500']."</td>
+                            <td>".$result['rtpevimpinf7000']."</td>
+                            <td>".$result['rtadvimpinf7000']."</td>
+                            <td>".$result['rtpevimpinf10000']."</td>
+                            <td>".$result['rtadvimpinf10000']."</td>
+                            <td>".$result['rtpevimpinf19000']."</td>
+                            <td>".$result['rtadvimpinf19000']."</td>
+                            <td>".$result['rtpevimpinf26000']."</td>
+                            <td>".$result['rtadvimpinf26000']."</td>
+                            <td>".$result['rtttalvhlimport']."</td>
                         </tr>");
                     }
                 $fichier .= ("
@@ -118,7 +125,7 @@ class statbycentrebyusagebymonth_xlsCtrl extends jController {
         ");
 
         // Declaration du type de contenu
-        $file_mane = 'STATISTIQUE ' . $nom_centre .' '. $trim;
+        $file_mane = 'STATISTIQUE RT' . $nom_centre .' '. $trim;
         $file_mane = strtolower(str_replace(" ","_",$file_mane)).".xls";
         header("Content-type: application/vnd.ms-excel");
         header("Content-disposition: attachment; filename=".$file_mane.""); /* Remplacer .csv par .xls pour exporter en .XLS */

@@ -1,6 +1,18 @@
 <h1 align="center" class="apptitle">CONTROLE TECHNIQUE<br/>
 <span class="welcome">OUTILS DE STATISTIQUE CT - CAD - RT</span></h1>
 <center>
+	{* <table>
+		<thead>
+			<tr>
+				<th colspan="3">STATISTIQUES ET BILANS</th>
+			</tr>
+			<tr>
+				<th>VISITE TECHNIQUE</th>
+				<th>RECEPTION TECHNIQUE</th>
+				<th>CONSTATATION AVANT DEDOUANEMENT</th>
+			</tr>
+		</thead>
+	</table> *}
 	<a class="lien" href="{jurl 'controles_techniques~etat_vhladm_gn:index'}">
 		<input name="ok" type="button" value="STATISTIQUE VT ADM &amp; GN" />
 	</a>
@@ -17,7 +29,7 @@
 		<input name="ok1" type="button" value="CR BILAN QUOTIDIEN" />
 	</a>
 	&nbsp;
-	<!--a class="lien" href="jurl 'controles_techniques~statbyusage_effectif:index'">
-		<input name="ok" type="button" value="Statistique usages effectifs" />
-	</a-->
+	<a class="lien" href="{jurl 'controles_techniques~rt_stat_motif_centre_periode:index'}">
+		<input name="ok" type="button" value="STAT MENSUELLE PAR MOTIF PAR CENTRE RECEPTION" />
+	</a>
 </center>
