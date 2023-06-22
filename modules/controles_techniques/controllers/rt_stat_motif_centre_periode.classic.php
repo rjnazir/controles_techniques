@@ -12,7 +12,8 @@ class rt_stat_motif_centre_periodeCtrl extends jController {
     /**
     *
     */
-    function index() {        $rep = $this->getResponse('html');
+    function index() {
+        $rep = $this->getResponse('html');
         $rep->bodyTpl = "controles_techniques~rt_stat_motif_centre_periode";
         $rep->title = "STATISTIQUE MENSUELLE PAR MOTIF PAR CENTRE DES RECEPTIONS";
 

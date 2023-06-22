@@ -969,5 +969,48 @@
             $nombre = $d->fetchFirst($s)->nombre_rt;
             return $nombre;
         }
+
+        /**
+         * Récupération nombre de CAD suivant les conditions
+         * @param $code     : Identifiant du centre et ces sous centres
+         * @param $motif    : Motif de reception du véhicule
+         * @param $isadmin  : Utilisation du véhicule (Particulier ou administratif)
+         * @return $nombre  : Nombre de visite remplicant les condition;
+         */
+        function getCompteCadByMotifByCentre($code, $annee, $periode, $tonnage, $genre)
+        {
+            if(isset($code) and !empty($code)){
+                $_c_code = ' AND ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
+            }
+            // if(isset($motif) and !empty($motif)){
+            //     $_c_motif = ' AND ct_genre_id = '.$genre;
+            // }
+            if(strlen($periode) != 7 AND $annee != 1000){
+                if(isset($annee) and isset($periode) and !empty($annee) and !empty($periode)){
+                    $_c_periode = ' AND (Year(cad_created) = '.$annee.' AND MONTH(cad_created) IN '.$periode.')';
+                }
+            }else{
+                $_c_periode = ' AND cad_created LIKE "'.$periode.'%"';
+            }
+            switch($tonnage){
+                case '3.5T ≤ PTAC < 7T' : $_c_tonnage = ' AND (cad_poids_total_charge >= 3500 AND cad_poids_total_charge < 7000)';break;
+                case '7T ≤ PTAC < 10T'  : $_c_tonnage = ' AND (cad_poids_total_charge >= 7000 AND cad_poids_total_charge < 10000)';break;
+                case '10T ≤ PTAC < 19T' : $_c_tonnage = ' AND (cad_poids_total_charge >= 10000 AND cad_poids_total_charge < 19000)';break;
+                case '19T ≤ PTAC < 26T' : $_c_tonnage = ' AND cad_poids_total_charge >= 19000';break;
+                default                 : $_c_tonnage = ' AND cad_poids_total_charge >= 3500';break;
+            }
+            /* Eto no nijanona */
+            switch($genre){
+                case '(1, 2, 3, 4, 5, 6, 8, 9)' : $_c_genre = ' AND ct_genre_id IN $genre';break;
+                case '(7)' : $_c_genre = ' AND ct_genre_id IN $genre';break;
+            }
+            $d = jDb::getDbWidget();
+            $s = "SELECT COUNT(*) AS nombre_cad FROM ct_const_av_ded INNER JOIN ct_const_av_deds_const_av_ded_caracs ON ct_const_av_ded.id = ct_const_av_deds_const_av_ded_caracs.const_av_ded_id
+                INNER JOIN ct_const_av_ded_carac ON ct_const_av_deds_const_av_ded_caracs.const_av_ded_carac_id = ct_const_av_ded_carac.id
+                INNER JOIN ct_genre ON ct_genre.id = ct_const_av_ded_carac.ct_genre_id
+                WHERE ct_const_av_ded_type_id = 2 $_c_code $_c_periode $_c_tonnage";
+            $nombre = $d->fetchFirst($s)->nombre_cad;
+            return $nombre;
+        }
     }
 ?>

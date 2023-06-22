@@ -28,8 +28,10 @@
 	<a class="lien" href="{jurl 'controles_techniques~crbilanquotidien:index'}">
 		<input name="ok1" type="button" value="CR BILAN QUOTIDIEN" />
 	</a>
-	&nbsp;
 	<a class="lien" href="{jurl 'controles_techniques~rt_stat_motif_centre_periode:index'}">
-		<input name="ok" type="button" value="STAT MENSUELLE PAR MOTIF PAR CENTRE RECEPTION" />
+		<input name="ok" type="button" value="STAT MENSUELLE PAR MOTIF PAR CENTRE DES RECEPTIONS" />
+	</a>
+	<a class="lien" href="{jurl 'controles_techniques~cad_stat_motif_centre_periode:index'}">
+		<input name="ok" type="button" value="STAT MENSUELLE PAR MOTIF PAR CENTRE DES CAD" />
 	</a>
 </center>
