@@ -29,92 +29,117 @@ class rt_stat_motif_centre_periode_xlsCtrl extends jController {
         $centre = $this->param("centre");
         $trimestre = $this->param("trimestre");
         $nom_centre = $myclass->transformcenter($myclass->getNomCentreById($centre));
-        // switch($trimestre)
-        // {
-        //     case 1 : $trim = "1ER TRIMESTRE";break;
-        //     case 2 : $trim = "2EME TRIMESTRE";break;
-        //     case 3 : $trim = "3EME TRIMESTRE";break;
-        //     case 4 : $trim = "4EME TRIMESTRE";break;
-        // }
+
         $trim = str_replace('-','_',$trimestre);
 
         if(empty($annee) AND empty($centre) AND empty($trimestre)){
             jMessage::add("Veuillez entrer les paramètres, svp!");
             $erreur = true;
         }else{
-            $_usage = $myclass->getUsageAll();
+            $_motifs = $myclass->getAllCtMotif();
             $periode = $myclass->convertToMonth($trimestre);
 
-            foreach($_usage as $_usage){
-                $usage = $_usage->id;
-                $result[$_i]['usage'] = utf8_encode($_usage->usg_libelle);
-                $code = $myclass->getCentreById($centre);
-                $result[$_i]['sspartprem'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 2, 1000, 0);
-                $result[$_i]['sspartcntr'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 2, 1000, 1);
-                $result[$_i]['ssadmiprem'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 1, 1000, 0);
-                $result[$_i]['ssadmicntr'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 1, 1000, 1);
-                $result[$_i]['ssitetotal'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 1000, 1000, 1000);
-                $result[$_i]['adpartprem'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 2, 2, 1000, 0);
-                $result[$_i]['adpartcntr'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 2, 2, 1000, 1);
-                $result[$_i]['adadmiprem'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 2, 1, 1000, 0);
-                $result[$_i]['adadmicntr'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 2, 1, 1000, 1);
-                $result[$_i]['aditetotal'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 2, 1000, 1000, 1000);
-                $result[$_i]['totalgener'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1000, 1000, 1000, 1000);
+            foreach($_motifs as $_motifs){
+                $_idmtf = $_motifs->id;
+                $_mtf   = $myclass->getCtMotifById($_idmtf);
+                $_result[$_i]['motif'] = utf8_encode($_motifs->mtf_libelle);
+                in_array($centre, array(3,4,6,12)) ? $_c = 26 : $_c = $centre;
+                $code = $myclass->getCentreById($_c);
+                $_result[$_i]['rtpartvhlimmmga'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 0, '');
+                $_result[$_i]['rtadmnvhlimmmga'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 0, '');
+                $_result[$_i]['rtttalvhlimmmga'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1000, 0, '');
+                $_result[$_i]['rtpevimpinf3500'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 1, '< 3500');
+                $_result[$_i]['rtadvimpinf3500'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 1, '< 3500');
+                $_result[$_i]['rtpevimpinf7000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 1, '3.5T ≤ PTAC < 7T');
+                $_result[$_i]['rtadvimpinf7000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 1, '3.5T ≤ PTAC < 7T');
+                $_result[$_i]['rtpevimpinf10000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 1, '7T ≤ PTAC < 10T');
+                $_result[$_i]['rtadvimpinf10000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 1, '7T ≤ PTAC < 10T');
+                $_result[$_i]['rtpevimpinf19000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 1, '10T ≤ PTAC < 19T');
+                $_result[$_i]['rtadvimpinf19000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 1, '10T ≤ PTAC < 19T');
+                $_result[$_i]['rtpevimpinf26000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 1, '19T ≤ PTAC < 26T');
+                $_result[$_i]['rtadvimpinf26000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 1, '19T ≤ PTAC < 26T');
+                $_result[$_i]['rtttalvhlimport'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1000, 1, '');
+
                 $_i++;
             }
-            $rep->body->assign('result', $result);
-            $rep->body->assign('usage', $_usage);
+            $rep->body->assign('result', $_result);
+            $rep->body->assign('motifs', $_motifs);
         }
+
         $fichier .= (
             "<table align='center' border='1 red 0.1em'>
                 <thead class='titre2' style='font-size: xx-small;'>
                     <tr>
-                        <th rowspan='3'>USAGES EFFECTIFS</th>
-                        <th colspan='4'>SUR SITE</th>
-                        <th rowspan='3'>TOTAL</th>
-                        <th colspan='4'>A DOMICILE</th>
-                        <th rowspan='3'>TOTAL</th>
-                        <th rowspan='3'>TOTAL GENERAL</th>
+                        <th rowspan='3'>MOTIFS</th>
+                        <th colspan='3'>VHL IMM A MSCR</th>
+                        <th colspan='11'>VHL IMPORT ET AUTRES</th>
                     </tr>
                     <tr>
-                        <th colspan='2'>PARTICULIER</th>
-                        <th colspan='2'>ADMISTRATIF</th>
-                        <th colspan='2'>PARTICULIER</th>
-                        <th colspan='2'>ADMISTRATIF</th>
+                        <th rowspan='2'>PARTICULIER</th>
+                        <th rowspan='2'>ADM</th>
+                        <th rowspan='2'>TOTAL</th>
+                        <th colspan='2'>PTAC < 3.5T</th>
+                        <th colspan='2'>3.5T ≤ PTAC < 7T</th>
+                        <th colspan='2'>7T ≤ PTAC < 10T</th>
+                        <th colspan='2'>10T ≤ PTAC < 19T</th>
+                        <th colspan='2'>19T ≤ PTAC < 26T</th>
+                        <th rowspan='2'>TOTAL</th>
                     </tr>
                     <tr>
-                        <th>PREMIER</th>
-                        <th>CONTRE</th>
-                        <th>PREMIER</th>
-                        <th>CONTRE</th>
-                        <th>PREMIER</th>
-                        <th>CONTRE</th>
-                        <th>PREMIER</th>
-                        <th>CONTRE</th>
+                        <th>PARTICULIER</th>
+                        <th>ADM</th>
+                        <th>PARTICULIER</th>
+                        <th>ADM</th>
+                        <th>PARTICULIER</th>
+                        <th>ADM</th>
+                        <th>PARTICULIER</th>
+                        <th>ADM</th>
+                        <th>PARTICULIER</th>
+                        <th>ADM</th>
                     </tr>
                 </thead>
                 <tbody>");
                     foreach ($result as $result){
                         $fichier .= (
                         "<tr align='right' class='corps' style='background:{cycle array('#CCCCCC','#FFFFFF')}' style='font-size: xx-small;'>
-                            <td align='left'>".$result['usage']."</td>
-                            <td>".$result['sspartprem']."</td>
-                            <td>".$result['sspartcntr']."</td>
-                            <td>".$result['ssadmiprem']."</td>
-                            <td>".$result['ssadmicntr']."</td>
-                            <td>".$result['ssitetotal']."</td>
-                            <td>".$result['adpartprem']."</td>
-                            <td>".$result['adpartcntr']."</td>
-                            <td>".$result['adadmiprem']."</td>
-                            <td>".$result['adadmicntr']."</td>
-                            <td>".$result['aditetotal']."</td>
-                            <td>".$result['totalgener']."</td>
+                            <td align='left'>".$result['motif']."</td>
+                            <td>".$result['rtpartvhlimmmga']."</td>
+                            <td>".$result['rtadmnvhlimmmga']."</td>
+                            <td>".$result['rtttalvhlimmmga']."</td>
+                            <td>".$result['rtpevimpinf3500']."</td>
+                            <td>".$result['rtadvimpinf3500']."</td>
+                            <td>".$result['rtpevimpinf7000']."</td>
+                            <td>".$result['rtadvimpinf7000']."</td>
+                            <td>".$result['rtpevimpinf10000']."</td>
+                            <td>".$result['rtadvimpinf10000']."</td>
+                            <td>".$result['rtpevimpinf19000']."</td>
+                            <td>".$result['rtadvimpinf19000']."</td>
+                            <td>".$result['rtpevimpinf26000']."</td>
+                            <td>".$result['rtadvimpinf26000']."</td>
+                            <td>".$result['rtttalvhlimport']."</td>
                         </tr>");
                     }
                 $fichier .= ("
                 </tbody>
             </table>
         ");
+
+
+        // Declaration du type de contenu
+        $file_mane = 'STATISTIQUE RT ' . $nom_centre .' '. $trim;
+        $file_mane = strtolower(str_replace(" ","_",$file_mane)).".xls";
+        header("Content-type: application/vnd.ms-excel");
+        header("Content-disposition: attachment; filename=".$file_mane.""); /* Remplacer .csv par .xls pour exporter en .XLS */
+
+        echo "<html>";
+        echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=Windows-1252\">";
+        echo "<body>";
+        echo utf8_decode($fichier);
+        echo "</body>";
+        echo "</html>";
+
+        $rep->bodyTpl = "controles_techniques~statbycentrebyusage";
+
         return $rep;
     }
 }

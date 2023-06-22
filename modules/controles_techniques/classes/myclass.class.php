@@ -906,6 +906,19 @@
         }
 
         /**
+         * Récupération tous genres de CAD
+         */
+        public function getAllCtGenre()
+        {
+            $db = jDb::getConnection();
+            $sql = "SELECT gr_libelle FROM ct_droit_ptac INNER JOIN ct_genre_categorie ON ct_genre_categorie.id = ct_droit_ptac.ct_genre_categorie_id
+                INNER JOIN ct_genre ON ct_genre_categorie.id = ct_genre.ct_genre_categorie_id WHERE ct_droit_ptac.ct_type_droit_ptac_id = 2
+                GROUP BY ct_genre.gr_libelle";
+            $r = $db->query($sql);
+            return $r;
+        }
+
+        /**
          * Récupérer motifs par ID
          * @param $id : Identifiant du motif
          */
@@ -999,16 +1012,14 @@
                 case '19T ≤ PTAC < 26T' : $_c_tonnage = ' AND cad_poids_total_charge >= 19000';break;
                 default                 : $_c_tonnage = ' AND cad_poids_total_charge >= 3500';break;
             }
-            /* Eto no nijanona */
-            switch($genre){
-                case '(1, 2, 3, 4, 5, 6, 8, 9)' : $_c_genre = ' AND ct_genre_id IN $genre';break;
-                case '(7)' : $_c_genre = ' AND ct_genre_id IN $genre';break;
-            }
+
+            $genre ? $_c_genre = ' AND ct_genre.gr_libelle = "'.$genre.'"' : $_c_genre = '';
+
             $d = jDb::getDbWidget();
             $s = "SELECT COUNT(*) AS nombre_cad FROM ct_const_av_ded INNER JOIN ct_const_av_deds_const_av_ded_caracs ON ct_const_av_ded.id = ct_const_av_deds_const_av_ded_caracs.const_av_ded_id
                 INNER JOIN ct_const_av_ded_carac ON ct_const_av_deds_const_av_ded_caracs.const_av_ded_carac_id = ct_const_av_ded_carac.id
                 INNER JOIN ct_genre ON ct_genre.id = ct_const_av_ded_carac.ct_genre_id
-                WHERE ct_const_av_ded_type_id = 2 $_c_code $_c_periode $_c_tonnage";
+                WHERE ct_const_av_ded_type_id = 2 $_c_code $_c_periode $_c_tonnage $_c_genre";
             $nombre = $d->fetchFirst($s)->nombre_cad;
             return $nombre;
         }

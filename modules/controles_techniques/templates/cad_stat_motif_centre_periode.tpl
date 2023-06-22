@@ -56,7 +56,7 @@
         </p>
         <br/>
         <table align="center" border="1 red 0.1em">
-            <thead class="titre2" style="font-size: xx-small;">
+            <thead class="titre2" style="font-size:xx-small;" >
                 <tr>
                     <th>CATEGORIE DE VEHICULES</th>
                     <th>3.5T ≤ PTAC < 7T</th>
@@ -67,17 +67,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>VEHICULE A MOTEUR (ISOLE)</td>
+                {foreach $result as $result}
+                <tr align="center" class="corps" style="background:{cycle array('#CCCCCC','#FFFFFF')}" style="font-size: xx-small;">
+                    <td align="left">{$result['GENREVHL']}</td>
                     <td>{$result['VHL07000']}</td>
                     <td>{$result['VHL10000']}</td>
                     <td>{$result['VHL19000']}</td>
                     <td>{$result['VHL26000']}</td>
                     <td>{$result['TOTALGAL']}</td>
                 </tr>
-                <tr>
-                    <td>REMORQUE ET SEMI-REMORQUE</td>
-                </tr>
+                {/foreach}
             </tbody>
         </table>
     	{/if}

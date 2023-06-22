@@ -39,40 +39,21 @@ class cad_stat_motif_centre_periodeCtrl extends jController {
                 in_array($centre, array(3,4,6,12)) ? $_c = 26 : $_c = $centre;
                 $code = $myclass->getCentreById($_c);
                 $periode = $myclass->convertToMonth($trimestre);
+                $genre = $myclass->getAllCtGenre();
 
-                $_result['VHL07000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '3.5T ≤ PTAC < 7T');
-                $_result['VHL10000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '7T ≤ PTAC < 10T');
-                $_result['VHL19000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '10T ≤ PTAC < 19T');
-                $_result['VHL26000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '19T ≤ PTAC < 26T');
-                $_result['TOTALGAL']     = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '');
-                // $_motifs = $myclass->getAllCtMotif();
-                // $periode = $myclass->convertToMonth($trimestre);
-                
-                // foreach($_motifs as $_motifs){
-                //     $_idmtf = $_motifs->id;
-                //     $_mtf   = $myclass->getCtMotifById($_idmtf);
-                //     $_result[$_i]['motif'] = utf8_encode($_motifs->mtf_libelle);
-                //     in_array($centre, array(3,4,6,12)) ? $_c = 26 : $_c = $centre;
-                //     $code = $myclass->getCentreById($_c);
-                //     $_result[$_i]['rtpartvhlimmmga'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 0, '');
-                //     $_result[$_i]['rtadmnvhlimmmga'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 0, '');
-                //     $_result[$_i]['rtttalvhlimmmga'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1000, 0, '');
-                //     $_result[$_i]['rtpevimpinf3500'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 1, '< 3500');
-                //     $_result[$_i]['rtadvimpinf3500'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 1, '< 3500');
-                //     $_result[$_i]['rtpevimpinf7000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 1, '3.5T ≤ PTAC < 7T');
-                //     $_result[$_i]['rtadvimpinf7000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 1, '3.5T ≤ PTAC < 7T');
-                //     $_result[$_i]['rtpevimpinf10000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 1, '7T ≤ PTAC < 10T');
-                //     $_result[$_i]['rtadvimpinf10000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 1, '7T ≤ PTAC < 10T');
-                //     $_result[$_i]['rtpevimpinf19000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 1, '10T ≤ PTAC < 19T');
-                //     $_result[$_i]['rtadvimpinf19000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 1, '10T ≤ PTAC < 19T');
-                //     $_result[$_i]['rtpevimpinf26000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 1, '19T ≤ PTAC < 26T');
-                //     $_result[$_i]['rtadvimpinf26000'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 1, '19T ≤ PTAC < 26T');
-                //     $_result[$_i]['rtttalvhlimport'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1000, 1, '');
+                foreach($genre as $genre){
+                    $cgenre = $genre->gr_libelle;
+                    $_result[$_i]['GENREVHL']    = $cgenre;
+                    $_result[$_i]['VHL07000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '3.5T ≤ PTAC < 7T', $cgenre);
+                    $_result[$_i]['VHL10000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '7T ≤ PTAC < 10T', $cgenre);
+                    $_result[$_i]['VHL19000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '10T ≤ PTAC < 19T', $cgenre);
+                    $_result[$_i]['VHL26000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '19T ≤ PTAC < 26T', $cgenre);
+                    $_result[$_i]['TOTALGAL']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '', $cgenre);
 
-                //     $_i++;
-                // }
+                    $_i++;
+                }
+
                 $rep->body->assign('result', $_result);
-                // $rep->body->assign('motifs', $_motifs);
             }
         }
 

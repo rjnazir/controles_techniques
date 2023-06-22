@@ -88,23 +88,23 @@
             </thead>
             <tbody>
                 {foreach $result as $result}
-                    <tr align="right" class="corps" style="background:{cycle array('#CCCCCC','#FFFFFF')}" style="font-size: xx-small;">
-                        <td align="left">{$result['motif']}</td>
-                        <td>{$result['rtpartvhlimmmga']}</td>
-                        <td>{$result['rtadmnvhlimmmga']}</td>
-                        <td>{$result['rtttalvhlimmmga']}</td>
-                        <td>{$result['rtpevimpinf3500']}</td>
-                        <td>{$result['rtadvimpinf3500']}</td>
-                        <td>{$result['rtpevimpinf7000']}</td>
-                        <td>{$result['rtadvimpinf7000']}</td>
-                        <td>{$result['rtpevimpinf10000']}</td>
-                        <td>{$result['rtadvimpinf10000']}</td>
-                        <td>{$result['rtpevimpinf19000']}</td>
-                        <td>{$result['rtadvimpinf19000']}</td>
-                        <td>{$result['rtpevimpinf26000']}</td>
-                        <td>{$result['rtadvimpinf26000']}</td>
-                        <td>{$result['rtttalvhlimport']}</td>
-                    </tr>
+                <tr align="right" class="corps" style="background:{cycle array('#CCCCCC','#FFFFFF')}" style="font-size: xx-small;">
+                    <td align="left">{$result['motif']}</td>
+                    <td>{$result['rtpartvhlimmmga']}</td>
+                    <td>{$result['rtadmnvhlimmmga']}</td>
+                    <td>{$result['rtttalvhlimmmga']}</td>
+                    <td>{$result['rtpevimpinf3500']}</td>
+                    <td>{$result['rtadvimpinf3500']}</td>
+                    <td>{$result['rtpevimpinf7000']}</td>
+                    <td>{$result['rtadvimpinf7000']}</td>
+                    <td>{$result['rtpevimpinf10000']}</td>
+                    <td>{$result['rtadvimpinf10000']}</td>
+                    <td>{$result['rtpevimpinf19000']}</td>
+                    <td>{$result['rtadvimpinf19000']}</td>
+                    <td>{$result['rtpevimpinf26000']}</td>
+                    <td>{$result['rtadvimpinf26000']}</td>
+                    <td>{$result['rtttalvhlimport']}</td>
+                </tr>
                 {/foreach}
             </tbody>
         </table>
