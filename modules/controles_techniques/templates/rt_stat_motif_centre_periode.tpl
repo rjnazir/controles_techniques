@@ -6,8 +6,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 {* <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" /> *}
 </head>
-<h1 align="center" class="apptitle">STATISTIQUE MENSUELLE PAR MOTIF PAR CENTRE DES RECEPTIONS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{jurl 'controles_techniques~default:index'}"><input name="retour" type="button" value="&lt;&lt; Retour" /></a></h1>
+<h1 align="center" class="apptitle">
+	STATISTIQUES ET BILANS DES CONTROLES TECHNIQUES<br/>
+	<span class="welcome">OUTILS DE STATISTIQUE CT - CAD - RT</span>
+	{$MENU}
+</h1>
 <form action="" method="post" enctype="application/x-www-form-urlencoded" name="form">
+<h6 align="center" class="titre2">STATISTIQUE MENSUELLE PAR MOTIF PAR CENTRE DES RECEPTIONS</h6>
 <table width="100%">
     <tr>
         <td width="2%"></td>
@@ -17,7 +22,7 @@
                 <td class="corps">Veuillez remplir les champs <span class="obligatoire">(*)</span> :</td>
                 <td></td>
                 <td>
-                    <select id="centre" name="centre" aria-placeholder="Choisir le centre">
+                    <select id="centre" class="form-select form-select-sm" name="centre" aria-placeholder="Choisir le centre">
                         <option value="">Choisir le centre ici</option>
                         {foreach $centres as $centres}
                         <option value="{$centres->id}" {if $centres->id == $centre}selected{/if}>{$centres->ctr_nom}</option>
@@ -26,17 +31,9 @@
                     </select>
                 </td>
                 <td>
-                    <input type="month" name="trimestre" id="trimestre" {if $trimestre}value={$trimestre}{/if}>
-                    {* <select id="trimestre" name="trimestre" aria-placeholder="Choisir le trimestre">
-                        <option value="0">Choisir la période ici</option>
-                        <option value="1" {if $trimestre == 1}selected{/if}>Premier trimestre</option>
-                        <option value="2" {if $trimestre == 2}selected{/if}>Deuxième trimestre</option>
-                        <option value="3" {if $trimestre == 3}selected{/if}>Troisième trimestre</option>
-                        <option value="4" {if $trimestre == 4}selected{/if}>Quatrième trimestre</option>
-                    </select> *}
+                    <input type="month" class="form-control form-control-sm" name="trimestre" id="trimestre" {if $trimestre}value={$trimestre}{/if}>
                 </td>
-                {* <td><input type="text" maxlength="4" width="4" name="annee" id="annee" placeholder="Entrer l'année ici (Ex: 2023)" value="{if($annee)}{$annee}{/if}" ></td> *}
-                <td><input name="OK" type="submit" value="Afficher" /></td>
+                <td><input name="OK" class="btn btn-sm btn-primary" type="submit" value="Afficher" /></td>
             </tr>
             {if $erreur == true}
             <tr align="center">
@@ -51,11 +48,10 @@
             {/if}
     	</table>
     	{if !empty($result)}
-    	<p align="center">
-        	<a href="{jurl 'controles_techniques~rt_stat_motif_centre_periode_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" target="_blank" alt="Exporter en MS Excel" ><img src="../../../msexcel.png" width="3%" alt="Exporter en MS Excel" /></a>
-        </p>
-        <br/>
-        <table align="center" border="1 red 0.1em">
+    	{* <p align="center">
+        	<a href="{jurl 'controles_techniques~rt_stat_motif_centre_periode_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" target="_blank" alt="Exporter en MS Excel" >{image 'msexcel.jpg', array('width'=>40)}</a>
+        </p> *}
+        <table align="center" class="table table-sm table-responsive-sm table-striped table-bordered border-primary">
             <thead class="titre2" style="font-size: xx-small;">
                 <tr>
                     <th rowspan="3">MOTIFS</th>

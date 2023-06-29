@@ -40,10 +40,13 @@ class cad_stat_motif_centre_periodeCtrl extends jController {
                 $code = $myclass->getCentreById($_c);
                 $periode = $myclass->convertToMonth($trimestre);
                 $genre = $myclass->getAllCtGenre();
+                $categorie = $myclass->getAllCtGenreCategorie();
 
                 foreach($genre as $genre){
                     $cgenre = $genre->gr_libelle;
+                    $catgri = $myclass->getOneCtGenreByLibelle($cgenre)->ct_genre_categorie_id;
                     $_result[$_i]['GENREVHL']    = $cgenre;
+                    $_result[$_i]['CATGRVHL']    = $catgri;
                     $_result[$_i]['VHL07000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '3.5T ≤ PTAC < 7T', $cgenre);
                     $_result[$_i]['VHL10000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '7T ≤ PTAC < 10T', $cgenre);
                     $_result[$_i]['VHL19000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '10T ≤ PTAC < 19T', $cgenre);
@@ -53,6 +56,7 @@ class cad_stat_motif_centre_periodeCtrl extends jController {
                     $_i++;
                 }
 
+                $rep->body->assign('categorie', $categorie);
                 $rep->body->assign('result', $_result);
             }
         }
@@ -64,7 +68,11 @@ class cad_stat_motif_centre_periodeCtrl extends jController {
         $rep->body->assign('centre', $centre);
         $rep->body->assign('centres', $centres);
         $rep->body->assign('trimestre', $trimestre);
-
+        
+        $rep->addCSSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
+        $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');        
+        $rep->body->assignZone('MENU', 'controles_techniques~menu');
+        
         return $rep;
     }
 }

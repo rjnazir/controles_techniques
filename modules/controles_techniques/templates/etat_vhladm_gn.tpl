@@ -1,79 +1,35 @@
 <head>
+
 <link href="../../../www/jelix/design/jelix.css" rel="stylesheet" type="text/css" />
 <link href="../../../jelix/design/jelix.css" rel="stylesheet" type="text/css" />
+<link href="/jelix/design/jelix.css" rel="stylesheet" type="text/css" />
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<h1 align="center" class="apptitle">LISTE DE VEHICULES ADMINISTRATIFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{jurl 'controles_techniques~default:index'}"><input name="retour" type="button" value="&lt;&lt; Retour" /></a></h1>
+<h1 align="center" class="apptitle">
+	STATISTIQUES ET BILANS DES CONTROLES TECHNIQUES<br/>
+	<span class="welcome">OUTILS DE STATISTIQUE CT - CAD - RT</span>
+	{$MENU}
+</h1>
 <form action="" method="post" enctype="application/x-www-form-urlencoded" name="form">
+<h6 align="center" class="titre2">LISTE DE VEHICULES ADMINISTRATIFS</h6>
 <table width="100%">
     <tr>
         <td width="2%"></td>
         <td align="center">
             <table>
                 <tr>
-                    <!--td class="corps">Choisir l'annee :</td>
-                    <td></td>
-                    <td>
-                        <!--select class="corps" name="annee">
-							{for($j=($i-25); $j<=($i+25); $j++)}
-							<option value="{$j}" {if($j==$i)} selected="selected" {/if}>{$j}</option>
-							{/for}
-                        </select>
-                    </td-->
 					<td class="corps">Choisir la date :</td>
 					<td></td>
-					<td><input type="month" name="annee" id="annee" value='{if($annee)}{$annee}{/if}' ></td>
-					<td><input name="ok" type="submit" value="Afficher" /></td>
+					<td><input type="month" class="form-control form-control-sm" name="annee" id="annee" value='{if($annee)}{$annee}{/if}' ></td>
+					<td><input name="ok" class="btn btn-sm btn-primary" type="submit" value="Afficher" /></td>
                 </tr>
             </table>
 			{if $nbr != null}
-			<table align="center">
-				<tr valign="middle">
-					<td>
-						<!--table class="titre2" align="center">
-							<tr>
-								<th colspan="2" scope="row">&nbsp;STATISTIQUE DE VT ADM.</th>
-							</tr>
-							<tr>
-								<th align="left" scope="row">&nbsp;Apte :</th>
-								<td align="right">{$nbrApte}&nbsp;&nbsp;</td>
-							</tr>
-							<tr>
-								<th align="left" scope="row">&nbsp;Inapte :</th>
-								<td align="right">{$nbrInapte}&nbsp;&nbsp;</td>
-							</tr>
-							<tr>
-								<th align="left" scope="row">&nbsp;Total :</th>
-								<td align="right">{$nbr}&nbsp;&nbsp;</td>
-							</tr>
-						</table-->
-					</td>
-					<td>
-						<!--table class="titre2" align="center">
-							<tr>
-								<th colspan="2" scope="row">&nbsp;STATISTIQUE DE VT GN</th>
-							</tr>
-							<tr>
-								<th align="left" scope="row">&nbsp;Apte :</th>
-								<td align="right">{$nbrgnapte}&nbsp;&nbsp;</td>
-							</tr>
-							<tr>
-								<th align="left" scope="row">&nbsp;Inapte :</th>
-								<td align="right">{$nbrgninapte}&nbsp;&nbsp;</td>
-							</tr>
-							<tr>
-								<th align="left" scope="row">&nbsp;Total :</th>
-								<td align="right">{$nbrgn}&nbsp;&nbsp;</td>
-							</tr>
-						</table-->
-					</td>
-					<td>
-						<a href="{jurl 'controles_techniques~etat_vhladm_gn_xls:index', array('annee'=>$annee,'res'=>$res)}" target="_blank"><img src="../../../printxls.jpg" width="80" alt="Impr. MS Excel" /></a>
-					</td>
-				</tr>
-			</table>
-
-			<table align="center">
+			<p>
+				<a href="{jurl 'controles_techniques~etat_vhladm_gn_xls:index', array('annee'=>$annee,'res'=>$res)}" target="_blank">{image 'msexcel.jpg', array('width'=>40, 'alt'=>'Exporter en MS Excel')}</a>
+			</p>
+			<table align="center" class="table table-sm table-responsive-sm table-striped table-bordered border-primary">
 				<tr align="center" class="titre2">
 					<th scope="col">N&deg;</th>
 					<th scope="col">Centre</th>

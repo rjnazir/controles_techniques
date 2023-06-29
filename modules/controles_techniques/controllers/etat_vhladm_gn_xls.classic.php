@@ -56,6 +56,11 @@ class etat_vhladm_gn_xlsCtrl extends jController {
         exit;
 
         $rep->bodyTpl = "controles_techniques~etat_vhladm_gn";
+        
+        $rep->addCSSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
+        $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');        
+        $rep->body->assignZone('MENU', 'controles_techniques~menu');
+        
         return $rep;
     }
 }

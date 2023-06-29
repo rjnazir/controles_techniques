@@ -98,12 +98,12 @@
          */
         function ListeVTbyIsApte($annee){
             $db = jDb::getConnection();
-            $sql= " SELECT DISTINCT `ct_centre`.`ctr_nom`, `ct_carte_grise`.`cg_immatriculation`, `ct_visite`.`vst_date_expiration`, `ct_carte_grise`.`cg_nom`,
-                    `ct_visite`.`vst_is_apte`, `ct_carte_grise`.`cg_prenom`, `ct_carte_grise`.`cg_nom_cooperative`, Max(`ct_visite`.`vst_created`) AS vst_created FROM `ct_visite`
-                    LEFT JOIN `ct_carte_grise` ON `ct_visite`.`ct_carte_grise_id` = `ct_carte_grise`.`id` LEFT JOIN `ct_centre` ON `ct_centre`.`id` = `ct_visite`.`ct_centre_id`
-                    WHERE `ct_visite`.`vst_created` LIKE '".$annee."%' AND `ct_visite`.`ct_utilisation_id` = 1 AND ISNULL(`ct_carte_grise`.`cg_immatriculation`) = FALSE
-                    GROUP BY `ct_centre`.`ctr_nom`, `ct_carte_grise`.`cg_immatriculation`, `ct_visite`.`vst_date_expiration`, `ct_carte_grise`.`cg_nom_cooperative`,
-                    `ct_carte_grise`.`cg_nom`, `ct_visite`.`vst_is_apte`, `ct_carte_grise`.`cg_prenom` ORDER BY `ct_carte_grise`.`cg_immatriculation`";
+            $sql= " SELECT DISTINCT ct_centre.ctr_nom, ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom,
+                    ct_visite.vst_is_apte, ct_carte_grise.cg_prenom, ct_carte_grise.cg_nom_cooperative, Max(ct_visite.vst_created) AS vst_created FROM ct_visite
+                    LEFT JOIN ct_carte_grise ON ct_visite.ct_carte_grise_id = ct_carte_grise.id LEFT JOIN ct_centre ON ct_centre.id = ct_visite.ct_centre_id
+                    WHERE ct_visite.vst_created LIKE '".$annee."%' AND ct_visite.ct_utilisation_id = 1 AND ISNULL(ct_carte_grise.cg_immatriculation) = FALSE
+                    GROUP BY ct_centre.ctr_nom, ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom_cooperative,
+                    ct_carte_grise.cg_nom, ct_visite.vst_is_apte, ct_carte_grise.cg_prenom ORDER BY ct_carte_grise.cg_immatriculation";
             $res = $db->query($sql);
             return $res;
         }
@@ -114,12 +114,12 @@
          */
         function ListeVTbyIsApteLimit($annee, $offset){
             $db = jDb::getConnection();
-            $sql= " SELECT DISTINCT `ct_centre`.`ctr_nom`, `ct_carte_grise`.`cg_immatriculation`, `ct_visite`.`vst_date_expiration`, `ct_carte_grise`.`cg_nom`,
-                    `ct_visite`.`vst_is_apte`, `ct_carte_grise`.`cg_prenom`, `ct_carte_grise`.`cg_nom_cooperative`, Max(`ct_visite`.`vst_created`) AS vst_created FROM `ct_visite`
-                    LEFT JOIN `ct_carte_grise` ON `ct_visite`.`ct_carte_grise_id` = `ct_carte_grise`.`id` LEFT JOIN `ct_centre` ON `ct_centre`.`id` = `ct_visite`.`ct_centre_id`
-                    WHERE `ct_visite`.`vst_created` LIKE '".$annee."%' AND `ct_visite`.`ct_utilisation_id` = 1 AND ISNULL(`ct_carte_grise`.`cg_immatriculation`) = FALSE
-                    GROUP BY `ct_centre`.`ctr_nom`, `ct_carte_grise`.`cg_immatriculation`, `ct_visite`.`vst_date_expiration`, `ct_carte_grise`.`cg_nom_cooperative`,
-                    `ct_carte_grise`.`cg_nom`, `ct_visite`.`vst_is_apte`, `ct_carte_grise`.`cg_prenom` ORDER BY `ct_carte_grise`.`cg_immatriculation`";
+            $sql= " SELECT DISTINCT ct_centre.ctr_nom, ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom,
+                    ct_visite.vst_is_apte, ct_carte_grise.cg_prenom, ct_carte_grise.cg_nom_cooperative, Max(ct_visite.vst_created) AS vst_created FROM ct_visite
+                    LEFT JOIN ct_carte_grise ON ct_visite.ct_carte_grise_id = ct_carte_grise.id LEFT JOIN ct_centre ON ct_centre.id = ct_visite.ct_centre_id
+                    WHERE ct_visite.vst_created LIKE '".$annee."%' AND ct_visite.ct_utilisation_id = 1 AND ISNULL(ct_carte_grise.cg_immatriculation) = FALSE
+                    GROUP BY ct_centre.ctr_nom, ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom_cooperative,
+                    ct_carte_grise.cg_nom, ct_visite.vst_is_apte, ct_carte_grise.cg_prenom ORDER BY ct_carte_grise.cg_immatriculation";
             $res = $db->LimitQuery($sql, $offset, 100);
             return $res;
         }
@@ -132,12 +132,12 @@
         public function CompteVTbyIsApte($annee, $IsApte) {
             $nbr = null;
             $db = jDb::getConnection();
-            $sql= " SELECT DISTINCT `ct_carte_grise`.`cg_immatriculation`, `ct_visite`.`vst_date_expiration`, `ct_carte_grise`.`cg_nom`, `ct_visite`.`vst_is_apte`,
-                    `ct_carte_grise`.`cg_prenom`, `ct_carte_grise`.`cg_nom_cooperative`, Max(`ct_visite`.`vst_created`) AS vst_created FROM `ct_visite`
-                    LEFT JOIN `ct_carte_grise` ON `ct_visite`.`ct_carte_grise_id` = `ct_carte_grise`.`id` WHERE `ct_visite`.`vst_created`
-                    LIKE '".$annee."%' AND `ct_visite`.`ct_utilisation_id` = 1 AND ISNULL(`ct_carte_grise`.`cg_immatriculation`) = FALSE
-                    GROUP BY  `ct_carte_grise`.`cg_immatriculation`, `ct_visite`.`vst_date_expiration`, `ct_carte_grise`.`cg_nom`, `ct_carte_grise`.`cg_nom_cooperative`,
-                    `ct_visite`.`vst_is_apte`, `ct_carte_grise`.`cg_prenom` ORDER BY `ct_carte_grise`.`cg_immatriculation`";
+            $sql= " SELECT DISTINCT ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom, ct_visite.vst_is_apte,
+                    ct_carte_grise.cg_prenom, ct_carte_grise.cg_nom_cooperative, Max(ct_visite.vst_created) AS vst_created FROM ct_visite
+                    LEFT JOIN ct_carte_grise ON ct_visite.ct_carte_grise_id = ct_carte_grise.id WHERE ct_visite.vst_created
+                    LIKE '".$annee."%' AND ct_visite.ct_utilisation_id = 1 AND ISNULL(ct_carte_grise.cg_immatriculation) = FALSE
+                    GROUP BY  ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom, ct_carte_grise.cg_nom_cooperative,
+                    ct_visite.vst_is_apte, ct_carte_grise.cg_prenom ORDER BY ct_carte_grise.cg_immatriculation";
                     
             $res = $db->query($sql);
             foreach($res as $res){
@@ -153,12 +153,12 @@
         public function CompteVTGN($annee) {
             $nbr = null;
             $db = jDb::getConnection();
-            $sql= " SELECT DISTINCT `ct_carte_grise`.`cg_immatriculation`, `ct_visite`.`vst_date_expiration`, `ct_carte_grise`.`cg_nom`, `ct_visite`.`vst_is_apte`,
-                    `ct_carte_grise`.`cg_prenom`, `ct_carte_grise`.`cg_nom_cooperative`, Max(`ct_visite`.`vst_created`) AS vst_created FROM `ct_visite`
-                    LEFT JOIN `ct_carte_grise` ON `ct_visite`.`ct_carte_grise_id` = `ct_carte_grise`.`id` WHERE `ct_visite`.`vst_created`
-                    LIKE '".$annee."%' AND `ct_visite`.`ct_utilisation_id` = 1 AND ISNULL(`ct_carte_grise`.`cg_immatriculation`) = FALSE
-                    GROUP BY `ct_carte_grise`.`cg_immatriculation`, `ct_visite`.`vst_date_expiration`, `ct_carte_grise`.`cg_nom`, `ct_carte_grise`.`cg_nom_cooperative`,
-                    `ct_visite`.`vst_is_apte`, `ct_carte_grise`.`cg_prenom` ORDER BY `ct_carte_grise`.`cg_immatriculation`";
+            $sql= " SELECT DISTINCT ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom, ct_visite.vst_is_apte,
+                    ct_carte_grise.cg_prenom, ct_carte_grise.cg_nom_cooperative, Max(ct_visite.vst_created) AS vst_created FROM ct_visite
+                    LEFT JOIN ct_carte_grise ON ct_visite.ct_carte_grise_id = ct_carte_grise.id WHERE ct_visite.vst_created
+                    LIKE '".$annee."%' AND ct_visite.ct_utilisation_id = 1 AND ISNULL(ct_carte_grise.cg_immatriculation) = FALSE
+                    GROUP BY ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom, ct_carte_grise.cg_nom_cooperative,
+                    ct_visite.vst_is_apte, ct_carte_grise.cg_prenom ORDER BY ct_carte_grise.cg_immatriculation";
                     
             $res = $db->query($sql);
             foreach($res as $res){
@@ -175,12 +175,12 @@
         public function CompteVTGNbyIsApte($annee, $IsApte) {
             $nbr = null;
             $db = jDb::getConnection();
-            $sql= " SELECT DISTINCT `ct_carte_grise`.`cg_immatriculation`, `ct_visite`.`vst_date_expiration`, `ct_carte_grise`.`cg_nom`, `ct_visite`.`vst_is_apte`,
-                    `ct_carte_grise`.`cg_prenom`, `ct_carte_grise`.`cg_nom_cooperative`, Max(`ct_visite`.`vst_created`) AS vst_created FROM `ct_visite`
-                    LEFT JOIN `ct_carte_grise` ON `ct_visite`.`ct_carte_grise_id` = `ct_carte_grise`.`id` WHERE `ct_visite`.`vst_created`
-                    LIKE '".$annee."%' AND `ct_visite`.`ct_utilisation_id` = 1 AND ISNULL(`ct_carte_grise`.`cg_immatriculation`) = FALSE
-                    GROUP BY `ct_carte_grise`.`cg_immatriculation`, `ct_visite`.`vst_date_expiration`, `ct_carte_grise`.`cg_nom`, `ct_carte_grise`.`cg_nom_cooperative`,
-                    `ct_visite`.`vst_is_apte`, `ct_carte_grise`.`cg_prenom` ORDER BY `ct_carte_grise`.`cg_immatriculation`";
+            $sql= " SELECT DISTINCT ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom, ct_visite.vst_is_apte,
+                    ct_carte_grise.cg_prenom, ct_carte_grise.cg_nom_cooperative, Max(ct_visite.vst_created) AS vst_created FROM ct_visite
+                    LEFT JOIN ct_carte_grise ON ct_visite.ct_carte_grise_id = ct_carte_grise.id WHERE ct_visite.vst_created
+                    LIKE '".$annee."%' AND ct_visite.ct_utilisation_id = 1 AND ISNULL(ct_carte_grise.cg_immatriculation) = FALSE
+                    GROUP BY ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom, ct_carte_grise.cg_nom_cooperative,
+                    ct_visite.vst_is_apte, ct_carte_grise.cg_prenom ORDER BY ct_carte_grise.cg_immatriculation";
                     
             $res = $db->query($sql);
             foreach($res as $res){
@@ -244,30 +244,30 @@
             if(empty($isadm)){
                 if(empty($isapte)){
                     if(empty($iscontre)){
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND `ct_visite`.`ct_type_visite_id` = ".$issursite."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND ct_visite.ct_type_visite_id = ".$issursite."";
                     }else{
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                     }
                 }else{
                     if(empty($iscontre)){
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.vst_is_apte =".$isapte."";
                     }else{
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                     }
                 }
             }else{
                 if(empty($isapte)){
                     if(empty($iscontre)){
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm."";
                     }else{
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
 
                     }
                 }else{
                     if(empty($iscontre)){
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte."";
                     }else{
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." AND ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                     }
                 }
             }
@@ -323,30 +323,30 @@
             if(is_null($isadm)){
                 if(is_null($isapte)){
                     if(is_null($iscontre)){
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." ct_visite.ct_type_visite_id = ".$issursite."";
                     }else{
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                     }
                 }else{
                     if(is_null($iscontre)){
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.vst_is_apte =".$isapte."";
                     }else{
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                     }
                 }
             }else{
                 if(is_null($isapte)){
                     if(is_null($iscontre)){
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm."";
                     }else{
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
 
                     }
                 }else{
                     if(is_null($iscontre)){
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte."";
                     }else{
-                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                        $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$center." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                     }
                 }
             }
@@ -645,30 +645,30 @@
                 if(empty($isadm)){
                     if(empty($isapte)){
                         if(empty($iscontre)){
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite."";
                         }else{
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                         }
                     }else{
                         if(empty($iscontre)){
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.vst_is_apte =".$isapte."";
                         }else{
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                         }
                     }
                 }else{
                     if(empty($isapte)){
                         if(empty($iscontre)){
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm."";
                         }else{
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
 
                         }
                     }else{
                         if(empty($iscontre)){
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte."";
                         }else{
-                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." `ct_visite`.`ct_type_visite_id` = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
+                            $sql = "SELECT * FROM ct_visite WHERE ct_visite.vst_created LIKE '".$date."%' AND ".$condition." ct_visite.ct_type_visite_id = ".$issursite." AND ct_visite.ct_utilisation_id = ".$isadm." AND ct_visite.vst_is_apte =".$isapte." AND ct_visite.vst_is_contre_visite = ".$iscontre."";
                         }
                     }
                 }
@@ -911,9 +911,32 @@
         public function getAllCtGenre()
         {
             $db = jDb::getConnection();
-            $sql = "SELECT gr_libelle FROM ct_droit_ptac INNER JOIN ct_genre_categorie ON ct_genre_categorie.id = ct_droit_ptac.ct_genre_categorie_id
-                INNER JOIN ct_genre ON ct_genre_categorie.id = ct_genre.ct_genre_categorie_id WHERE ct_droit_ptac.ct_type_droit_ptac_id = 2
-                GROUP BY ct_genre.gr_libelle";
+            $sql = "SELECT ct_genre.gr_libelle, ct_genre.ct_genre_categorie_id FROM ct_droit_ptac INNER JOIN
+                    ct_genre_categorie ON ct_genre_categorie.id = ct_droit_ptac.ct_genre_categorie_id INNER JOIN
+                    ct_genre ON ct_genre_categorie.id = ct_genre.ct_genre_categorie_id WHERE ct_droit_ptac.ct_type_droit_ptac_id = 2
+                    GROUP BY ct_genre.gr_libelle, ct_genre.ct_genre_categorie_id ORDER BY ct_genre.ct_genre_categorie_id";
+            $r = $db->query($sql);
+            return $r;
+        }
+
+        /**
+         * récupération de donnée du genre selectionné
+         */
+        public function getOneCtGenreByLibelle($lib)
+        {
+            $db = jDb::getDbWidget();
+            $sq = "SELECT * FROM ct_genre WHERE gr_libelle = '".$lib."'";
+            $rs = $db->fetchFirst($sq);
+            return $rs;  
+        }
+
+        /**
+         * Récupération toutes catégories genres de CAD
+         */
+        public function getAllCtGenreCategorie()
+        {
+            $db = jDb::getConnection();
+            $sql = "SELECT * FROM ct_genre_categorie";
             $r = $db->query($sql);
             return $r;
         }

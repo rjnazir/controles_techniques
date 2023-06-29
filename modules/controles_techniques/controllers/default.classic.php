@@ -19,6 +19,10 @@ class defaultCtrl extends jController {
         // this is a call for the 'welcome' zone after creating a new application
         // remove this line !
         $rep->body->assignZone('MAIN', 'jelix~check_install');
+        
+        $rep->addCSSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
+        $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');
+        $rep->body->assignZone('MENU', 'controles_techniques~menu');
 
         return $rep;
     }

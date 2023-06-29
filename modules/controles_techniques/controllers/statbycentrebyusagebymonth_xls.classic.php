@@ -138,6 +138,10 @@ class statbycentrebyusagebymonth_xlsCtrl extends jController {
         echo "</html>";
 
         $rep->bodyTpl = "controles_techniques~statbycentrebyusage";
+        
+        $rep->addCSSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
+        $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');        
+        $rep->body->assignZone('MENU', 'controles_techniques~menu');
 
         return $rep;
     }

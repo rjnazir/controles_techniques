@@ -1,11 +1,18 @@
 <head>
+
 <link href="../../../www/jelix/design/jelix.css" rel="stylesheet" type="text/css" />
 <link href="../../../jelix/design/jelix.css" rel="stylesheet" type="text/css" />
 <link href="/jelix/design/jelix.css" rel="stylesheet" type="text/css" />
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<h1 align="center" class="apptitle">BILAN D'ACTIVITE JOURNALIERE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{jurl 'controles_techniques~default:index'}"><input name="retour" type="button" value="&lt;&lt; Retour" /></a></h1>
+<h1 align="center" class="apptitle">
+	STATISTIQUES ET BILANS DES CONTROLES TECHNIQUES<br/>
+	<span class="welcome">OUTILS DE STATISTIQUE CT - CAD - RT</span>
+	{$MENU}
+</h1>
 <form action="" method="post" enctype="application/x-www-form-urlencoded" name="form">
+<h6 align="center" class="titre2">BILAN D'ACTIVITE JOURNALIERE</h6>
 <table width="100%">
     <tr>
         <td width="2%"></td>
@@ -14,8 +21,8 @@
     		<tr>
                 <td class="corps">Choisir la date :</td>
                 <td></td>
-                <td><input type="date" name="annee" id="annee" value="{if($annee)}{$annee}{/if}" ></td>
-                <td><input name="ok" type="submit" value="Afficher" /></td>
+                <td><input type="date" class="form-control form-control-sm" name="annee" id="annee" value="{if($annee)}{$annee}{/if}" ></td>
+                <td><input name="ok" class="btn btn-sm btn-primary" type="submit" value="Afficher" /></td>
             </tr>
             {if $erreur == true}
             <tr align="center">
@@ -31,10 +38,10 @@
     	</table>
     	{if $res}
     	<p align="center">
-        	<a href="{jurl 'controles_techniques~crbilanquotidien_xls:index', array('annee'=>$annee)}" target="_blank" alt="Exporter en MS Excel" ><img src="../../../msexcel.png" width="3%" alt="Exporter en MS Excel" /></a>
+        	<a href="{jurl 'controles_techniques~crbilanquotidien_xls:index', array('annee'=>$annee)}" target="_blank" >{image 'msexcel.jpg', array('width'=>40, 'alt'=>'Exporter en MS Excel')}</a>
         </p>
-        <table align="center" border="1 red 0.1em">
-          <tr align="center" class="titre2">
+        <table align="center" class="table table-responsive-sm table-striped table-bordered border-primary">
+          <tr align="center">
                 <th rowspan="3" scope="col">N&deg;</th>
                 <th rowspan="3" scope="col">CENTRES</th>
                 <th colspan="5" scope="col">VISITE SUR SITE</th>
@@ -43,7 +50,7 @@
                 <th colspan="3" scope="col">RT</th>
                 <th rowspan="3" scope="col">CAD</th>
             </tr>
-            <tr align="center" class="titre2">
+            <tr align="center">
                 <th colspan="3" scope="col">VISITES</th>
                 <th colspan="2" scope="col">INAPTES</th>
                 <th colspan="3" scope="col">VISITES</th>
@@ -55,7 +62,7 @@
                 <th rowspan="2" scope="col">ADM</th>
                 <th rowspan="2" scope="col">TECG</th>
             </tr>
-            <tr align="center" class="titre2">
+            <tr align="center">
               <th scope="col">TTL</th>
               <th scope="col">CVT</th>
               <th scope="col">ADM</th>
@@ -98,28 +105,28 @@
                 <td align="right">{$res->total_cad}</td>
             </tr>
             {/foreach}
-            <tr class="corps" style="color:#F00; font-weight:bold;">
-            	<th colspan="2" align="right" >TOTAL</th>
-             	<th align="right">{$total}</th>
-             	<th align="right">{$contre}</th>
-            	<th align="right">{$adm}</th>
-            	<th align="right">{$inapte}</th>
-            	<th align="right">{$ife}</th>
-            	<th align="right">{$itiner}</th>
-            	<th align="right">{$cvitiner}</th>
-            	<th align="right">{$admitiner}</th>
-            	<th align="right">{$inptitiner}</th>
-            	<th align="right">{$ifeitiner}</th>
-            	<th align="right">{$rtitiner}</th>
-            	<th align="right">{$domicile}</th>
-            	<th align="right">{$contredom}</th>
-            	<th align="right">{$admdom}</th>
-            	<th align="right">{$inaptedom}</th>
-            	<th align="right">{$ifedom}</th>
-            	<th align="right">{$rt}</th>
-            	<th align="right">{$rtadm}</th>
-            	<th align="right">{$rttecg}</th>
-            	<th align="right">{$cad}</th>
+            <tr align="right" style="color:#F00; font-weight:bold;">
+            	<th colspan="2" >TOTAL</th>
+             	<th>{$total}</th>
+             	<th>{$contre}</th>
+            	<th>{$adm}</th>
+            	<th>{$inapte}</th>
+            	<th>{$ife}</th>
+            	<th>{$itiner}</th>
+            	<th>{$cvitiner}</th>
+            	<th>{$admitiner}</th>
+            	<th>{$inptitiner}</th>
+            	<th>{$ifeitiner}</th>
+            	<th>{$rtitiner}</th>
+            	<th>{$domicile}</th>
+            	<th>{$contredom}</th>
+            	<th>{$admdom}</th>
+            	<th>{$inaptedom}</th>
+            	<th>{$ifedom}</th>
+            	<th>{$rt}</th>
+            	<th>{$rtadm}</th>
+            	<th>{$rttecg}</th>
+            	<th>{$cad}</th>
        	   </tr>
         </table>
     	{/if}
@@ -129,7 +136,7 @@
     <tr>
     	<td></td>
     	<td align="center">
-        	<table border="0">
+        	<table border="0" class="table table-sm table-striped">
             	<tr align="left">
                 	<th colspan="3"><u>LEGENDES</u> :</th>
                 </tr>

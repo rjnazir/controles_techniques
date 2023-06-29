@@ -182,6 +182,10 @@ class crbilanquotidienCtrl extends jController {
         $rep->body->assign('annee', $annee);
         $rep->body->assign('erreur', $erreur);
         $rep->body->assign('res', $res);
+        
+        $rep->addCSSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
+        $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');        
+        $rep->body->assignZone('MENU', 'controles_techniques~menu');
 
         return $rep;
     }

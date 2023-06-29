@@ -1,6 +1,11 @@
 <link href="../../../www/jelix/design/jelix.css" rel="stylesheet" type="text/css" />
 <link href="../../../jelix/design/jelix.css" rel="stylesheet" type="text/css" />
-<h1 align="center" class="apptitle">STATISTIQUE DE VISITES PAR USAGES EFFECTIFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{jurl 'controles_techniques~default:index'}"><input name="retour" type="button" value="&lt;&lt; Retour" /></a></h1>
+{* <h1 align="center" class="apptitle">STATISTIQUE DE VISITES PAR USAGES EFFECTIFS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{jurl 'controles_techniques~default:index'}"><input name="retour" type="button" value="&lt;&lt; Retour" /></a></h1> *}
+<h1 align="center" class="apptitle">
+	STATISTIQUES ET BILANS DES CONTROLES TECHNIQUES<br/>
+	<span class="welcome">OUTILS DE STATISTIQUE CT - CAD - RT</span>
+	{$MENU}
+</h1>
 <form action="" name="formulaire">
 <table align="center">
   <tr>
