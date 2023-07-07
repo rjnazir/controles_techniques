@@ -52,7 +52,6 @@
     	{* <p align="center">
         	<a href="{jurl 'controles_techniques~cad_stat_motif_centre_periode_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" target="_blank" alt="Exporter en MS Excel" >{image 'msexcel.jpg', array('width'=>40)}</a>
         </p> *}
-        <p></p>
         <table align="center" class="table table-sm table-responsive-sm table-striped table-bordered border-primary">
             <thead class="titre2" style="font-size:xx-small;" >
                 <tr>

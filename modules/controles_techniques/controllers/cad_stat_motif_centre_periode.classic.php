@@ -37,7 +37,7 @@ class cad_stat_motif_centre_periodeCtrl extends jController {
                 $erreur = true;
             }else{
                 in_array($centre, array(3,4,6,12)) ? $_c = 26 : $_c = $centre;
-                $code = $myclass->getCentreById($_c);
+                $code = $centre != 99999 ? $myclass->getCentreById($_c) : '';
                 $periode = $myclass->convertToMonth($trimestre);
                 $genre = $myclass->getAllCtGenre();
                 $categorie = $myclass->getAllCtGenreCategorie();

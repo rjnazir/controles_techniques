@@ -44,7 +44,7 @@ class rt_stat_motif_centre_periodeCtrl extends jController {
                     $_mtf   = $myclass->getCtMotifById($_idmtf);
                     $_result[$_i]['motif'] = utf8_encode($_motifs->mtf_libelle);
                     in_array($centre, array(3,4,6,12)) ? $_c = 26 : $_c = $centre;
-                    $code = $myclass->getCentreById($_c);
+                    $code = $centre != 1000 ? $myclass->getCentreById($_c) : '';
                     $_result[$_i]['rtpartvhlimmmga'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 2, 0, '');
                     $_result[$_i]['rtadmnvhlimmmga'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1, 0, '');
                     $_result[$_i]['rtttalvhlimmmga'] = $myclass->getCompteRtByMotifByCentre($code, $_idmtf, $annee, $periode, 1000, 0, '');

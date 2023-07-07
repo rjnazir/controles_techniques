@@ -42,7 +42,7 @@ class statbycentrebyusagebymonthCtrl extends jController {
                 foreach($_usage as $_usage){
                     $usage = $_usage->id;
                     $_result[$_i]['usage'] = utf8_encode($_usage->usg_libelle);
-                    $code = $myclass->getCentreById($centre);
+                    $code = $centre != 1000 ? $myclass->getCentreById($centre) : '';
                     $_result[$_i]['sspartprem'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 2, 1000, 0);
                     $_result[$_i]['sspartcntr'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 2, 1000, 1);
                     $_result[$_i]['ssadmiprem'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 1, 1000, 0);

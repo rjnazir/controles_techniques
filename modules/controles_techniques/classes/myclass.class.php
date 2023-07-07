@@ -855,6 +855,8 @@
          */
         function getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, $typevst, $isadmin, $isapte, $iscontre)
         {
+            $_c_code = null; $_c_usage = null; $_c_periode = null;
+
             if(isset($code) and !empty($code)){
                 $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
             }
@@ -966,6 +968,8 @@
          */
         function getCompteRtByMotifByCentre($code, $motif, $annee, $periode, $isadmin, $isvhlimmmga, $tonnage)
         {
+            $_c_code = null; $_c_motif = null; $_c_periode = null;
+
             if(isset($code) and !empty($code)){
                 $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
             }
@@ -1023,6 +1027,8 @@
          */
         function getCompteCadByMotifByCentre($code, $annee, $periode, $tonnage, $genre)
         {
+            $_c_code = null; $_c_periode = null;
+            
             if(isset($code) and !empty($code)){
                 $_c_code = ' AND ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
             }
