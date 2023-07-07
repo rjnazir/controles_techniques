@@ -859,7 +859,11 @@
                 $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
             }
             if(isset($usage) and !empty($usage)){
-                $_c_usage = ' AND ct_usage_id = '.$usage;
+                if(is_null($_c_code)){
+                    $_c_usage = 'ct_usage_id = '.$usage;
+                }ELSE{
+                    $_c_usage = ' AND ct_usage_id = '.$usage;
+                }
             }
             if(strlen($periode) != 7 AND $annee != 1000){
                 if(isset($annee) and isset($periode) and !empty($annee) and !empty($periode)){
@@ -966,7 +970,11 @@
                 $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
             }
             if(isset($motif) and !empty($motif)){
-                $_c_motif = ' AND ct_motif_id = '.$motif;
+                if(is_null($_c_code)){
+                    $_c_motif = 'ct_motif_id = '.$motif;
+                }else{
+                    $_c_motif = ' AND ct_motif_id = '.$motif;
+                }
             }
             if(strlen($periode) != 7 AND $annee != 1000){
                 if(isset($annee) and isset($periode) and !empty($annee) and !empty($periode)){

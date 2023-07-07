@@ -27,7 +27,7 @@
                         {foreach $centres as $centres}
                         <option value="{$centres->id}" {if $centres->id == $centre}selected{/if}>{$centres->ctr_nom}</option>
                         {/foreach}
-                        {* <option value="1000">TOUS CENTRES</option> *}
+                        <option value="1000" {if "1000"== $centre}selected{/if}>TOUS CENTRES</option>
                     </select>
                 </td>
                 <td>
