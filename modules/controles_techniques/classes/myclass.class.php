@@ -855,7 +855,13 @@
          */
         function getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, $typevst, $isadmin, $isapte, $iscontre)
         {
-            $_c_code = null; $_c_usage = null; $_c_periode = null;
+            if(is_null($code)) $_c_code = null;
+            if(is_null($usage)) $_c_usage = null;
+            if(is_null($periode)) $_c_periode = null;
+            if(is_null($typevst)) $_c_cvisite = null;
+            if(is_null($isadmin)) $_c_isadmin = null;
+            if(is_null($isapte)) $_c_isapte = null;
+            if(is_null($iscontre)) $_c_iscontre= null;
 
             if(isset($code) and !empty($code)){
                 $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';

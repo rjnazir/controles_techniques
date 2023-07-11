@@ -25,7 +25,7 @@ class rt_stat_motif_centre_periodeCtrl extends jController {
 
         // Recupération des variables
         $OK = $this->param("OK");
-        $annee = 1000;
+        $annee = null;
         $centre = $this->param("centre");
         $trimestre = $this->param("trimestre");
         $centres = $myclass->getCentreParent2();
@@ -64,6 +64,7 @@ class rt_stat_motif_centre_periodeCtrl extends jController {
                 }
                 $rep->body->assign('result', $_result);
                 $rep->body->assign('motifs', $_motifs);
+                $rep->body->assignZone('res_rt_stat', 'controles_techniques~res_rt_stat_motif_centre_periode', array('result'=>$_result));
             }
         }
 
@@ -77,6 +78,7 @@ class rt_stat_motif_centre_periodeCtrl extends jController {
         
         $rep->addCSSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
         $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');        
+        $rep->addJSLink('https://kit.fontawesome.com/13957d2282.js');
         $rep->body->assignZone('MENU', 'controles_techniques~menu');
         
         return $rep;

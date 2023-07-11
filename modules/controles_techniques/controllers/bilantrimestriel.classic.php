@@ -103,6 +103,8 @@ class bilantrimestrielCtrl extends jController {
                     }
 
                     //renvoi des valeurs recupérées
+                    $rep->body->assignZone('resultbilantrimestriel', 'controles_techniques~resultbilantrimestriel', array('res'=>$_result));
+
                     $rep->body->assign('usage', $_usage);
                     $rep->body->assign('ctres', $_ctres);
                 }
@@ -118,6 +120,7 @@ class bilantrimestrielCtrl extends jController {
         
         $rep->addCSSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
         $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');        
+        $rep->addJSLink('https://kit.fontawesome.com/13957d2282.js');
         $rep->body->assignZone('MENU', 'controles_techniques~menu');
         
         return $rep;

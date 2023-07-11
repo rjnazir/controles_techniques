@@ -77,7 +77,8 @@ class imm_doublonsCtrl extends jController {
         $rep->bodyTpl = "controles_techniques~main";
         
         $rep->addCSSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
-        $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');        
+        $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');
+        $rep->addJSLink('https://kit.fontawesome.com/13957d2282.js');
         $rep->body->assignZone('MENU', 'controles_techniques~menu');
         
         return $rep;

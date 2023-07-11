@@ -31,7 +31,17 @@
                     </select>
                 </td>
                 <td><input type="text" class="form-control form-control-sm" maxlength="4" width="4" name="annee" id="annee" placeholder="Ex : 2001" value="{if($annee)}{$annee}{/if}" ></td>
-                <td><input name="ok" class="btn btn-sm btn-primary" type="submit" value="Afficher" /></td>
+                <td>
+                    <input name="ok" class="btn btn-sm btn-primary" type="submit" value="Afficher" />
+                    {if !empty($res)}
+						<a href="{jurl 'controles_techniques~bilantrimestriel_xls:index', array('annee'=>$annee, 'trimestre'=>$trimestre)}" class="btn btn-sm btn-success btn-icon-split ml-2 mr-2">
+							<span class="icon text-white-50">
+								<i class="fa fa-file-excel-o"></i>
+							</span>
+							<span class="text">Exporter en MS Excel</span>
+						</a>
+                    {/if}
+                </td>
             </tr>
             {if $erreur == true}
             <tr align="center">
@@ -46,71 +56,7 @@
             {/if}
     	</table>
     	{if !empty($res)}
-    	{* <p align="center">
-        	<a href="{jurl 'controles_techniques~crbilanquotidien_xls:index', array('annee'=>$annee)}" target="_blank" alt="Exporter en MS Excel" ><img src="../../../msexcel.png" width="3%" alt="Exporter en MS Excel" /></a>
-        </p> *}
-        <table align="center" class="table table-sm table-responsive-sm table-striped table-bordered border-primary">
-            <thead class="titre2" style="font-size: xx-small;">
-                <tr>
-                    <th></th>
-                    <th>DOR</th>
-                    <th>BGL</th>
-                    <th>ALS</th>
-                    <th>IVT</th>
-                    <th>ABE</th>
-                    <th>TDD</th>
-                    <th>TNA</th>
-                    <th>AKA</th>
-                    <th>FVE</th>
-                    <th>MOG</th>
-                    <th>ANA</th>
-                    <th>SVA</th>
-                    <th>NSB</th>
-                    <th>FNR</th>
-                    <th>ATR</th>
-                    <th>MRA</th>
-                    <th>FNA</th>
-                    <th>IHO</th>
-                    <th>TLR</th>
-                    <th>MVA</th>
-                    <th>TRO</th>
-                    <th>ABA</th>
-                    <th>MGA</th>
-                    <th>ATH</th>
-                </tr>
-            </thead>
-            <tbody>
-                {foreach $res as $res}
-                    <tr align="right" class="corps" style="background:{cycle array('#CCCCCC','#FFFFFF')}" style="font-size: xx-small;">
-                        <td align="left">{$res['usg_libelle']}</td>
-                        <td>{$res['vt_total001']}</td>
-                        <td>{$res['vt_total002']}</td>
-                        <td>{$res['vt_total004']}</td>
-                        <td>{$res['vt_total010']}</td>
-                        <td>{$res['vt_total023']}</td>
-                        <td>{$res['vt_total027']}</td>
-                        <td>{$res['vt_total005']}</td>
-                        <td>{$res['vt_total016']}</td>
-                        <td>{$res['vt_total017']}</td>
-                        <td>{$res['vt_total018']}</td>
-                        <td>{$res['vt_total009']}</td>
-                        <td>{$res['vt_total019']}</td>
-                        <td>{$res['vt_total029']}</td>
-                        <td>{$res['vt_total007']}</td>
-                        <td>{$res['vt_total015']}</td>
-                        <td>{$res['vt_total021']}</td>
-                        <td>{$res['vt_total022']}</td>
-                        <td>{$res['vt_total025']}</td>
-                        <td>{$res['vt_total008']}</td>
-                        <td>{$res['vt_total011']}</td>
-                        <td>{$res['vt_total013']}</td>
-                        <td>{$res['vt_total014']}</td>
-                        <td>{$res['vt_total020']}</td>
-                        <td>{$res['vt_total026']}</td>
-                    </tr>
-                {/foreach}
-            </tbody>
-        </table>
+            {$resultbilantrimestriel}
     	{/if}
     	</td>
    		<td width="2%"></td>

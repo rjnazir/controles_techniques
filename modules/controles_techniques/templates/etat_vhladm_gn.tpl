@@ -22,13 +22,21 @@
 					<td class="corps">Choisir la date :</td>
 					<td></td>
 					<td><input type="month" class="form-control form-control-sm" name="annee" id="annee" value='{if($annee)}{$annee}{/if}' ></td>
-					<td><input name="ok" class="btn btn-sm btn-primary" type="submit" value="Afficher" /></td>
+					<td>
+						<input name="ok" class="btn btn-sm btn-primary" type="submit" value="Afficher" />
+						{if $nbr != null}
+						<a href="{jurl 'controles_techniques~etat_vhladm_gn_xls:index', array('annee'=>$annee,'res'=>$res)}" class="btn btn-sm btn-success btn-icon-split ml-2 mr-2">
+							<span class="icon text-white-50">
+								<i class="fa fa-file-excel-o"></i>
+							</span>
+							<span class="text">Exporter en MS Excel</span>
+						</a>
+						{/if}
+					</td>
                 </tr>
             </table>
 			{if $nbr != null}
-			<p>
-				<a href="{jurl 'controles_techniques~etat_vhladm_gn_xls:index', array('annee'=>$annee,'res'=>$res)}" target="_blank">{image 'msexcel.jpg', array('width'=>40, 'alt'=>'Exporter en MS Excel')}</a>
-			</p>
+
 			<table align="center" class="table table-sm table-responsive-sm table-striped table-bordered border-primary">
 				<tr align="center" class="titre2">
 					<th scope="col">N&deg;</th>

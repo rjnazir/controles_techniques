@@ -42,7 +42,7 @@ class statbycentrebyusageCtrl extends jController {
                 foreach($_usage as $_usage){
                     $usage = $_usage->id;
                     $_result[$_i]['usage'] = utf8_encode($_usage->usg_libelle);
-                    $code = $myclass->getCentreById($centre);
+                    $code = $centre != "1000" ? $myclass->getCentreById($centre) : '';
                     $_result[$_i]['sspartprem'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 2, 1000, 0);
                     $_result[$_i]['sspartcntr'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 2, 1000, 1);
                     $_result[$_i]['ssadmiprem'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 1, 1000, 0);
@@ -71,6 +71,7 @@ class statbycentrebyusageCtrl extends jController {
         
         $rep->addCSSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
         $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');        
+        $rep->addJSLink('https://kit.fontawesome.com/13957d2282.js');
         $rep->body->assignZone('MENU', 'controles_techniques~menu');
                 
         return $rep;

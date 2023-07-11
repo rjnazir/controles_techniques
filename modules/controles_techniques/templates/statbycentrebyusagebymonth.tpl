@@ -33,7 +33,17 @@
                 <td>
                     <input type="month" class="form-control form-control-sm" name="trimestre" id="trimestre" {if $trimestre}value={$trimestre}{/if}>
                 </td>
-                <td><input name="OK" class="btn btn-sm btn-primary" type="submit" value="Afficher" /></td>
+                <td>
+                    <input name="OK" class="btn btn-sm btn-primary" type="submit" value="Afficher" />
+                    {if !empty($result)}
+                    <a href="{jurl 'controles_techniques~statbycentrebyusagebymonth_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" class="btn btn-sm btn-success btn-icon-split ml-2 mr-2">
+                        <span class="icon text-white-50">
+                            <i class="fa fa-file-excel-o"></i>
+                        </span>
+                        <span class="text">Exporter en MS Excel</span>
+                    </a>
+                    {/if}
+                </td>
             </tr>
             {if $erreur == true}
             <tr align="center">
@@ -47,10 +57,7 @@
             </tr>
             {/if}
     	</table>
-    	{if !empty($result)}
-    	{* <p align="center">
-        	<a href="{jurl 'controles_techniques~statbycentrebyusagebymonth_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" target="_blank" alt="Exporter en MS Excel" >{image 'msexcel.jpg', array('width'=>40, 'alt'=>'Exporter en MS Excel')}</a>
-        </p> *}
+        {if !empty($result)}
         <table align="center" class="table table-sm table-responsive table-striped table-bordered border-primary">
             <thead class="titre2" style="font-size: xx-small;">
                 <tr>
