@@ -64,17 +64,8 @@
                     <th rowspan="2">USAGES EFFECTIFS</th>
                     <th colspan="5">SUR SITE</th>
                     <th colspan="5">ITINERANTE</th>
-                    {* <th rowspan="3">TOTAL</th>
-                    <th colspan="4">A DOMICILE</th>
-                    <th rowspan="3">TOTAL</th>
-                    <th rowspan="3">TOTAL GENERAL</th> *}
+                    <th colspan="5">A DOMICILE</th>
                 </tr>
-                {* <tr>
-                    <th colspan="2">PARTICULIER</th>
-                    <th colspan="2">ADMISTRATIF</th>
-                    <th colspan="2">PARTICULIER</th>
-                    <th colspan="2">ADMISTRATIF</th>
-                </tr> *}
                 <tr>
                     <th>APTES</th>
                     <th>INAPTES</th>
@@ -86,9 +77,11 @@
                     <th>PAYANTES</th>
                     <th>GRATUITES</th>
                     <th>TOTAL</th>
-                    {* <th>CONTRE</th>
-                    <th>PREMIER</th>
-                    <th>CONTRE</th> *}
+                    <th>APTES</th>
+                    <th>INAPTES</th>
+                    <th>PAYANTES</th>
+                    <th>GRATUITES</th>
+                    <th>TOTAL</th>
                 </tr>
             </thead>
             <tbody>
@@ -105,6 +98,12 @@
                         <td>{$result['ssitintotalp']}</td>
                         <td>{$result['ssitinadmin']}</td>
                         <td>{$result['ssitintotal']}</td>
+
+                        <td>{$result['adpartapte']}</td>
+                        <td>{$result['adpartinapte']}</td>
+                        <td>{$result['adtotalpremi']}</td>
+                        <td>{$result['adtotaladmin']}</td>
+                        <td>{$result['adtotalgener']}</td>
                         {* <td>{$result['totalgener']}</td> *}
                     </tr>
                 {/foreach}
