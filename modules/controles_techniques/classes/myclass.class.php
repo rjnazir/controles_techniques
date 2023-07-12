@@ -853,7 +853,7 @@
          * @param $iscontre : Genre de visite première ou contre
          * @return $nombre  : Nombre de visite remplicant les condition;
          */
-        function getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, $typevst, $isadmin, $isapte, $iscontre)
+        function getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, $typevst, $isadmin, $isapte, $iscontre, $isitin)
         {
             if(is_null($code)) $_c_code = null;
             if(is_null($usage)) $_c_usage = null;
@@ -864,7 +864,13 @@
             if(is_null($iscontre)) $_c_iscontre= null;
 
             if(isset($code) and !empty($code)){
-                $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
+                switch($isitin){
+                    case 0 : $_c_code = 'ct_centre_id = '.$code.'';break;
+                    case 1 :
+                        $_ctr_code = $this->getCentreById($code);
+                        $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$_ctr_code.'" AND id != '.$code.')';break;
+                    default: $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
+                } 
             }
             if(isset($usage) and !empty($usage)){
                 if(is_null($_c_code)){
