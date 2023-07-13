@@ -865,11 +865,11 @@
 
             if(isset($code) and !empty($code)){
                 switch($isitin){
-                    case 0 : $_c_code = 'ct_centre_id = '.$code.'';break;
+                    case 0 : $_c_code = 'AND ct_visite.ct_centre_id = '.$code.'';break;
                     case 1 :
                         $_ctr_code = $this->getCentreById($code);
-                        $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$_ctr_code.'" AND id != '.$code.')';break;
-                    default: $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
+                        $_c_code = 'AND ct_visite.ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$_ctr_code.'" AND id != '.$code.')';break;
+                    default: $_c_code = 'AND ct_visite.ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
                 } 
             }
             if(isset($usage) and !empty($usage)){
@@ -907,7 +907,7 @@
                 case 1000 : $_c_iscontre= '';break;
             }
             $d = jDb::getDbWidget();
-            $s = "SELECT COUNT(*) AS nombre_vt FROM ct_visite WHERE $_c_code $_c_usage $_c_periode $_c_cvisite $_c_isadmin $_c_isapte $_c_iscontre";
+            $s = "SELECT COUNT(*) AS nombre_vt FROM ct_visite INNER JOIN ct_carte_grise ON ct_visite.ct_carte_grise_id = ct_carte_grise.id WHERE ISNULL(cg_immatriculation) = FALSE $_c_code $_c_usage $_c_periode $_c_cvisite $_c_isadmin $_c_isapte $_c_iscontre";
             $nombre = $d->fetchFirst($s)->nombre_vt;
             return $nombre;
         }
