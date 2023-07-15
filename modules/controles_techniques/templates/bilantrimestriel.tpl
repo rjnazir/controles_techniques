@@ -33,14 +33,14 @@
                 <td><input type="text" class="form-control form-control-sm" maxlength="4" width="4" name="annee" id="annee" placeholder="Ex : 2001" value="{if($annee)}{$annee}{/if}" ></td>
                 <td>
                     <input name="ok" class="btn btn-sm btn-primary" type="submit" value="Afficher" />
-                    {if !empty($res)}
+                    {* {if !empty($res)}
 						<a href="{jurl 'controles_techniques~bilantrimestriel_xls:index', array('annee'=>$annee, 'trimestre'=>$trimestre)}" class="btn btn-sm btn-success btn-icon-split ml-2 mr-2">
 							<span class="icon text-white-50">
 								<i class="fa fa-file-excel-o"></i>
 							</span>
 							<span class="text">Exporter en MS Excel</span>
 						</a>
-                    {/if}
+                    {/if} *}
                 </td>
             </tr>
             {if $erreur == true}

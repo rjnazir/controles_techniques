@@ -42,14 +42,14 @@
                 <td><input type="text" maxlength="4" class="form-control form-control-sm" width="4" name="annee" id="annee" placeholder="Ex: 2023" value="{if($annee)}{$annee}{/if}" ></td>
                 <td>
                     <input name="OK" class="btn btn-sm btn-primary" type="submit" value="Afficher" />
-    	            {if !empty($result)}
+    	            {* {if !empty($result)}
 						<a href="{jurl 'controles_techniques~statbycentrebyusage_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" class="btn btn-sm btn-success btn-icon-split ml-2 mr-2">
 							<span class="icon text-white-50">
 								<i class="fa fa-file-excel-o"></i>
 							</span>
 							<span class="text">Exporter en MS Excel</span>
 						</a>
-                    {/if}
+                    {/if} *}
                 </td>
             </tr>
             {if $erreur == true}

@@ -35,14 +35,14 @@
                 </td>
                 <td>
                     <input name="OK" class="btn btn-sm btn-primary" type="submit" value="Afficher" />
-                    {if !empty($result)}
+                    {* {if !empty($result)}
                         <a href="{jurl 'controles_techniques~rt_stat_motif_centre_periode_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre)}" class="btn btn-sm btn-success btn-icon-split ml-2 mr-2">
                             <span class="icon text-white-50">
                                 <i class="fa fa-file-excel-o"></i>
                             </span>
                             <span class="text">Exporter en MS Excel</span>
                         </a>
-                    {/if}
+                    {/if} *}
                 </td>
             </tr>
             {if $erreur == true}
