@@ -879,7 +879,7 @@
                     $_c_usage = ' AND ct_usage_id = '.$usage;
                 }
             }
-            if(strlen($periode) != 7 AND $annee != 1000){
+            if(strlen($periode) != 7 AND strlen($periode) != 10 AND $annee != 1000){
                 if(isset($annee) and isset($periode) and !empty($annee) and !empty($periode)){
                     $_c_periode = ' AND (Year(vst_created) = '.$annee.' AND MONTH(vst_created) IN '.$periode.')';
                 }

@@ -12,7 +12,7 @@
 	{$MENU}
 </h1>
 <form action="" method="post" enctype="application/x-www-form-urlencoded" name="form">
-<h6 align="center" class="titre2">STATISTIQUE TRIMESTRIELLE VISITE PAR USAGES EFFECTIFS</h6>
+<h6 align="center" class="titre2">STATISTIQUE JOURNALIERE VISITE PAR USAGES EFFECTIFS</h6>
 <table width="100%">
     <tr>
         <td width="2%"></td>
@@ -27,16 +27,16 @@
                         {foreach $centres as $centres}
                         <option value="{$centres->id}" {if $centres->id == $centre}selected{/if}>{$centres->ctr_nom}</option>
                         {/foreach}
-                        <option value="99999" {if "99999" == $centre}selected{/if}>TOUS CENTRES</option>
+                        <option value="1000" {if "1000" == $centre}selected{/if}>TOUS CENTRES</option>
                     </select>
                 </td>
                 <td>
-                    <input type="month" class="form-control form-control-sm" name="trimestre" id="trimestre" {if $trimestre}value={$trimestre}{/if}>
+                    <input type="date" class="form-control form-control-sm" name="trimestre" id="trimestre" {if $trimestre}value={$trimestre}{/if}>
                 </td>
                 <td>
                     <input name="OK" class="btn btn-sm btn-primary" type="submit" value="Afficher" />
                     {if !empty($result)}
-                    <a href="{jurl 'controles_techniques~statbycentrebyusagebymonth_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" class="btn btn-sm btn-success btn-icon-split ml-2 mr-2">
+                    <a href="{jurl 'controles_techniques~statbycentrebyusagebyday_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" class="btn btn-sm btn-success btn-icon-split ml-2 mr-2">
                         <span class="icon text-white-50">
                             <i class="fa fa-file-excel-o"></i>
                         </span>
@@ -58,7 +58,7 @@
             {/if}
     	</table>
         {if !empty($result)}
-            {$res_vt_month}
+            {$res_vt_stat}
     	{/if}
     	</td>
    		<td width="2%"></td>

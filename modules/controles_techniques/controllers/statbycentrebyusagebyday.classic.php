@@ -8,13 +8,13 @@
 * @license    All rights reserved
 */
 
-class statbycentrebyusagebymonthCtrl extends jController {
+class statbycentrebyusagebydayCtrl extends jController {
     /**
     *
     */
     function index() {
         $rep = $this->getResponse('html');
-        $rep->bodyTpl = "controles_techniques~statbycentrebyusagebymonth";
+        $rep->bodyTpl = "controles_techniques~statbycentrebyusagebyday";
         $rep->title = "STATISTIQUE MENSUELLE PAR USAGE PAR CENTRE DES VISITES";
 
         //Initialisation
@@ -25,7 +25,7 @@ class statbycentrebyusagebymonthCtrl extends jController {
 
         // Recupération des variables
         $OK = $this->param("OK");
-        $annee = 1000;
+        $annee = null;
         $centre = $this->param("centre");
         $trimestre = $this->param("trimestre");
         $centres = $myclass->getCentreParent2();
@@ -69,6 +69,7 @@ class statbycentrebyusagebymonthCtrl extends jController {
                 }
                 $rep->body->assign('result', $_result);
                 $rep->body->assign('usage', $_usage);
+                $rep->body->assignZone('res_vt_stat', 'controles_techniques~res_statbycentrebyusagebyday', array('result'=>$_result));
             }
         }
 

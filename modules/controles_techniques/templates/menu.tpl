@@ -15,9 +15,9 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{jurl 'controles_techniques~etat_vhladm_gn:index'}">Véhicules administratifs</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{jurl 'controles_techniques~statbycentrebyusagebymonth:index'}">Mensuelle par usage</a></li>
+                        <li><a class="dropdown-item" href="{jurl 'controles_techniques~statbycentrebyusagebyday:index'}">Journalière par usage</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{jurl 'controles_techniques~statbycentrebyusagebymonth2:index'}">Mensuelle par usage (2)</a></li>
+                        <li><a class="dropdown-item" href="{jurl 'controles_techniques~statbycentrebyusagebymonth2:index'}">Mensuelle par usage</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="{jurl 'controles_techniques~statbycentrebyusage:index'}">Trimestrielle par usage</a></li>
                         <li><hr class="dropdown-divider"></li>

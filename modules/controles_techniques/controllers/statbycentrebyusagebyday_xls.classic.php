@@ -8,7 +8,7 @@
 * @license    All rights reserved
 */
 
-class statbycentrebyusagebymonth_xlsCtrl extends jController {
+class statbycentrebyusagebyday_xlsCtrl extends jController {
     /**
     *
     */

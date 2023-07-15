@@ -42,7 +42,7 @@ class statbycentrebyusagebymonth2Ctrl extends jController {
                 foreach($_usage as $_usage){
                     $usage = $_usage->id;
                     $_result[$_i]['usage'] = utf8_encode($_usage->usg_libelle);
-                    $code = $centre != 1000 ? $centre : '';
+                    $code = $centre != '99999' ? $centre : '';
                     //sur site
                     $_result[$_i]['sspartprem'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 2, 1, 0, 0);        //aptes
                     $_result[$_i]['sspartcntr'] = $myclass->getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, 1, 2, 0, 0, 0);        //inaptes
@@ -65,6 +65,7 @@ class statbycentrebyusagebymonth2Ctrl extends jController {
                 }
                 $rep->body->assign('result', $_result);
                 $rep->body->assign('usage', $_usage);
+                $rep->body->assignZone('res_vt_month', 'controles_techniques~res_statbycentrebyusagebymonth', array('result'=>$_result));
             }
         }
 
