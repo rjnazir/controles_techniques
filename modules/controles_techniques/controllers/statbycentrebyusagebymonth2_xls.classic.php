@@ -8,7 +8,7 @@
 * @license    All rights reserved
 */
 
-class statbycentrebyusagebyday_xlsCtrl extends jController {
+class statbycentrebyusagebymonth2_xlsCtrl extends jController {
     /**
     *
     */
@@ -66,7 +66,7 @@ class statbycentrebyusagebyday_xlsCtrl extends jController {
             $rep->body->assign('usage', $_usage);
         }
 
-        $fichier .= jZone::get('controles_techniques~res_statbycentrebyusagebyday', array('result'=>$_result));
+        $fichier .= jZone::get('controles_techniques~res_statbycentrebyusagebymonth', array('result'=>$result));
 
         // Declaration du type de contenu
         $file_mane = 'STATISTIQUE VT' . $nom_centre .' '. $trim;
@@ -81,7 +81,7 @@ class statbycentrebyusagebyday_xlsCtrl extends jController {
         echo "</body>";
         echo "</html>";
 
-        $rep->bodyTpl = "controles_techniques~statbycentrebyusage";
+        $rep->bodyTpl = "controles_techniques~statbycentrebyusagebymonth2";
         
         $rep->addCSSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
         $rep->addJSLink('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js');        
@@ -93,3 +93,4 @@ class statbycentrebyusagebyday_xlsCtrl extends jController {
         return $rep;
     }
 }
+

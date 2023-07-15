@@ -36,7 +36,7 @@
                 <td>
                     <input name="OK" class="btn btn-sm btn-primary" type="submit" value="Afficher" />
                     {if !empty($result)}
-                    <a href="{jurl 'controles_techniques~statbycentrebyusagebymonth_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" class="btn btn-sm btn-success btn-icon-split ml-2 mr-2">
+                    <a href="{jurl 'controles_techniques~statbycentrebyusagebymonth2_xls:index', array('centre'=>$centre, 'trimestre'=>$trimestre, 'annee'=>$annee)}" class="btn btn-sm btn-success btn-icon-split ml-2 mr-2">
                         <span class="icon text-white-50">
                             <i class="fa fa-file-excel-o"></i>
                         </span>

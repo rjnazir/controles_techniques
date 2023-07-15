@@ -767,7 +767,8 @@
         function getUsageAll()
         {
             $db = jDb::getConnection();
-            $sql = "SELECT * FROM ct_usage ORDER BY id ASC";
+            // $sql = "SELECT * FROM ct_usage ORDER BY id ASC";
+            $sql = "SELECT * FROM ct_usage ORDER BY usg_libelle ASC";
             $r = $db->query($sql);
             return $r;
         }
@@ -855,21 +856,35 @@
          */
         function getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, $typevst, $isadmin, $isapte, $iscontre, $isitin)
         {
-            if(is_null($code)) $_c_code = null;
-            if(is_null($usage)) $_c_usage = null;
-            if(is_null($periode)) $_c_periode = null;
-            if(is_null($typevst)) $_c_cvisite = null;
-            if(is_null($isadmin)) $_c_isadmin = null;
-            if(is_null($isapte)) $_c_isapte = null;
-            if(is_null($iscontre)) $_c_iscontre= null;
+            if(is_null($code))      $_c_code    = null;
+            if(is_null($usage))     $_c_usage   = null;
+            if(is_null($periode))   $_c_periode = null;
+            if(is_null($typevst))   $_c_cvisite = null;
+            if(is_null($isadmin))   $_c_isadmin = null;
+            if(is_null($isapte))    $_c_isapte  = null;
+            if(is_null($iscontre))  $_c_iscontre= null;
 
             if(isset($code) and !empty($code)){
                 switch($isitin){
-                    case 0 : $_c_code = 'AND ct_visite.ct_centre_id = '.$code.'';break;
+                    case 0 : 
+                        if($code == 7){
+                            $_c_code = 'AND ct_visite.ct_centre_id IN (7, 8)';break;
+                        }else{
+                            $_c_code = 'AND ct_visite.ct_centre_id = '.$code.'';break;
+                        }
                     case 1 :
                         $_ctr_code = $this->getCentreById($code);
-                        $_c_code = 'AND ct_visite.ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$_ctr_code.'" AND id != '.$code.')';break;
-                    default: $_c_code = 'AND ct_visite.ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
+                        if($code == 7){
+                            $_c_code = 'AND ct_visite.ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$_ctr_code.'" AND id NOT IN (7, 8))';break;
+                        }else{
+                            $_c_code = 'AND ct_visite.ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$_ctr_code.'" AND id != '.$code.')';break;
+                        }
+                    default:
+                        if($code == 7){
+                            $_c_code = 'AND ct_visite.ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code IN (7, 8)';break;
+                        }else{
+                            $_c_code = 'AND ct_visite.ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';break;
+                        }
                 } 
             }
             if(isset($usage) and !empty($usage)){

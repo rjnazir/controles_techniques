@@ -40,7 +40,7 @@
                         <span class="icon text-white-50">
                             <i class="fa fa-file-excel-o"></i>
                         </span>
-                        <span class="text">Exporter en MS Excel</span>
+                        <span class="text">Generer Excel</span>
                     </a>
                     {/if}
                 </td>

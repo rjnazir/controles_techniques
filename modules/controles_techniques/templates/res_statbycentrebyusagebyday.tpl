@@ -33,6 +33,7 @@
                 <td>{$result['ssadmiprem']}</td>
                 <td>{$result['ssadmicntr']}</td>
                 <td>{$result['ssitetotal']}</td>
+                
                 <td>{$result['ssitinapte']}</td>
                 <td>{$result['ssitininapte']}</td>
                 <td>{$result['ssitintotalp']}</td>
