@@ -130,7 +130,7 @@
          * @param $IsApte   : Type d'aptitude de visite
          */
         public function CompteVTbyIsApte($annee, $IsApte) {
-            $nbr = null;
+            $nbr = NULL;
             $db = jDb::getConnection();
             $sql= " SELECT DISTINCT ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom, ct_visite.vst_is_apte,
                     ct_carte_grise.cg_prenom, ct_carte_grise.cg_nom_cooperative, Max(ct_visite.vst_created) AS vst_created FROM ct_visite
@@ -151,7 +151,7 @@
          * @param $annee    : Annee a traiter pour le statistique
          */
         public function CompteVTGN($annee) {
-            $nbr = null;
+            $nbr = NULL;
             $db = jDb::getConnection();
             $sql= " SELECT DISTINCT ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom, ct_visite.vst_is_apte,
                     ct_carte_grise.cg_prenom, ct_carte_grise.cg_nom_cooperative, Max(ct_visite.vst_created) AS vst_created FROM ct_visite
@@ -173,7 +173,7 @@
          * @param $IsApte   : Type d'aptitude de visite
          */
         public function CompteVTGNbyIsApte($annee, $IsApte) {
-            $nbr = null;
+            $nbr = NULL;
             $db = jDb::getConnection();
             $sql= " SELECT DISTINCT ct_carte_grise.cg_immatriculation, ct_visite.vst_date_expiration, ct_carte_grise.cg_nom, ct_visite.vst_is_apte,
                     ct_carte_grise.cg_prenom, ct_carte_grise.cg_nom_cooperative, Max(ct_visite.vst_created) AS vst_created FROM ct_visite
@@ -199,7 +199,7 @@
             $db = jDb::getDbWidget();
             $sql = "SELECT ct_user.password FROM ct_user WHERE ct_user.username = '".$login."'";
             $res = $db->fetchFirst($sql);
-            $motdepasse = ($res)?$res->password:null;
+            $motdepasse = ($res)?$res->password:NULL;
             echo $motdepasse."<br/>";
             $options = [
                 'salt' => "%secret%",
@@ -286,7 +286,7 @@
             $sql= "SELECT * FROM ct_centre WHERE ct_centre.ctr_code LIKE '".$code."' AND ct_centre.ctr_nom NOT LIKE '%ITINERANTE%'";
             $res= $db->query($sql);
             $nbr= $res->rowCount();
-            $script = null;
+            $script = NULL;
             $i = 0;
             foreach($res as $ctr){
                 $i != ($nbr - 1) ? $link = ' OR ' : $link = '';
@@ -856,13 +856,13 @@
          */
         function getCompteVisiteByUsageByCentre($code, $usage, $annee, $periode, $typevst, $isadmin, $isapte, $iscontre, $isitin)
         {
-            if(is_null($code))      $_c_code    = null;
-            if(is_null($usage))     $_c_usage   = null;
-            if(is_null($periode))   $_c_periode = null;
-            if(is_null($typevst))   $_c_cvisite = null;
-            if(is_null($isadmin))   $_c_isadmin = null;
-            if(is_null($isapte))    $_c_isapte  = null;
-            if(is_null($iscontre))  $_c_iscontre= null;
+            if(is_null($code))      $_c_code    = NULL;
+            if(is_null($usage))     $_c_usage   = NULL;
+            if(is_null($periode))   $_c_periode = NULL;
+            if(is_null($typevst))   $_c_cvisite = NULL;
+            if(is_null($isadmin))   $_c_isadmin = NULL;
+            if(is_null($isapte))    $_c_isapte  = NULL;
+            if(is_null($iscontre))  $_c_iscontre= NULL;
 
             if(isset($code) and !empty($code)){
                 switch($isitin){
@@ -995,7 +995,7 @@
          */
         function getCompteRtByMotifByCentre($code, $motif, $annee, $periode, $isadmin, $isvhlimmmga, $tonnage)
         {
-            $_c_code = null; $_c_motif = null; $_c_periode = null;
+            $_c_code = NULL; $_c_motif = NULL; $_c_periode = NULL;
 
             if(isset($code) and !empty($code)){
                 $_c_code = 'ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
@@ -1030,8 +1030,9 @@
                     case '3.5T ≤ PTAC < 7T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 3500 AND vhc_poids_total_charge < 7000';break;
                     case '7T ≤ PTAC < 10T'  : $_c_tonnage = ' AND vhc_poids_total_charge >= 7000 AND vhc_poids_total_charge < 10000';break;
                     case '10T ≤ PTAC < 19T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 10000 AND vhc_poids_total_charge < 19000';break;
-                    // case '19T ≤ PTAC < 26T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 19000 AND vhc_poids_total_charge < 26000';break;
-                    case '19T ≤ PTAC < 26T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 19000';break;
+                    case '19T ≤ PTAC < 26T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 19000 AND vhc_poids_total_charge < 26000';break;
+                    case '26T ≤ PTAC < 32T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 26000 AND vhc_poids_total_charge < 32000';break;
+                    case '32T ≤ PTAC < 44T' : $_c_tonnage = ' AND vhc_poids_total_charge >= 32000';break;
                     default                 : $_c_tonnage = '';break;
                 }
             }else{
@@ -1045,6 +1046,175 @@
             return $nombre;
         }
 
+        public function getCentresAndSubcentres($id, $ct, $itin)
+        {
+            if($ct == 'Réception'){
+                if($itin == 0){
+                    switch($id){
+                        case 7 :
+                        case 8 : $s = "SELECT id FROM ct_centre WHERE id IN (7, 8)";break;
+                        case 3 :
+                        case 4 :
+                        case 6 :
+                        case 12: $s = "SELECT id FROM ct_centre WHERE ctr_code = (SELECT ctr_code FROM ct_centre WHERE id IN (26))";break;
+                        default: $s = "SELECT id FROM ct_centre WHERE id = $id";break;
+                    }
+                }else if($itin == 1){
+                    switch($id){
+                        case 7 :
+                        case 8 : $s = "SELECT id FROM ct_centre WHERE ctr_code = (SELECT ctr_code FROM ct_centre WHERE id IN (7, 8)) AND id NOT IN (7, 8)";break;
+                        case 3 :
+                        case 4 :
+                        case 6 :
+                        case 12: $s = "SELECT id FROM ct_centre WHERE ctr_code = (SELECT id FROM ct_centre WHERE id NOT IN (3, 4, 6, 12))";break;
+                        default: $s = "SELECT id FROM ct_centre WHERE ctr_code = (SELECT id FROM ct_centre WHERE id = $id) AND id != $id";break;
+                    }
+                }else if($itin == 2){
+                    switch($id){
+                        case 7 :
+                        case 8 : $s = "SELECT id FROM ct_centre WHERE ctr_code = (SELECT ctr_code FROM ct_centre WHERE id IN (7, 8))";break;
+                        case 3 :
+                        case 4 :
+                        case 6 :
+                        case 12: $s = "SELECT id FROM ct_centre WHERE ctr_code = (SELECT id FROM ct_centre WHERE id IN (3, 4, 6, 12, 26))";break;
+                        default: $s = "SELECT id FROM ct_centre WHERE ctr_code = (SELECT id FROM ct_centre WHERE id = $id)";break;
+                    }
+                }
+            }
+            // $d = jDb::getConnection();
+            // $r = $d->query($s);
+            return $s;
+        }
+
+        public function getCompteRtByMotifGenreTonnage($centre, $periode, $payante, $motif, $iscalculable, $genre, $min, $max)
+        {
+            $d = jDb::getDbWidget();
+            switch($payante){
+                case 1 :
+                case 2 : $cpayante = " AND ct_reception.ct_utilisation_id = ".$payante."";break;
+                default: $cpayante = "";
+            }
+            if($iscalculable == 1){
+                ($min > 0) ? $cmin = " AND ct_vehicule.vhc_poids_total_charge >= ".$min."" : $cmin = "";
+                ($max > 0) ? $cmax = " AND ct_vehicule.vhc_poids_total_charge < ".$max."" : $cmax = "";
+            }else{
+                $cmin = "";
+                $cmax = "";
+            }
+            is_null($genre) ? $cgenre = "" : $cgenre = " AND ct_reception.ct_genre_id IN ".$genre."";
+            is_null($motif) ? $cmotif = "" : $cmotif = " AND ct_reception.ct_motif_id IN (".$motif.")";
+            $s = "SELECT COUNT(*) AS NBRE FROM ct_reception INNER JOIN ct_vehicule ON ct_vehicule.id = ct_reception.ct_vehicule_id
+                    INNER JOIN ct_motif ON ct_motif.id = ct_reception.ct_motif_id
+                    WHERE   ct_reception.ct_centre_id IN (".$centre.")
+                            AND ct_reception.rcp_created LIKE '".$periode."%'
+                            $cpayante
+                            $cmotif
+                            AND ct_motif.mtf_is_calculable = ".$iscalculable."
+                            $cgenre
+                            $cmin $cmax
+                ";
+            $res = $d->fetchFirst($s)->NBRE;
+            return $res;
+        }
+
+        public function getStatistiqueReception($centre, $periode, $genre, $iscalculable){
+            $centre = $this->getCentresAndSubcentres($centre, 'Réception', 0);
+
+            if($genre == '(5, 6, 9, 12, 13, 14, 20)' OR $genre == '(4, 11, 16, 17)'){
+                // Vhl à moteur isolé 0 à 3.5T
+                $res[0]['motif'] = htmlspecialchars('PTAC < 3,5T');
+                $res[0]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, NULL, $iscalculable, $genre, 0, 3500);
+                $res[0]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, NULL, $iscalculable, $genre, 0, 3500);
+                $res[0]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, NULL, $iscalculable, $genre, 0, 3500);
+                // Vhl à moteur isolé 3.5 à 7T
+                $res[1]['motif'] = htmlspecialchars('3,5T ≤ PTAC < 7T');
+                $res[1]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, NULL, $iscalculable, $genre, 3500, 7000);
+                $res[1]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, NULL, $iscalculable, $genre, 3500, 7000);
+                $res[1]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, NULL, $iscalculable, $genre, 3500, 7000);
+                // Vhl à moteur isolé 7 à 10T
+                $res[2]['motif'] = htmlspecialchars('7T ≤ PTAC < 10T');
+                $res[2]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, NULL, $iscalculable, $genre, 7000, 10000);
+                $res[2]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, NULL, $iscalculable, $genre, 7000, 10000);
+                $res[2]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, NULL, $iscalculable, $genre, 7000, 10000);
+                // Vhl à moteur isolé 10 à 19T
+                $res[3]['motif'] = htmlspecialchars('10T ≤ PTAC < 19T');
+                $res[3]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, NULL, $iscalculable, $genre, 10000, 19000);
+                $res[3]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, NULL, $iscalculable, $genre, 10000, 19000);
+                $res[3]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, NULL, $iscalculable, $genre, 10000, 19000);
+                // Vhl à moteur isolé 19 à 26T
+                $res[4]['motif'] = htmlspecialchars('19T ≤ PTAC < 26T');
+                $res[4]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, NULL, $iscalculable, $genre, 19000, 26000);
+                $res[4]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, NULL, $iscalculable, $genre, 19000, 26000);
+                $res[4]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, NULL, $iscalculable, $genre, 19000, 26000);
+                // Vhl à moteur isolé 26 à 32T
+                $res[5]['motif'] = htmlspecialchars('26T ≤ PTAC < 32T');
+                $res[5]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, NULL, $iscalculable, $genre, 26000, 32000);
+                $res[5]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, NULL, $iscalculable, $genre, 26000, 32000);
+                $res[5]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, NULL, $iscalculable, $genre, 26000, 32000);
+                // Vhl à moteur isolé 32 à 44T
+                $res[6]['motif'] = htmlspecialchars('32T ≤ PTAC < 44T');
+                $res[6]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, NULL, $iscalculable, $genre, 32000, NULL);
+                $res[6]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, NULL, $iscalculable, $genre, 32000, NULL);
+                $res[6]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, NULL, $iscalculable, $genre, 32000, NULL);
+            }elseif($genre == '(1, 2, 3, 7, 8, 18)'){
+                $res[0]['motif'] = htmlspecialchars('MOTOCYCLETTES, VELOMOTEURS, CYCLOMOTEURS, TRICYCLES ET QUATRICYCLES');
+                $res[0]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, NULL, $iscalculable, $genre, NULL, NULL);
+                $res[0]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, NULL, $iscalculable, $genre, NULL, NULL);
+                $res[0]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, NULL, $iscalculable, $genre, NULL, NULL);
+            }elseif($genre == '(10, 15)'){
+                $res[0]['motif'] = htmlspecialchars('VÉHICULES ET APPAREILS AGRICOLES OUFORESTIERS, MATÉRIELS DE TP ET ENGINS SPÉCIAUX');
+                $res[0]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, NULL, $iscalculable, $genre, NULL, NULL);
+                $res[0]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, NULL, $iscalculable, $genre, NULL, NULL);
+                $res[0]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, NULL, $iscalculable, $genre, NULL, NULL);
+            }else{
+                $res[0]['motif'] = htmlspecialchars('PESAGE TOUS VÉHICULES');
+                $res[0]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 3, $iscalculable, NULL, NULL, NULL);
+                $res[0]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 3, $iscalculable, NULL, NULL, NULL);
+                $res[0]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 3, $iscalculable, NULL, NULL, NULL);
+                $res[1]['motif'] = htmlspecialchars('CHGMT NB DE PL PTAC 3,5T ET PLUS (SANS TRANSF° GENRE OU DE CARROS)');
+                $res[1]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 5, $iscalculable, NULL, NULL, NULL);
+                $res[1]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 5, $iscalculable, NULL, NULL, NULL);
+                $res[1]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 5, $iscalculable, NULL, NULL, NULL);
+                $res[2]['motif'] = htmlspecialchars('REMPLACEMENT DE CADRE OU DE COQUE');
+                $res[2]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 6, $iscalculable, NULL, NULL, NULL);
+                $res[2]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 6, $iscalculable, NULL, NULL, NULL);
+                $res[2]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 6, $iscalculable, NULL, NULL, NULL);
+                $res[3]['motif'] = htmlspecialchars('TRANSFORMATION DE CHASSIS');
+                $res[3]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 7, $iscalculable, NULL, NULL, NULL);
+                $res[3]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 7, $iscalculable, NULL, NULL, NULL);
+                $res[3]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 7, $iscalculable, NULL, NULL, NULL);
+                $res[4]['motif'] = htmlspecialchars('TRANSFORMATION ENTRAINANT CHANGEMENT DE GENRE');
+                $res[4]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 9, $iscalculable, NULL, NULL, NULL);
+                $res[4]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 9, $iscalculable, NULL, NULL, NULL);
+                $res[4]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 9, $iscalculable, NULL, NULL, NULL);
+                $res[5]['motif'] = htmlspecialchars('CHANGEMENT DE MOTEUR');
+                $res[5]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 10, $iscalculable, NULL, NULL, NULL);
+                $res[5]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 10, $iscalculable, NULL, NULL, NULL);
+                $res[5]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 10, $iscalculable, NULL, NULL, NULL);
+                $res[6]['motif'] = htmlspecialchars('ERREUR DE TRANSCRIPTION');
+                $res[6]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 11, $iscalculable, NULL, NULL, NULL);
+                $res[6]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 11, $iscalculable, NULL, NULL, NULL);
+                $res[6]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 11, $iscalculable, NULL, NULL, NULL);
+                $res[7]['motif'] = htmlspecialchars('PERTE DE PLAQUE DE CONSTRUCTEUR');
+                $res[7]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 12, $iscalculable, NULL, NULL, NULL);
+                $res[7]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 12, $iscalculable, NULL, NULL, NULL);
+                $res[7]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 12, $iscalculable, NULL, NULL, NULL);
+                $res[8]['motif'] = htmlspecialchars('CHGMT NB DE PL PTAC MOINS 3,5T (SANS TRANSF° GENRE OU DE CARROS)');
+                $res[8]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 14, $iscalculable, NULL, NULL, NULL);
+                $res[8]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 14, $iscalculable, NULL, NULL, NULL);
+                $res[8]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 14, $iscalculable, NULL, NULL, NULL);
+                $res[9]['motif'] = htmlspecialchars('TRANSFORMATION DE CARROSSERIE');
+                $res[9]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 20, $iscalculable, NULL, NULL, NULL);
+                $res[9]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 20, $iscalculable, NULL, NULL, NULL);
+                $res[9]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 20, $iscalculable, NULL, NULL, NULL);
+                $res[10]['motif'] = htmlspecialchars('DISCORDANCE CG ET VHL ET ERREUR DE TRANSCRIPTION');
+                $res[10]['parti'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 2, 21, $iscalculable, NULL, NULL, NULL);
+                $res[10]['admin'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, 1, 21, $iscalculable, NULL, NULL, NULL);
+                $res[10]['total'] = $this->getCompteRtByMotifGenreTonnage($centre, $periode, NULL, 21, $iscalculable, NULL, NULL, NULL);
+            }
+            return $res;
+        }
+
         /**
          * Récupération nombre de CAD suivant les conditions
          * @param $code     : Identifiant du centre et ces sous centres
@@ -1054,8 +1224,8 @@
          */
         function getCompteCadByMotifByCentre($code, $annee, $periode, $tonnage, $genre)
         {
-            $_c_code = null; $_c_periode = null;
-            
+            $_c_code = NULL; $_c_periode = NULL;
+
             if(isset($code) and !empty($code)){
                 $_c_code = ' AND ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
             }

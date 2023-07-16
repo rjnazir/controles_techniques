@@ -29,7 +29,8 @@
                     Réception technique
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{jurl 'controles_techniques~rt_stat_motif_centre_periode:index'}">Mensuelle par genre</a></li>
+                        <li><a class="dropdown-item" href="{jurl 'controles_techniques~rt_stat_bycentrebycatb_day:index'}">Journalière par catégorie</a></li>
+                        <li><a class="dropdown-item" href="{jurl 'controles_techniques~rt_stat_motif_centre_periode:index'}">Mensuelle par catégorie</a></li>
                         {* <li><hr class="dropdown-divider"></li> *}
                     </ul>
                 </li>
