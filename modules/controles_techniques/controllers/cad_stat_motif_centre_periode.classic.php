@@ -20,7 +20,7 @@ class cad_stat_motif_centre_periodeCtrl extends jController {
         //Initialisation
         $myclass= jClasses::getService("controles_techniques~myclass");
         $erreur = false;
-        $_result = null;
+        $vhlamoteurs = null;
         $_i = 0;
 
         // Recupération des variables
@@ -36,30 +36,23 @@ class cad_stat_motif_centre_periodeCtrl extends jController {
                 jMessage::add("Veuillez entrer les paramètres, svp!");
                 $erreur = true;
             }else{
-                in_array($centre, array(3,4,6,12)) ? $_c = 26 : $_c = $centre;
-                $code = $centre != 99999 ? $myclass->getCentreById($_c) : '';
-                $periode = $myclass->convertToMonth($trimestre);
-                $genre = $myclass->getAllCtGenre();
-                $categorie = $myclass->getAllCtGenreCategorie();
+                /* Véhicule à moteur (isolé) */
+                $genre0 = '(5, 6, 9, 12, 13, 14, 20)';
+                $vhlamoteurs = $myclass->getStatitstiqueCAD($centre, $genre0, $trimestre);
 
-                foreach($genre as $genre){
-                    $cgenre = $genre->gr_libelle;
-                    $catgri = $myclass->getOneCtGenreByLibelle($cgenre)->ct_genre_categorie_id;
-                    $_result[$_i]['GENREVHL']    = $cgenre;
-                    $_result[$_i]['CATGRVHL']    = $catgri;
-                    $_result[$_i]['VHL07000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '3.5T ≤ PTAC < 7T', $cgenre);
-                    $_result[$_i]['VHL10000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '7T ≤ PTAC < 10T', $cgenre);
-                    $_result[$_i]['VHL19000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '10T ≤ PTAC < 19T', $cgenre);
-                    $_result[$_i]['VHL26000']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '19T ≤ PTAC < 26T', $cgenre);
-                    $_result[$_i]['TOTALGAL']    = $myclass->getCompteCadByMotifByCentre($code, $annee, $periode, '', $cgenre);
+                /* Véhicule à moteur (isolé) */
+                $genre1 = '(4, 11, 16, 17)';
+                $semiremorqs = $myclass->getStatitstiqueCAD($centre, $genre1, $trimestre);
 
-                    $_i++;
-                }
-
-                $rep->body->assign('categorie', $categorie);
-                $rep->body->assign('result', $_result);
-                $rep->body->assignZone('res_cad_stat', 'controles_techniques~res_cad_stat_motif_centre_periode', array('result'=>$_result));
-
+                $rep->body->assign('vhlamoteurs', $vhlamoteurs);
+                $rep->body->assignZone(
+                    'res_cad_stat',
+                    'controles_techniques~res_cad_stat_motif_centre_periode',
+                    array(
+                        'vhlamoteurs' => $vhlamoteurs,
+                        'semiremorqs' => $semiremorqs,
+                    )
+                );
             }
         }
 

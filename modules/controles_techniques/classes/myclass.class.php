@@ -1048,7 +1048,7 @@
 
         public function getCentresAndSubcentres($id, $ct, $itin)
         {
-            if($ct == 'Réception'){
+            if($ct == 'Réception' || $ct == 'Constatation'){
                 if($itin == 0){
                     switch($id){
                         case 7 :
@@ -1080,9 +1080,27 @@
                         default: $s = "SELECT id FROM ct_centre WHERE ctr_code = (SELECT id FROM ct_centre WHERE id = $id)";break;
                     }
                 }
+            }elseif($ct == 'Visite'){
+                if($itin == 0){
+                    switch($id){
+                        case 7 :
+                        case 8 : $s = "SELECT id FROM ct_centre WHERE id IN (7, 8)";break;
+                        default: $s = "SELECT id FROM ct_centre WHERE id = $id";break;
+                    }
+                }elseif($itin == 1){
+                    switch($id){
+                        case 7 :
+                        case 8 : $s = "SELECT id FROM ct_centre WHERE ctr_code = (SELECT ctr_code FROM ct_centre WHERE id IN (7, 8)) AND id NOT IN (7, 8)";break;
+                        default: $s = "SELECT id FROM ct_centre WHERE ctr_code = (SELECT ctr_code FROM ct_centre WHERE id = $id) AND id != $id";break;
+                    }
+                }elseif($itin == 2){
+                    switch($id){
+                        case 7 :
+                        case 8 : "SELECT id FROM ct_centre WHERE ctr_code = (SELECT ctr_code FROM ct_centre WHERE id IN (7, 8))";break;
+                        default: "SELECT id FROM ct_centre WHERE ctr_code = (SELECT ctr_code FROM ct_centre WHERE id = $id";break;
+                    }
+                }
             }
-            // $d = jDb::getConnection();
-            // $r = $d->query($s);
             return $s;
         }
 
@@ -1222,17 +1240,11 @@
          * @param $isadmin  : Utilisation du véhicule (Particulier ou administratif)
          * @return $nombre  : Nombre de visite remplicant les condition;
          */
-        function getCompteCadByMotifByCentre($code, $annee, $periode, $tonnage, $genre)
+        function getCompteCadByMotifByCentre($code, $annee, $periode, $tonnage, $genre, $isadm)
         {
-            $_c_code = NULL; $_c_periode = NULL;
+            $_c_periode = NULL;
 
-            if(isset($code) and !empty($code)){
-                $_c_code = ' AND ct_centre_id IN (SELECT id FROM ct_centre WHERE ctr_code = "'.$code.'")';
-            }
-            // if(isset($motif) and !empty($motif)){
-            //     $_c_motif = ' AND ct_genre_id = '.$genre;
-            // }
-            if(strlen($periode) != 7 AND $annee != 1000){
+            if(strlen($periode) != 7 AND !is_null($annee)){
                 if(isset($annee) and isset($periode) and !empty($annee) and !empty($periode)){
                     $_c_periode = ' AND (Year(cad_created) = '.$annee.' AND MONTH(cad_created) IN '.$periode.')';
                 }
@@ -1243,19 +1255,71 @@
                 case '3.5T ≤ PTAC < 7T' : $_c_tonnage = ' AND (cad_poids_total_charge >= 3500 AND cad_poids_total_charge < 7000)';break;
                 case '7T ≤ PTAC < 10T'  : $_c_tonnage = ' AND (cad_poids_total_charge >= 7000 AND cad_poids_total_charge < 10000)';break;
                 case '10T ≤ PTAC < 19T' : $_c_tonnage = ' AND (cad_poids_total_charge >= 10000 AND cad_poids_total_charge < 19000)';break;
-                case '19T ≤ PTAC < 26T' : $_c_tonnage = ' AND cad_poids_total_charge >= 19000';break;
+                case '19T ≤ PTAC < 26T' : $_c_tonnage = ' AND (cad_poids_total_charge >= 19000 AND cad_poids_total_charge < 26000)';break;
+                case '26T ≤ PTAC < 32T' : $_c_tonnage = ' AND (cad_poids_total_charge >= 26000 AND cad_poids_total_charge < 32000)';break;
+                case '32T ≤ PTAC < 44T' : $_c_tonnage = ' AND cad_poids_total_charge >= 32000';break;
                 default                 : $_c_tonnage = ' AND cad_poids_total_charge >= 3500';break;
             }
 
-            $genre ? $_c_genre = ' AND ct_genre.gr_libelle = "'.$genre.'"' : $_c_genre = '';
+            if($isadm == 1){
+                $genre ? $_c_genre = ' AND ct_genre.id IN '.$genre.' AND ct_genre.id NOT IN (19)' : $_c_genre = '';
+            }elseif($isadm == 2){
+                $genre ? $_c_genre = ' AND ct_genre.id NOT IN (19)' : $_c_genre = '';
+            }elseif($isadm == NULL){
+                $genre = NULL;
+            }
 
             $d = jDb::getDbWidget();
             $s = "SELECT COUNT(*) AS nombre_cad FROM ct_const_av_ded INNER JOIN ct_const_av_deds_const_av_ded_caracs ON ct_const_av_ded.id = ct_const_av_deds_const_av_ded_caracs.const_av_ded_id
                 INNER JOIN ct_const_av_ded_carac ON ct_const_av_deds_const_av_ded_caracs.const_av_ded_carac_id = ct_const_av_ded_carac.id
                 INNER JOIN ct_genre ON ct_genre.id = ct_const_av_ded_carac.ct_genre_id
-                WHERE ct_const_av_ded_type_id = 2 $_c_code $_c_periode $_c_tonnage $_c_genre";
+                WHERE ct_const_av_ded_type_id = 2 AND ct_centre_id IN (".$code.") $_c_periode $_c_tonnage $_c_genre";
             $nombre = $d->fetchFirst($s)->nombre_cad;
             return $nombre;
+        }
+
+        public function getStatitstiqueCAD($centre, $genre, $periode)
+        {
+            $centre = $this->getCentresAndSubcentres($centre, 'Constatation', 0);
+            
+            if($genre == '(5, 6, 9, 12, 13, 14, 20)' OR $genre == '(4, 11, 16, 17)'){
+                // Vhl à moteur isolé 3.5 à 7T
+                $res[0]['motif'] = htmlspecialchars('3.5T ≤ PTAC < 7T');
+                $res[0]['parti'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '3.5T ≤ PTAC < 7T', $genre, 1);
+                // $res[0]['admin'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '3.5T ≤ PTAC < 7T', $genre, 2);
+                // $res[0]['total'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '3.5T ≤ PTAC < 7T', NULL, NULL);
+
+                // Vhl à moteur isolé 7 à 10T
+                $res[1]['motif'] = htmlspecialchars('7T ≤ PTAC < 10T');
+                $res[1]['parti'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '7T ≤ PTAC < 10T', $genre, 1);
+                // $res[1]['admin'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '7T ≤ PTAC < 10T', '(19)');
+                // $res[1]['total'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '7T ≤ PTAC < 10T', NULL);
+
+                // Vhl à moteur isolé 10 à 19T
+                $res[2]['motif'] = htmlspecialchars('10T ≤ PTAC < 19T');
+                $res[2]['parti'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '10T ≤ PTAC < 19T', $genre, 1);
+                // $res[2]['admin'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '10T ≤ PTAC < 19T', '(19)');
+                // $res[2]['total'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '10T ≤ PTAC < 19T', NULL);
+                
+                // Vhl à moteur isolé 19 à 26T
+                $res[3]['motif'] = htmlspecialchars('19T ≤ PTAC < 26T');
+                $res[3]['parti'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '19T ≤ PTAC < 26T', $genre, 1);
+                // $res[3]['admin'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '19T ≤ PTAC < 26T', '(19)');
+                // $res[3]['total'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '19T ≤ PTAC < 26T', NULL);
+
+                // Vhl à moteur isolé 26 à 32T
+                $res[4]['motif'] = htmlspecialchars('26T ≤ PTAC < 32T');
+                $res[4]['parti'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '26T ≤ PTAC < 32T', $genre, 1);
+                // $res[4]['admin'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '26T ≤ PTAC < 32T', $genre, 2);
+                // $res[4]['total'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '26T ≤ PTAC < 32T', NULL, NULL);
+
+                // Vhl à moteur isolé 32 à 44T
+                $res[5]['motif'] = htmlspecialchars('32T ≤ PTAC < 44T');
+                $res[5]['parti'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '32T ≤ PTAC < 44T', $genre, 1);
+                // $res[5]['admin'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '32T ≤ PTAC < 44T', '(19)');
+                // $res[5]['total'] = $this->getCompteCadByMotifByCentre($centre, NULL, $periode, '32T ≤ PTAC < 44T', NULL);
+            }
+            return $res;
         }
     }
 ?>
